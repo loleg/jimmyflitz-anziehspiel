@@ -16,7 +16,7 @@ var imgJimmy = Titanium.UI.createImageView({
 	image:'assets/jimmy/jimmy_striped_shirt_red.png',
 	height:'180px',
 	center:{x:50, y:350},
-	zIndex:5
+	zIndex:15
 });
 
 // jimmy's mirror
@@ -38,20 +38,21 @@ var imgClothes = [];
 		if (col > 3) { col = 1; row++; }
 		var img = Titanium.UI.createImageView({
 			image:'assets/clothes/' + clothes[i] + '.png',
-			jimmyID:clothes[i], zIndex:10
+			height:'80px', width:'60px',
+			center: {x:0 + 80 * col, y:120 + 100 * row},
+			jimmyID:clothes[i], zIndex:20
 		});
-		// last two
-		if (i >= clothes.length - 2) { 
-			img.height = '100px'; img.width = '90px'; 
-		} else {
-			img.height = '80px';  img.width = '60px';
-		}
+		
 		// center the umbrella on top
 		if (i >= clothes.length - 1) { 
-			img.center = {x:210, 		  y:67};
-		} else {
-			img.center = {x:0 + 80 * col, y:120 + 100 * row};
+			img.center = {x:'auto', y:63};
+			img.height = '140px'; img.width = '140px';
+			img.zIndex = 10;
+		// make the shoes bigger
+		} else if (i == clothes.length - 2) { 
+			img.height = '100px'; img.width = '90px';
 		}
+		
 		// add to stack
 		imgClothes.push(img);
 	}

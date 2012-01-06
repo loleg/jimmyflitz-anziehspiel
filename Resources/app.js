@@ -12,11 +12,12 @@ function drawOpenCloset() {
 		// imgClothes[i].addEventListener('click', function(e) {
 			// imgJimmy.image = 'assets/jimmy/jimmy_' + this.jimmyID + '.png';
 		// });
-		imgClothes[i].origin_x = imgClothes[i].center.x;
-		imgClothes[i].origin_y = imgClothes[i].center.y;
 		imgClothes[i].addEventListener('touchstart', function(e) {
 			this.offset_x = e.x;
 			this.offset_y = e.y;
+			if (typeof this.origin == 'undefined') {
+				this.origin = this.center;
+			}
 		});
 		imgClothes[i].addEventListener('touchmove', function(e) {
 			// Ti.API.debug('Our event tells us the center is ' + e.x + ', ' + e.y ); 
@@ -37,16 +38,16 @@ function drawOpenCloset() {
 						}
 					}
 					this.center = {
-						x:this.origin_x,
-						y:this.origin_y
+						x:this.origin.x,
+						y:this.origin.y
 					};
 					this.hide();
 				}
 			} else {
 				// put the item back on its shelf
 				this.center = {
-					x:this.origin_x,
-					y:this.origin_y
+					x:this.origin.x,
+					y:this.origin.y
 				};
 			}
 		});
