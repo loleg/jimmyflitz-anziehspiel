@@ -7,7 +7,7 @@ var win1 = Titanium.UI.createWindow({
 
 // fade cabinet
 var imgIntro = Titanium.UI.createImageView({
-	image:'assets/kleiderschrank1-closed.jpg',
+	image:'assets/kleiderschrank1-closed.png',
 	opacity:1, zOrder:99, width:'100%', height:'auto'
 });
 
@@ -47,7 +47,7 @@ var imgClothes = [];
 		if (i >= clothes.length - 1) { 
 			img.center = {x:'auto', y:63};
 			img.height = '140px'; img.width = '140px';
-			img.zIndex = 10;
+			img.zIndex = 21;
 		// make the shoes bigger
 		} else if (i == clothes.length - 2) { 
 			img.height = '100px'; img.width = '90px';
