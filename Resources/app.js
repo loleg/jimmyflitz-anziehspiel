@@ -3,14 +3,11 @@ Ti.include('game_objects.js');
 // background color of the master UIView
 Titanium.UI.setBackgroundColor('#cdf');
 
-// add startup images
-win1.add(imgIntro);
-win1.add(imgLogo);
-
 // draws Jimmy and all clothes
-function drawCloset() {
+function drawOpenCloset() {	
 	win1.add(imgJimmy);
-win1.add(imgMirror);
+	win1.add(imgMirror);
+	win1.setBackgroundImage('assets/kleiderschrank1-open.jpg');
 	for (var i in imgClothes) {
 		// imgClothes[i].addEventListener('click', function(e) {
 			// imgJimmy.image = 'assets/jimmy/jimmy_' + this.jimmyID + '.png';
@@ -53,16 +50,15 @@ win1.add(imgMirror);
 				};
 			}
 		});
+		// put to display
 		win1.add(imgClothes[i]);
 	}
 }
 
-// event handler
-win1.addEventListener('click',function(e)
-{
-	drawCloset();
+function startGame() {
+	drawOpenCloset();
 	// set up intro animations
-	var introFade = logoFade = Titanium.UI.createAnimation({
+	var introFade = Titanium.UI.createAnimation({
         curve:Ti.UI.ANIMATION_CURVE_EASE_OUT,
         opacity:0,
         duration:1000 
@@ -70,10 +66,22 @@ win1.addEventListener('click',function(e)
     introFade.addEventListener('complete', function() {
     	// finish the intro animation
     });
-    imgLogo.animate(logoFade);
     imgIntro.animate(introFade);
-});
+}
 
 // open root window
 win1.open();
+win1.add(imgIntro);
+imgIntro.hide();
 
+// event handler
+var gameStarted = false;
+win1.addEventListener('click',function(e)
+{
+	if (!imgIntro.visible) {
+		imgIntro.show();
+	} else if (!gameStarted) {
+		gameStarted = true;
+		startGame();
+	}
+});
