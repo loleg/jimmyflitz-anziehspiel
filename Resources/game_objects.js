@@ -2,7 +2,7 @@
 var win1 = Titanium.UI.createWindow({  
     title:'Anziehspiel',
     backgroundColor:'#fff',
-    backgroundImage:'iphone/Default.png'
+    backgroundImage:'assets/backgrounds/Landscape1.jpg'
 });
 
 // fade cabinet
@@ -47,7 +47,7 @@ var imgClothes = [];
 		if (i >= clothes.length - 1) { 
 			img.center = {x:'auto', y:63};
 			img.height = '140px'; img.width = '140px';
-			img.zIndex = 21;
+			//img.zIndex = 21;
 		// make the shoes bigger
 		} else if (i == clothes.length - 2) { 
 			img.height = '100px'; img.width = '90px';

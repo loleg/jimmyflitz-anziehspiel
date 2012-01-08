@@ -73,15 +73,13 @@ function startGame() {
 // open root window
 win1.open();
 win1.add(imgIntro);
-imgIntro.hide();
+// imgIntro.hide();
 
 // event handler
 var gameStarted = false;
 win1.addEventListener('click',function(e)
 {
-	if (!imgIntro.visible) {
-		imgIntro.show();
-	} else if (!gameStarted) {
+	if (!gameStarted) {
 		gameStarted = true;
 		startGame();
 	}
