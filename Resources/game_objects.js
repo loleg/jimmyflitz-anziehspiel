@@ -15,7 +15,7 @@ var imgIntro = Titanium.UI.createImageView({
 var imgJimmy = Titanium.UI.createImageView({
 	image:'assets/jimmy/jimmy_red.png',
 	height:'200px',
-	center:{x:50, y:360},
+	center:{x:40, y:360},
 	zIndex:15
 });
 
@@ -23,19 +23,19 @@ var imgJimmy = Titanium.UI.createImageView({
 var imgMirror = Titanium.UI.createImageView({
 	image:'assets/jimmy/mirror.png',
 	height:'140px', width:'80px',
-	center:{x:250, y:340}
+	center:{x:240, y:340}
 });
 
 // door icons
 var imgDoorClose = Titanium.UI.createImageView({
 	image:'assets/ui/button_close.png',
 	height:'90px', width:'90px',
-	center:{x:25, y:400}
+	center:{x:25, y:400}, zIndex:99
 });
 var imgDoorExit = Titanium.UI.createImageView({
 	image:'assets/ui/button_door.png',
 	height:'90px', width:'90px',
-	center:{x:300, y:400}
+	center:{x:300, y:400}, zIndex:99
 });
 
 // some clothes

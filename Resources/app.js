@@ -1,15 +1,15 @@
 Ti.include('game_objects.js');
 
 // background color of the master UIView
-Titanium.UI.setBackgroundColor('#cdf');
+Ti.UI.setBackgroundColor('#cdf');
+var container = Ti.UI.createView();
+win1.add(container);
 
 // draws Jimmy and all clothes
 function drawOpenCloset() {	
-	win1.add(imgJimmy);
-	win1.add(imgMirror);
-	win1.add(imgDoorClose);
-	win1.add(imgDoorExit);
-	win1.setBackgroundImage('assets/bg/kleiderschrank1-open.jpg');
+	container.add(imgJimmy);
+	container.add(imgMirror);
+	container.setBackgroundImage('assets/bg/kleiderschrank1-open.jpg');
 	for (var i in imgClothes) {
 		// imgClothes[i].addEventListener('click', function(e) {
 			// imgJimmy.image = 'assets/jimmy/jimmy_' + this.jimmyID + '.png';
@@ -59,7 +59,7 @@ function drawOpenCloset() {
 			}
 		});
 		// put to display
-		win1.add(imgClothes[i]);
+		container.add(imgClothes[i]);
 	}
 }
 
@@ -78,16 +78,35 @@ function startGame() {
 }
 
 // open root window
+gotoScreen(0);
 win1.open();
-win1.add(imgIntro);
-// imgIntro.hide();
 
 // event handler
-var gameStarted = false;
-win1.addEventListener('click',function(e)
-{
-	if (!gameStarted) {
-		gameStarted = true;
+var currentScreen = 0;
+function gotoScreen(s) {
+	Ti.API.debug('Opening screen ' + s);
+	win1.remove(container);
+	container = Ti.UI.createView({
+		width:'100%', height:'100%', top:0, left:0
+	});
+	switch(s) {
+	case 0:
+		container.add(imgIntro);
+		imgIntro.addEventListener('click',function(e) {
+			gotoScreen(1);
+		});
+		break;
+	case 1:
 		startGame();
+		imgDoorClose.addEventListener('click',function(e) {
+			gotoScreen(0);
+		});
+		container.add(imgDoorClose);
+		container.add(imgDoorExit);
+		break;
 	}
-});
+	win1.add(container);
+	currentScreen = s;
+}
+
+
