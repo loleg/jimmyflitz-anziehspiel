@@ -1,9 +1,22 @@
-// create root window
-var win1 = Titanium.UI.createWindow({  
-    title:'Anziehspiel',
-    backgroundColor:'#fff',
-    backgroundImage:'assets/bg/Landscape1.jpg'
-});
+// create root windows
+var windows = [
+	Titanium.UI.createWindow({  
+	    title:'Intro',
+	    backgroundColor:'#fff',
+	    backgroundImage:'assets/bg/Landscape1.jpg'
+	}),
+	Titanium.UI.createWindow({  
+	    title:'Game',
+	    backgroundColor:'#fff',
+	    backgroundImage:'assets/bg/kleiderschrank1-open.jpg'
+	}),
+	Titanium.UI.createWindow({  
+	    title:'Jury',
+	    backgroundColor:'#fff',
+	    backgroundImage:'assets/bg/Landscape1.jpg'
+	})
+];
+for (var u in windows) { windows[u].isPainted = false; }
 
 // fade cabinet
 var imgIntro = Titanium.UI.createImageView({
