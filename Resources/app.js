@@ -62,6 +62,8 @@ function drawOpenCloset() {
 		// put to display
 		container.add(imgClothes[i]);
 	}
+	// but hide the first
+	imgClothes[0].hide();
 }
 
 function startGame() {
@@ -98,7 +100,13 @@ function gotoScreen(s) {
 				gotoScreen(0);
 			});
 			container.add(imgDoorClose);
+			imgDoorExit.addEventListener('click',function(e) {
+				gotoScreen(2);
+			});
 			container.add(imgDoorExit);
+			break;
+		case 2:
+			container.add(imgDoorClose);
 			break;
 		}
 		windows[s].add(container);
@@ -109,5 +117,3 @@ function gotoScreen(s) {
 	windows[s].open();
 	currentScreen = s;
 }
-
-
