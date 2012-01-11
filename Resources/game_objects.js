@@ -2,32 +2,44 @@
 var win1 = Titanium.UI.createWindow({  
     title:'Anziehspiel',
     backgroundColor:'#fff',
-    backgroundImage:'assets/backgrounds/Landscape1.jpg'
+    backgroundImage:'assets/bg/Landscape1.jpg'
 });
 
 // fade cabinet
 var imgIntro = Titanium.UI.createImageView({
-	image:'assets/kleiderschrank1-closed.png',
+	image:'assets/bg/kleiderschrank1-closed.png',
 	opacity:1, zOrder:99, width:'100%', height:'auto'
 });
 
 // jimmy
 var imgJimmy = Titanium.UI.createImageView({
-	image:'assets/jimmy/jimmy_striped_shirt_red.png',
-	height:'180px',
-	center:{x:50, y:350},
+	image:'assets/jimmy/jimmy_red.png',
+	height:'200px',
+	center:{x:50, y:360},
 	zIndex:15
 });
 
 // jimmy's mirror
 var imgMirror = Titanium.UI.createImageView({
-	image:'assets/jimmy_mirror.png',
-	height:'120px', width:'60px',
-	center:{x:240, y:330}
+	image:'assets/jimmy/mirror.png',
+	height:'140px', width:'80px',
+	center:{x:250, y:340}
+});
+
+// door icons
+var imgDoorClose = Titanium.UI.createImageView({
+	image:'assets/ui/button_close.png',
+	height:'90px', width:'90px',
+	center:{x:25, y:400}
+});
+var imgDoorExit = Titanium.UI.createImageView({
+	image:'assets/ui/button_door.png',
+	height:'90px', width:'90px',
+	center:{x:300, y:400}
 });
 
 // some clothes
-var clothes = ["striped_shirt_red", "striped_shirt_blue", "striped_shirt_yellow", "scarf1", "hat1", "shoes1", "umbrella"];
+var clothes = ["jimmy_red", "jimmy_blue", "jimmy_yellow", "scarf1", "hat1", "shoes1", "umbrella"];
 var imgClothes = [];
 
 // loads clothes data
@@ -38,20 +50,24 @@ var imgClothes = [];
 		if (col > 3) { col = 1; row++; }
 		var img = Titanium.UI.createImageView({
 			image:'assets/clothes/' + clothes[i] + '.png',
-			height:'80px', width:'60px',
-			center: {x:0 + 80 * col, y:120 + 100 * row},
+			height: 90, width: 90,
+			center: {x:-20 + 90 * col, y:130 + 90 * row},
 			jimmyID:clothes[i], zIndex:20
 		});
 		
 		// center the umbrella on top
 		if (i >= clothes.length - 1) { 
-			img.center = {x:'auto', y:63};
-			img.height = '140px'; img.width = '140px';
+			img.center = {x:'auto', y:57};
+			img.height = 140; img.width = 140;
 			//img.zIndex = 21;
+			
 		// make the shoes bigger
 		} else if (i == clothes.length - 2) { 
-			img.height = '100px'; img.width = '90px';
+			img.height = 110; img.width = 110;
 		}
+		
+		img.o_height = img.height;
+		img.o_width = img.width;
 		
 		// add to stack
 		imgClothes.push(img);

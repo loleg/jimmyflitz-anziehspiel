@@ -7,7 +7,9 @@ Titanium.UI.setBackgroundColor('#cdf');
 function drawOpenCloset() {	
 	win1.add(imgJimmy);
 	win1.add(imgMirror);
-	win1.setBackgroundImage('assets/kleiderschrank1-open.jpg');
+	win1.add(imgDoorClose);
+	win1.add(imgDoorExit);
+	win1.setBackgroundImage('assets/bg/kleiderschrank1-open.jpg');
 	for (var i in imgClothes) {
 		// imgClothes[i].addEventListener('click', function(e) {
 			// imgJimmy.image = 'assets/jimmy/jimmy_' + this.jimmyID + '.png';
@@ -28,9 +30,9 @@ function drawOpenCloset() {
 		});
 		imgClothes[i].addEventListener('touchend', function(e) {
 			if (this.center.y > imgJimmy.center.y - imgJimmy.height/2) {
-				if (this.jimmyID.indexOf('shirt') > 0) {
+				if (this.jimmyID.indexOf('jimmy') == 0) {
 					// dress up Jimmy
-					imgJimmy.image = 'assets/jimmy/jimmy_' + this.jimmyID + '.png';
+					imgJimmy.image = 'assets/jimmy/' + this.jimmyID + '.png';
 					// unhide other clothes
 					for (var i in imgClothes) {
 						if (!imgClothes[i].visible) {
@@ -42,6 +44,9 @@ function drawOpenCloset() {
 						y:this.origin.y
 					};
 					this.hide();
+				} else {
+					this.width = this.o_width * 0.8;
+					this.height = this.o_height * 0.8;
 				}
 			} else {
 				// put the item back on its shelf
@@ -49,6 +54,8 @@ function drawOpenCloset() {
 					x:this.origin.x,
 					y:this.origin.y
 				};
+				this.width = this.o_width;
+				this.height = this.o_height;
 			}
 		});
 		// put to display
