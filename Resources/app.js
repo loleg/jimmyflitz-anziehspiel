@@ -21,6 +21,7 @@ function drawOpenCloset() {
 			if (typeof this.origin == 'undefined') {
 				this.origin = this.center;
 			}
+			this.zIndex = 50;
 		});
 		imgClothes[i].addEventListener('touchmove', function(e) {
 			// Ti.API.debug('Our event tells us the center is ' + e.x + ', ' + e.y ); 
@@ -30,22 +31,24 @@ function drawOpenCloset() {
 			};
 		});
 		imgClothes[i].addEventListener('touchend', function(e) {
+			this.zIndex = 20;
 			if (this.center.y > imgJimmy.center.y - imgJimmy.height/2) {
 				if (this.jimmyID.indexOf('jimmy') == 0) {
 					// dress up Jimmy
 					imgJimmy.image = 'assets/jimmy/' + this.jimmyID + '.png';
 					// unhide other clothes
 					for (var i in imgClothes) {
-						if (!imgClothes[i].visible) {
-							imgClothes[i].show();				
+						if (imgClothes[i].jimmyID != this.jimmyID 
+							&& imgClothes[i].jimmyID.indexOf('jimmy') == 0) {
+								imgClothes[i].opacity = 1;
 						}
 					}
 					this.center = {
 						x:this.origin.x,
 						y:this.origin.y
 					};
-					this.hide();
 					// don't "wear" the costume
+					this.opacity = 0;
 				} else {
 					this.width = this.o_width * 0.8;
 					this.height = this.o_height * 0.8;
@@ -66,14 +69,14 @@ function drawOpenCloset() {
 		container.add(imgClothes[i]);
 	}
 	// but hide the first
-	imgClothes[0].hide();
+	imgClothes[0].opacity = 0;
 }
 
 function startGame() {
 	drawOpenCloset();
 	// set up intro animations
 	var introFade = Titanium.UI.createAnimation({
-        curve:Ti.UI.ANIMATION_CURVE_EASE_OUT,
+        //curve:Ti.UI.ANIMATION_CURVE_EASE_OUT,
         opacity:0,
         duration:1000 
     });
@@ -105,6 +108,7 @@ function updateResult() {
 function gotoScreen(s) {
 	Ti.API.debug('Opening screen ' + s);
 	if (!windows[s].isPainted) {
+		windows[s].isPainted = true;
 		container = Ti.UI.createView({
 			width:'100%', height:'100%', top:0, left:0
 		});
@@ -139,7 +143,8 @@ function gotoScreen(s) {
 	if (currentScreen != -1) {
 		windows[currentScreen].close();
 	}
-	if (currentScreen == 2) {
+	// refresh end screen
+	if (s == 2) {
 		updateResult();
 	}
 	windows[s].open();
