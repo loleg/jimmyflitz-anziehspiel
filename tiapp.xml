@@ -9,17 +9,17 @@
         <target device="blackberry">false</target>
     </deployment-targets>
     <id>ch.utou.rz.anziehspiel</id>
-    <name>Jimmy Flitz Anziehspiel</name>
+    <name>Jimmy Flitz</name>
     <version>1.0</version>
     <publisher>Roland Zoss</publisher>
     <url>http://www.jimmyflitz.ch</url>
-    <description>A game of dressing up Jimmy Flitz, character from a Swiss children's book</description>
+    <description>Jimmy Flitz muss sich anziehen, Kleinkindspiel basiert auf das Buch von Roland Zoss</description>
     <copyright>2012 by Oleg Lavrovsky</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
     <statusbar-style>default</statusbar-style>
-    <statusbar-hidden>false</statusbar-hidden>
+    <statusbar-hidden>true</statusbar-hidden>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
@@ -27,12 +27,11 @@
     <iphone>
         <orientations device="iphone">
             <orientation>Ti.UI.PORTRAIT</orientation>
+            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
         </orientations>
         <orientations device="ipad">
             <orientation>Ti.UI.PORTRAIT</orientation>
             <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android"/>
