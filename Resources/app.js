@@ -4,11 +4,12 @@ Ti.include('game_objects.js');
 Ti.UI.setBackgroundColor('#cdf');
 
 // open root window
-var container, currentScreen = -1;
+var container;
+var currentScreen = -1;
 gotoScreen(0);
 
 // draws Jimmy and all clothes
-function drawOpenCloset() {	
+function startGame() {	
 	container.add(imgJimmy);
 	container.add(imgMirror);
 	for (var i in imgClothes) {
@@ -72,20 +73,6 @@ function drawOpenCloset() {
 	imgClothes[0].opacity = 0;
 }
 
-function startGame() {
-	drawOpenCloset();
-	// set up intro animations
-	var introFade = Titanium.UI.createAnimation({
-        //curve:Ti.UI.ANIMATION_CURVE_EASE_OUT,
-        opacity:0,
-        duration:1000 
-    });
-    introFade.addEventListener('complete', function() {
-    	// finish the intro animation
-    });
-    imgIntro.animate(introFade);
-}
-
 function showResult() {
 	container.add(imgJimmy);
 }
@@ -98,8 +85,13 @@ function updateResult() {
 	showClothes = [];
 	for (var i in imgClothes) {
 		if (imgClothes[i].wearing) {
-			showClothes.push(imgClothes[i]);
-			windows[currentScreen].add(showClothes[showClothes.length-1]);				
+			Ti.API.debug('Wearing ' + imgClothes[i].jimmyID);
+			var item = imgClothes[i];
+			showClothes.push(item);
+			item.opacity = 1;
+			item.zIndex = 22;
+			item.show();
+			windows[currentScreen].add(item);
 		}
 	}
 }
@@ -107,6 +99,7 @@ function updateResult() {
 // event handler
 function gotoScreen(s) {
 	Ti.API.debug('Opening screen ' + s);
+	// Create contents of the window
 	if (!windows[s].isPainted) {
 		windows[s].isPainted = true;
 		container = Ti.UI.createView({
@@ -140,11 +133,13 @@ function gotoScreen(s) {
 		}
 		windows[s].add(container);
 	}
+	// Close the currently open window
 	if (currentScreen != -1) {
 		windows[currentScreen].close();
 	}
-	// refresh end screen
+	// Refresh end screen
 	if (s == 2) {
+		Ti.API.debug('Updating result');
 		updateResult();
 	}
 	windows[s].open();
