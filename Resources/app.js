@@ -80,18 +80,15 @@ function showResult() {
 var showClothes = [];
 function updateResult() {
 	for (var u in showClothes) {
-		windows[currentScreen].remove(showClothes[u])
+		windows[currentScreen].container.remove(showClothes[u])
 	}
 	showClothes = [];
 	for (var i in imgClothes) {
-		if (imgClothes[i].wearing) {
-			Ti.API.debug('Wearing ' + imgClothes[i].jimmyID);
-			var item = imgClothes[i];
+		var item = imgClothes[i];
+		if (item.wearing) {
+			Ti.API.debug('Wearing ' + item.jimmyID);
 			showClothes.push(item);
-			item.opacity = 1;
-			item.zIndex = 22;
-			item.show();
-			windows[currentScreen].add(item);
+			windows[currentScreen].container.add(item);
 		}
 	}
 }
@@ -101,10 +98,11 @@ function gotoScreen(s) {
 	Ti.API.debug('Opening screen ' + s);
 	// Create contents of the window
 	if (!windows[s].isPainted) {
-		windows[s].isPainted = true;
 		container = Ti.UI.createView({
 			width:'100%', height:'100%', top:0, left:0
 		});
+		windows[s].container = container;
+		windows[s].isPainted = true;
 		switch(s) {
 		case 0:
 			container.add(imgIntro);
@@ -137,11 +135,11 @@ function gotoScreen(s) {
 	if (currentScreen != -1) {
 		windows[currentScreen].close();
 	}
+	currentScreen = s;
 	// Refresh end screen
 	if (s == 2) {
 		Ti.API.debug('Updating result');
 		updateResult();
 	}
 	windows[s].open();
-	currentScreen = s;
 }
