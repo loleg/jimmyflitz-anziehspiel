@@ -3,7 +3,8 @@ var windows = [
 	Titanium.UI.createWindow({  
 	    title:'Intro',
 	    backgroundColor:'#fff',
-	    backgroundImage:'assets/bg/Landscape1.jpg'
+	    backgroundImage:'assets/bg/Landscape1.jpg',
+	    
 	}),
 	Titanium.UI.createWindow({  
 	    title:'Game',
@@ -18,7 +19,17 @@ var windows = [
 ];
 for (var u in windows) { windows[u].isPainted = false; }
 
-// fade cabinet
+// sliding animation
+var imgCabLeft = Titanium.UI.createImageView({
+	image:'assets/bg/kleiderschrank1-closed-LEFT.jpg',
+	center:{x:0, y:0}, zIndex:55
+});
+var imgCabRight = Titanium.UI.createImageView({
+	image:'assets/bg/kleiderschrank1-closed-RIGHT.jpg',
+	center:{x:'50%', y:0}, zIndex:55
+});
+
+// window image
 var imgIntro = Titanium.UI.createImageView({
 	image:'assets/bg/kleiderschrank1-closed.png',
 	opacity:1, zOrder:99, width:'100%', height:'auto'

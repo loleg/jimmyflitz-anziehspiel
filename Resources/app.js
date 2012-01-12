@@ -9,7 +9,17 @@ var currentScreen = -1;
 gotoScreen(0);
 
 // draws Jimmy and all clothes
-function startGame() {	
+function startGame() {
+	container.add(imgCabLeft);
+	container.add(imgCabRight);
+	imgCabLeft.animate({
+        left: -500,
+        duration: 2500
+    });
+    imgCabRight.animate({
+        left: Ti.Platform.displayCaps.getPlatformWidth() + 500,
+        duration: 2500
+    });
 	container.add(imgJimmy);
 	container.add(imgMirror);
 	for (var i in imgClothes) {
