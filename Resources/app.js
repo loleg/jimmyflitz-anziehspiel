@@ -45,9 +45,11 @@ function drawOpenCloset() {
 						y:this.origin.y
 					};
 					this.hide();
+					// don't "wear" the costume
 				} else {
 					this.width = this.o_width * 0.8;
 					this.height = this.o_height * 0.8;
+					this.wearing = true;
 				}
 			} else {
 				// put the item back on its shelf
@@ -57,6 +59,7 @@ function drawOpenCloset() {
 				};
 				this.width = this.o_width;
 				this.height = this.o_height;
+				this.wearing = false;
 			}
 		});
 		// put to display
@@ -78,6 +81,24 @@ function startGame() {
     	// finish the intro animation
     });
     imgIntro.animate(introFade);
+}
+
+function showResult() {
+	container.add(imgJimmy);
+}
+
+var showClothes = [];
+function updateResult() {
+	for (var u in showClothes) {
+		windows[currentScreen].remove(showClothes[u])
+	}
+	showClothes = [];
+	for (var i in imgClothes) {
+		if (imgClothes[i].wearing) {
+			showClothes.push(imgClothes[i]);
+			windows[currentScreen].add(showClothes[showClothes.length-1]);				
+		}
+	}
 }
 
 // event handler
@@ -106,13 +127,20 @@ function gotoScreen(s) {
 			container.add(imgDoorExit);
 			break;
 		case 2:
-			container.add(imgDoorClose);
+			showResult();
+			imgDoorEnter.addEventListener('click',function(e) {
+				gotoScreen(1);
+			});
+			container.add(imgDoorEnter);
 			break;
 		}
 		windows[s].add(container);
 	}
 	if (currentScreen != -1) {
 		windows[currentScreen].close();
+	}
+	if (currentScreen == 2) {
+		updateResult();
 	}
 	windows[s].open();
 	currentScreen = s;

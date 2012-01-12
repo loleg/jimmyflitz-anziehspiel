@@ -50,6 +50,11 @@ var imgDoorExit = Titanium.UI.createImageView({
 	height:'90px', width:'90px',
 	center:{x:300, y:400}, zIndex:99
 });
+var imgDoorEnter = Titanium.UI.createImageView({
+	image:'assets/ui/button_door.png',
+	height:'90px', width:'90px',
+	center:{x:25, y:400}, zIndex:99
+});
 
 // some clothes
 var clothes = ["jimmy_red", "jimmy_blue", "jimmy_yellow", "scarf1", "hat1", "shoes1", "umbrella"];
@@ -81,6 +86,7 @@ var imgClothes = [];
 		
 		img.o_height = img.height;
 		img.o_width = img.width;
+		img.wearing = false;
 		
 		// add to stack
 		imgClothes.push(img);
