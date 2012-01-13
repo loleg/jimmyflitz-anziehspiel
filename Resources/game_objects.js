@@ -22,11 +22,13 @@ for (var u in windows) { windows[u].isPainted = false; }
 // sliding animation
 var imgCabLeft = Titanium.UI.createImageView({
 	image:'assets/bg/kleiderschrank1-closed-LEFT.jpg',
-	center:{x:0, y:0}, zIndex:55
+	width:'50%',
+	center:{x:70, y:0}, zIndex:55
 });
 var imgCabRight = Titanium.UI.createImageView({
 	image:'assets/bg/kleiderschrank1-closed-RIGHT.jpg',
-	center:{x:'50%', y:0}, zIndex:55
+	width:'50%',
+	center:{x:Ti.Platform.displayCaps.getPlatformWidth()-70, y:0}, zIndex:55
 });
 
 // window image

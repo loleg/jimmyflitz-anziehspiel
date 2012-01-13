@@ -14,11 +14,15 @@ function startGame() {
 	container.add(imgCabRight);
 	imgCabLeft.animate({
         left: -500,
-        duration: 2500
+        duration: 1100
+    }, function() {
+    	container.remove(imgCabLeft);
     });
     imgCabRight.animate({
-        left: Ti.Platform.displayCaps.getPlatformWidth() + 500,
-        duration: 2500
+        left: Ti.Platform.displayCaps.getPlatformWidth()+500,
+        duration: 1100
+    }, function() {
+    	container.remove(imgCabRight);
     });
 	container.add(imgJimmy);
 	container.add(imgMirror);
