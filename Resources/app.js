@@ -13,14 +13,14 @@ function startGame() {
 	container.add(imgCabLeft);
 	container.add(imgCabRight);
 	imgCabLeft.animate({
-        left: -500,
-        duration: 1100
+        left: -900,
+        duration: 1500
     }, function() {
     	container.remove(imgCabLeft);
     });
     imgCabRight.animate({
-        left: Ti.Platform.displayCaps.getPlatformWidth()+500,
-        duration: 1100
+        left: 1200,
+        duration: 2100
     }, function() {
     	container.remove(imgCabRight);
     });
@@ -113,7 +113,8 @@ function gotoScreen(s) {
 	// Create contents of the window
 	if (!windows[s].isPainted) {
 		container = Ti.UI.createView({
-			width:'100%', height:'100%', top:0, left:0
+			width:'100%', height:'100%', top:0, left:0,
+			borderRadius:0 // fix clipping issues
 		});
 		windows[s].container = container;
 		windows[s].isPainted = true;
