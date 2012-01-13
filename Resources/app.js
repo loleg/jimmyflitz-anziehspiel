@@ -12,18 +12,6 @@ gotoScreen(0);
 function startGame() {
 	container.add(imgCabLeft);
 	container.add(imgCabRight);
-	imgCabLeft.animate({
-        left: -900,
-        duration: 1500
-    }, function() {
-    	container.remove(imgCabLeft);
-    });
-    imgCabRight.animate({
-        left: 1200,
-        duration: 2100
-    }, function() {
-    	container.remove(imgCabRight);
-    });
 	container.add(imgJimmy);
 	container.add(imgMirror);
 	for (var i in imgClothes) {
@@ -85,6 +73,19 @@ function startGame() {
 	}
 	// but hide the first
 	imgClothes[0].opacity = 0;
+	// animate sliding doors
+	imgCabLeft.animate({
+        left: -900,
+        duration: 1500
+    }, function() {
+    	container.remove(imgCabLeft);
+    });
+    imgCabRight.animate({
+        left: 1200,
+        duration: 2100
+    }, function() {
+    	container.remove(imgCabRight);
+    });
 }
 
 function showResult() {
@@ -94,7 +95,7 @@ function showResult() {
 var showClothes = [];
 function updateResult() {
 	for (var u in showClothes) {
-		windows[currentScreen].container.remove(showClothes[u])
+		container.remove(showClothes[u])
 	}
 	showClothes = [];
 	for (var i in imgClothes) {
@@ -102,7 +103,7 @@ function updateResult() {
 		if (item.wearing) {
 			Ti.API.debug('Wearing ' + item.jimmyID);
 			showClothes.push(item);
-			windows[currentScreen].container.add(item);
+			container.add(item);
 		}
 	}
 }
@@ -112,11 +113,10 @@ function gotoScreen(s) {
 	Ti.API.debug('Opening screen ' + s);
 	// Create contents of the window
 	if (!windows[s].isPainted) {
-		container = Ti.UI.createView({
+		container = windows[s].container = Ti.UI.createView({
 			width:'100%', height:'100%', top:0, left:0,
 			borderRadius:0 // fix clipping issues
 		});
-		windows[s].container = container;
 		windows[s].isPainted = true;
 		switch(s) {
 		case 0:
