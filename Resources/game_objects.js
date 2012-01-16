@@ -45,11 +45,11 @@ var imgJimmy = Titanium.UI.createImageView({
 });
 
 // jimmy's mirror
-var imgMirror = Titanium.UI.createImageView({
-	image:'assets/jimmy/mirror.png',
-	height:'140px', width:'80px',
-	center:{x:240, y:340}
-});
+// var imgMirror = Titanium.UI.createImageView({
+	// image:'assets/jimmy/mirror.png',
+	// height:'140px', width:'80px',
+	// center:{x:240, y:340}
+// });
 
 // door icons
 var imgDoorClose = Titanium.UI.createImageView({
@@ -69,7 +69,7 @@ var imgDoorEnter = Titanium.UI.createImageView({
 });
 
 // some clothes
-var clothes = ["jimmy_red", "jimmy_blue", "jimmy_yellow", "scarf1", "hat1", "shoes1", "umbrella"];
+var clothes = ["jimmy_red", "jimmy_blue", "jimmy_yellow", "jacket1", "hat1", "socks_blue", "umbrella"];
 var imgClothes = [];
 
 // loads clothes data

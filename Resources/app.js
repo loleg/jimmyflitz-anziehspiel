@@ -13,7 +13,7 @@ function startGame() {
 	container.add(imgCabLeft);
 	container.add(imgCabRight);
 	container.add(imgJimmy);
-	container.add(imgMirror);
+	// container.add(imgMirror);
 	for (var i in imgClothes) {
 		// imgClothes[i].addEventListener('click', function(e) {
 			// imgJimmy.image = 'assets/jimmy/jimmy_' + this.jimmyID + '.png';
