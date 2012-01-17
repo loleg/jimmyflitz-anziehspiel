@@ -6,11 +6,12 @@ Ti.UI.setBackgroundColor('#cdf');
 // open root window
 var container;
 var currentScreen = -1;
-gotoScreen(0);
+gotoScreen(1);
 
 // initial screen with weather, Jimmy & friends
 function showIntro() {
 	container.add(imgIntro);
+	container.add(imgWindow);
 	for (var i in imgFriends) {
 		imgFriends[i].touchEnabled = false;
 		// CENTERING CODE
@@ -143,14 +144,12 @@ function gotoScreen(s) {
 		});
 		windows[s].isPainted = true;
 		switch(s) {
-		case 0:
-			container.addEventListener('click',function(e) {
-				gotoScreen(1);
-			});
-			break;
 		case 1:
 			showIntro();
 			imgIntro.addEventListener('click',function(e) {
+				this.hide();
+			});
+			imgWindow.addEventListener('click',function(e) {
 				gotoScreen(2);
 			});
 			break;

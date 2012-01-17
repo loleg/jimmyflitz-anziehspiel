@@ -1,10 +1,6 @@
 // create root windows
 var windows = [
 	Titanium.UI.createWindow({  
-	    title:'Intro',
-	    backgroundImage:'iphone/Default.png',	    
-	}),
-	Titanium.UI.createWindow({  
 	    title:'Welcome',
 	    backgroundImage:'assets/bg/Landscape1.jpg',	    
 	}),
@@ -19,6 +15,16 @@ var windows = [
 ];
 for (var u in windows) { windows[u].isPainted = false; }
 
+// welcome images
+var imgIntro = Titanium.UI.createImageView({
+	image:'assets/bg/jimmy-jump-intro.jpg',
+	opacity:1, width:'100%', height:'auto', zIndex:10
+});
+var imgWindow = Titanium.UI.createImageView({
+	image:'assets/bg/cabane.gif',
+	opacity:1, width:'auto', height:'100%', zIndex:1
+});
+
 // sliding animation
 var imgCabLeft = Titanium.UI.createImageView({
 	image:'assets/bg/kleiderschrank1-closed-LEFT.jpg',
@@ -28,12 +34,6 @@ var imgCabLeft = Titanium.UI.createImageView({
 var imgCabRight = Titanium.UI.createImageView({
 	image:'assets/bg/kleiderschrank1-closed-RIGHT.jpg',
 	left:'50%',	height:'100%', zIndex:55
-});
-
-// window image
-var imgIntro = Titanium.UI.createImageView({
-	image:'assets/bg/cabane.gif',
-	opacity:1, width:'auto', height:'100%'
 });
 
 // jimmy
