@@ -2,18 +2,18 @@
 var windows = [
 	Titanium.UI.createWindow({  
 	    title:'Intro',
-	    backgroundColor:'#fff',
-	    backgroundImage:'assets/bg/Landscape1.jpg',
-	    
+	    backgroundImage:'iphone/Default.png',	    
+	}),
+	Titanium.UI.createWindow({  
+	    title:'Welcome',
+	    backgroundImage:'assets/bg/Landscape1.jpg',	    
 	}),
 	Titanium.UI.createWindow({  
 	    title:'Game',
-	    backgroundColor:'#fff',
 	    backgroundImage:'assets/bg/kleiderschrank1-open.jpg'
 	}),
 	Titanium.UI.createWindow({  
 	    title:'Jury',
-	    backgroundColor:'#fff',
 	    backgroundImage:'assets/bg/Landscape1.jpg'
 	})
 ];
@@ -32,8 +32,8 @@ var imgCabRight = Titanium.UI.createImageView({
 
 // window image
 var imgIntro = Titanium.UI.createImageView({
-	image:'assets/bg/kleiderschrank1-closed.png',
-	opacity:1, zOrder:99, width:'100%', height:'auto'
+	image:'assets/bg/cabane.gif',
+	opacity:1, width:'auto', height:'100%'
 });
 
 // jimmy
@@ -43,6 +43,29 @@ var imgJimmy = Titanium.UI.createImageView({
 	center:{x:40, y:360},
 	zIndex:15
 });
+
+var imgFriends = [
+	Titanium.UI.createImageView({
+		image:'assets/friends/culan.png',
+		height:'200px', width:'200px',
+		center:{x:28, y:414}, zIndex:5
+	}),
+	Titanium.UI.createImageView({
+		image:'assets/friends/fernanda.png',
+		height:'150px', width:'150px',
+		center:{x:255, y:178}, zIndex:3
+	}),
+	Titanium.UI.createImageView({
+		image:'assets/friends/wulwul.png',
+		height:'270px', width:'220px',
+		center:{x:260, y:330}, zIndex:4
+	}),
+	Titanium.UI.createImageView({
+		image:'assets/jimmy/dancing.png',
+		height:'200px', width:'200px', 
+		center:{x:135, y:356}, zIndex:2
+	})
+]
 
 // jimmy's mirror
 // var imgMirror = Titanium.UI.createImageView({
@@ -69,8 +92,10 @@ var imgDoorEnter = Titanium.UI.createImageView({
 });
 
 // some clothes
-var clothes = ["jimmy_red", "jimmy_blue", "jimmy_yellow", "jacket1", "hat1", "socks_blue", "umbrella"];
+var clothes = ["jimmy_red", "jimmy_blue", "jimmy_yellow", "jimmy_jacket", "hat1", "socks_blue", "umbrella"];
 var imgClothes = [];
+var centerClothes = [ -20, 100 ];
+var marginClothes = [ 90, 90 ];
 
 // loads clothes data
 {
@@ -81,19 +106,23 @@ var imgClothes = [];
 		var img = Titanium.UI.createImageView({
 			image:'assets/clothes/' + clothes[i] + '.png',
 			height: 90, width: 90,
-			center: {x:-20 + 90 * col, y:130 + 90 * row},
+			center: {x:centerClothes[0] + marginClothes[0] * col,
+				 	 y:centerClothes[1] + marginClothes[1] * row},
 			jimmyID:clothes[i], zIndex:20
 		});
 		
 		// center the umbrella on top
-		if (i >= clothes.length - 1) { 
-			img.center = {x:'auto', y:57};
+		switch (clothes[i]) {
+		case "umbrella": 
+			img.center = {x:'auto', y:47};
 			img.height = 140; img.width = 140;
 			//img.zIndex = 21;
-			
-		// make the shoes bigger
-		} else if (i == clothes.length - 2) { 
+			break;
+				
+		// make the jacket bigger
+		case "jacket1": 
 			img.height = 110; img.width = 110;
+			break;
 		}
 		
 		img.o_height = img.height;

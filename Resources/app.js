@@ -8,6 +8,30 @@ var container;
 var currentScreen = -1;
 gotoScreen(0);
 
+// initial screen with weather, Jimmy & friends
+function showIntro() {
+	container.add(imgIntro);
+	for (var i in imgFriends) {
+		imgFriends[i].touchEnabled = false;
+		// CENTERING CODE
+		// imgFriends[i].addEventListener('touchstart', function(e) {
+			// this.offset_x = e.x; this.offset_y = e.y;
+			// if (typeof this.origin == 'undefined') {
+				// this.origin = this.center;
+			// }
+			// this.zIndex = 50;
+		// });
+		// imgFriends[i].addEventListener('touchmove', function(e) {
+			// this.center = {
+					// x:this.center.x + (e.x - this.offset_x), 
+					// y:this.center.y + (e.y - this.offset_y)
+			// };
+			// Ti.API.debug('Center: ' + this.center.x + ', ' + this.center.y ); 
+		// });
+		container.add(imgFriends[i]);
+	}
+}
+
 // draws Jimmy and all clothes
 function startGame() {
 	container.add(imgCabLeft);
@@ -120,26 +144,31 @@ function gotoScreen(s) {
 		windows[s].isPainted = true;
 		switch(s) {
 		case 0:
-			container.add(imgIntro);
-			imgIntro.addEventListener('click',function(e) {
+			container.addEventListener('click',function(e) {
 				gotoScreen(1);
 			});
 			break;
 		case 1:
+			showIntro();
+			imgIntro.addEventListener('click',function(e) {
+				gotoScreen(2);
+			});
+			break;
+		case 2:
 			startGame();
 			imgDoorClose.addEventListener('click',function(e) {
-				gotoScreen(0);
+				gotoScreen(1);
 			});
 			container.add(imgDoorClose);
 			imgDoorExit.addEventListener('click',function(e) {
-				gotoScreen(2);
+				gotoScreen(3);
 			});
 			container.add(imgDoorExit);
 			break;
-		case 2:
+		case 3:
 			showResult();
 			imgDoorEnter.addEventListener('click',function(e) {
-				gotoScreen(1);
+				gotoScreen(2);
 			});
 			container.add(imgDoorEnter);
 			break;
@@ -152,7 +181,7 @@ function gotoScreen(s) {
 	}
 	currentScreen = s;
 	// Refresh end screen
-	if (s == 2) {
+	if (s == 3) {
 		Ti.API.debug('Updating result');
 		updateResult();
 	}
