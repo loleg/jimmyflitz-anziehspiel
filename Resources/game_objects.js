@@ -15,8 +15,18 @@ var windows = [
 ];
 for (var u in windows) { windows[u].isPainted = false; }
 
+// score
+var labelResult = Titanium.UI.createLabel({
+	backgroundColor: "#fff", color: "#000",
+	font: {fontSize: "66px"},
+	width: "auto", height: "auto",
+	shadowColor: "#ccc", shadowOffset: {x:2, y:2},
+	center: {y: 200}
+})
+
+// end game music
 var soundClips = Titanium.Media.createSound({
-	url: "21-DAJANA-MASTERMIX_02.mp3" });
+	url: "sound/21-DAJANA-MASTERMIX_02.mp3" });
 
 // welcome images
 var imgIntro = Titanium.UI.createImageView({
@@ -124,7 +134,7 @@ var marginClothes = [ 85, 85 ];
 			break;
 				
 		// make the jacket bigger
-		case "jacket1": 
+		case "jimmy_jacket": 
 			img.height = 110; img.width = 110;
 			break;
 		}

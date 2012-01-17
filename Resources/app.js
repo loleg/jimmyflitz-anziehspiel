@@ -85,6 +85,7 @@ function startGame() {
 					// this.height = this.o_height * 0.8;
 					this.wearing = true;
 				}
+				Ti.API.debug('Item placed: ' + this.center.x + ', ' + this.center.y );
 			} else {
 				// put the item back on its shelf
 				this.center = {
@@ -118,15 +119,17 @@ function startGame() {
 }
 
 function showResult() {
-	container.add(imgJimmy);
 	for (var i = 1; i < imgFriends.length; i++) {
-		imgFriends[i].touchEnabled = false;
 		container.add(imgFriends[i]);
 	}
+	container.add(imgJimmy);
+	container.add(labelResult);
+	soundClips.play();
 }
 
 var showClothes = [];
 function updateResult() {
+	labelResult.text = Math.floor(Math.random() * 5 + 1);
 	for (var u in showClothes) {
 		container.remove(showClothes[u])
 	}
@@ -175,7 +178,6 @@ function gotoScreen(s) {
 			break;
 		case 2:
 			showResult();
-			soundClips.play();
 			imgDoorEnter.addEventListener('click',function(e) {
 				gotoScreen(1);
 			});
@@ -192,8 +194,14 @@ function gotoScreen(s) {
 	currentScreen = s;
 	
 	// Refresh end screen
-	if (s == 2) {
-		Ti.API.debug('Updating result');
+	switch (s) {
+	case 1:
+		// Re-enable clothes
+		for (var i in imgClothes) {
+			imgClothes[i].touchEnabled = false;
+		}
+	case 2:
+		// End game result
 		updateResult();
 	}
 	windows[s].open();
