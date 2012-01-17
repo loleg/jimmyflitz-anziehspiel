@@ -57,9 +57,11 @@ function startGame() {
 					x:this.center.x + (e.x - this.offset_x), 
 					y:this.center.y + (e.y - this.offset_y)
 			};
+			this.opacity = 0.8;
 		});
 		imgClothes[i].addEventListener('touchend', function(e) {
 			this.zIndex = 20;
+			this.opacity = 1;
 			if (this.center.y > imgJimmy.center.y - imgJimmy.height/2) {
 				if (this.jimmyID.indexOf('jimmy') == 0) {
 					// dress up Jimmy
@@ -78,8 +80,9 @@ function startGame() {
 					// don't "wear" the costume
 					this.opacity = 0;
 				} else {
-					this.width = this.o_width * 0.8;
-					this.height = this.o_height * 0.8;
+					// Scale images for a pop-in effect
+					// this.width = this.o_width * 0.8;
+					// this.height = this.o_height * 0.8;
 					this.wearing = true;
 				}
 			} else {
@@ -88,8 +91,9 @@ function startGame() {
 					x:this.origin.x,
 					y:this.origin.y
 				};
-				this.width = this.o_width;
-				this.height = this.o_height;
+				// Restore size from pop-in
+				// this.width = this.o_width;
+				// this.height = this.o_height;
 				this.wearing = false;
 			}
 		});
@@ -115,6 +119,10 @@ function startGame() {
 
 function showResult() {
 	container.add(imgJimmy);
+	for (var i = 1; i < imgFriends.length; i++) {
+		imgFriends[i].touchEnabled = false;
+		container.add(imgFriends[i]);
+	}
 }
 
 var showClothes = [];
@@ -127,6 +135,7 @@ function updateResult() {
 		var item = imgClothes[i];
 		if (item.wearing) {
 			Ti.API.debug('Wearing ' + item.jimmyID);
+			item.touchEnabled = false;
 			showClothes.push(item);
 			container.add(item);
 		}
@@ -166,6 +175,7 @@ function gotoScreen(s) {
 			break;
 		case 2:
 			showResult();
+			soundClips.play();
 			imgDoorEnter.addEventListener('click',function(e) {
 				gotoScreen(1);
 			});

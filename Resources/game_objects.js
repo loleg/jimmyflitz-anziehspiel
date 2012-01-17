@@ -15,6 +15,9 @@ var windows = [
 ];
 for (var u in windows) { windows[u].isPainted = false; }
 
+var soundClips = Titanium.Media.createSound({
+	url: "21-DAJANA-MASTERMIX_02.mp3" });
+
 // welcome images
 var imgIntro = Titanium.UI.createImageView({
 	image:'assets/bg/jimmy-jump-intro.jpg',
@@ -44,11 +47,12 @@ var imgJimmy = Titanium.UI.createImageView({
 	zIndex:15
 });
 
+// jimmy (intro) and friends
 var imgFriends = [
 	Titanium.UI.createImageView({
-		image:'assets/friends/culan.png',
-		height:'200px', width:'200px',
-		center:{x:28, y:414}, zIndex:5
+		image:'assets/jimmy/dancing.png',
+		height:'200px', width:'200px', 
+		center:{x:135, y:356}, zIndex:2
 	}),
 	Titanium.UI.createImageView({
 		image:'assets/friends/fernanda.png',
@@ -61,9 +65,9 @@ var imgFriends = [
 		center:{x:260, y:330}, zIndex:4
 	}),
 	Titanium.UI.createImageView({
-		image:'assets/jimmy/dancing.png',
-		height:'200px', width:'200px', 
-		center:{x:135, y:356}, zIndex:2
+		image:'assets/friends/culan.png',
+		height:'200px', width:'200px',
+		center:{x:28, y:414}, zIndex:5
 	})
 ]
 
