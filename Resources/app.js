@@ -138,7 +138,7 @@ function updateResult() {
 		var item = imgClothes[i];
 		if (item.wearing) {
 			Ti.API.debug('Wearing ' + item.jimmyID);
-			item.touchEnabled = false;
+		//	item.touchEnabled = false;
 			showClothes.push(item);
 			container.add(item);
 		}
@@ -198,7 +198,7 @@ function gotoScreen(s) {
 	case 1:
 		// Re-enable clothes
 		for (var i in imgClothes) {
-			imgClothes[i].touchEnabled = true;
+			//imgClothes[i].touchEnabled = true;
 		}
 	case 2:
 		// End game result
