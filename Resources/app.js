@@ -6,7 +6,7 @@ Ti.UI.setBackgroundColor('#cdf');
 // open root window
 var container;
 var currentScreen = -1;
-gotoScreen(1);
+gotoScreen(0);
 
 // initial screen with weather, Jimmy & friends
 function showIntro() {
@@ -144,43 +144,45 @@ function gotoScreen(s) {
 		});
 		windows[s].isPainted = true;
 		switch(s) {
-		case 1:
+		case 0:
 			showIntro();
 			imgIntro.addEventListener('click',function(e) {
 				this.hide();
 			});
 			imgWindow.addEventListener('click',function(e) {
-				gotoScreen(2);
+				gotoScreen(1);
 			});
 			break;
-		case 2:
+		case 1:
 			startGame();
 			imgDoorClose.addEventListener('click',function(e) {
-				gotoScreen(1);
+				gotoScreen(0);
 			});
 			container.add(imgDoorClose);
 			imgDoorExit.addEventListener('click',function(e) {
-				gotoScreen(3);
+				gotoScreen(2);
 			});
 			container.add(imgDoorExit);
 			break;
-		case 3:
+		case 2:
 			showResult();
 			imgDoorEnter.addEventListener('click',function(e) {
-				gotoScreen(2);
+				gotoScreen(1);
 			});
 			container.add(imgDoorEnter);
 			break;
 		}
 		windows[s].add(container);
 	}
+	
 	// Close the currently open window
 	if (currentScreen != -1) {
 		windows[currentScreen].close();
 	}
 	currentScreen = s;
+	
 	// Refresh end screen
-	if (s == 3) {
+	if (s == 2) {
 		Ti.API.debug('Updating result');
 		updateResult();
 	}

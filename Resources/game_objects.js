@@ -94,8 +94,8 @@ var imgDoorEnter = Titanium.UI.createImageView({
 // some clothes
 var clothes = ["jimmy_red", "jimmy_blue", "jimmy_yellow", "jimmy_jacket", "hat1", "socks_blue", "umbrella"];
 var imgClothes = [];
-var centerClothes = [ -20, 100 ];
-var marginClothes = [ 90, 90 ];
+var centerClothes = [ -37, 103 ];
+var marginClothes = [ 85, 85 ];
 
 // loads clothes data
 {
