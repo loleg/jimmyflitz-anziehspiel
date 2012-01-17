@@ -18,10 +18,10 @@ for (var u in windows) { windows[u].isPainted = false; }
 // score
 var labelResult = Titanium.UI.createLabel({
 	backgroundColor: "#fff", color: "#000",
-	font: {fontSize: "66px"},
+	font: {fontSize: "72px"},
 	width: "auto", height: "auto",
-	shadowColor: "#ccc", shadowOffset: {x:2, y:2},
-	center: {y: 200}
+	shadowColor: "#ddd", shadowOffset: {x:2, y:2},
+	center: {y: 180}
 })
 
 // end game music

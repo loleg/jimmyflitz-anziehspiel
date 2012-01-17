@@ -129,7 +129,7 @@ function showResult() {
 
 var showClothes = [];
 function updateResult() {
-	labelResult.text = Math.floor(Math.random() * 5 + 1);
+	labelResult.text = ' ' + Math.floor(Math.random() * 5 + 1) + ' ';
 	for (var u in showClothes) {
 		container.remove(showClothes[u])
 	}
@@ -198,7 +198,7 @@ function gotoScreen(s) {
 	case 1:
 		// Re-enable clothes
 		for (var i in imgClothes) {
-			imgClothes[i].touchEnabled = false;
+			imgClothes[i].touchEnabled = true;
 		}
 	case 2:
 		// End game result
