@@ -57,11 +57,11 @@ function startGame() {
 					x:this.center.x + (e.x - this.offset_x), 
 					y:this.center.y + (e.y - this.offset_y)
 			};
-			this.opacity = 0.8;
+			// this.opacity = 0.8;
 		});
 		imgClothes[i].addEventListener('touchend', function(e) {
 			this.zIndex = 20;
-			this.opacity = 1;
+			// this.opacity = 1;
 			if (this.center.y > imgJimmy.center.y - imgJimmy.height/2) {
 				if (this.jimmyID.indexOf('jimmy') == 0) {
 					// dress up Jimmy
