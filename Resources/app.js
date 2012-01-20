@@ -6,6 +6,7 @@ Ti.UI.setBackgroundColor('#cdf');
 // open root window
 var container;
 var currentScreen = -1;
+setLandscape();
 gotoScreen(0);
 
 // initial screen with weather, Jimmy & friends
@@ -31,6 +32,15 @@ function showIntro() {
 		// });
 		container.add(imgFriends[i]);
 	}
+}
+
+function setLandscape() {
+	// choose a random landscape and conditions
+	var theLandscape = Math.floor(Math.random() * 4);
+	var fairWeather = (Math.random() > 0.5);
+	Ti.API.debug('Landscape: ' + landscapes[theLandscape] + ', ' + (fairWeather) ? 'nice weather' : 'storm');
+	
+	windows[0].setBackgroundImage
 }
 
 // draws Jimmy and all clothes
@@ -63,6 +73,7 @@ function startGame() {
 			this.zIndex = 20;
 			// this.opacity = 1;
 			if (this.center.y > imgJimmy.center.y - imgJimmy.height/2) {
+				// TODO: place in function, recycle for "click" event
 				if (this.jimmyID.indexOf('jimmy') == 0) {
 					// dress up Jimmy
 					imgJimmy.image = 'assets/jimmy/' + this.jimmyID + '.png';

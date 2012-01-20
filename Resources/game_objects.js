@@ -1,19 +1,21 @@
 // create root windows
 var windows = [
 	Titanium.UI.createWindow({  
-	    title:'Welcome',
-	    backgroundImage:'assets/bg/Landscape1.jpg',	    
+	    title:'Welcome'	    
 	}),
 	Titanium.UI.createWindow({  
 	    title:'Game',
 	    backgroundImage:'assets/bg/kleiderschrank1-open.jpg'
 	}),
 	Titanium.UI.createWindow({  
-	    title:'Jury',
-	    backgroundImage:'assets/bg/Landscape1.jpg'
+	    title:'Jury'
 	})
 ];
 for (var u in windows) { windows[u].isPainted = false; }
+
+var landscapes = ['spring', 'summer', 'autumn', 'winter'];
+var fairWeather = true;
+var theLandscape = 0;
 
 // score
 var labelResult = Titanium.UI.createLabel({
