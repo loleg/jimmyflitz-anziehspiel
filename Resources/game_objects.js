@@ -1,3 +1,7 @@
+// create positioning helper
+var rezX = Ti.Platform.displayCaps.getPlatformWidth()  / 320;
+var rezY = Ti.Platform.displayCaps.getPlatformHeight() / 480;
+
 // create root windows
 var windows = [
 	Titanium.UI.createWindow({  
@@ -23,7 +27,7 @@ var labelResult = Titanium.UI.createLabel({
 	font: {fontSize: "72px"},
 	width: "auto", height: "auto",
 	shadowColor: "#ddd", shadowOffset: {x:2, y:2},
-	center: {y: 180}
+	center: {y: rezY* 180}
 })
 
 // end game music
@@ -33,11 +37,11 @@ var soundClips = Titanium.Media.createSound({
 // welcome images
 var imgIntro = Titanium.UI.createImageView({
 	image:'assets/bg/jimmy-jump-intro.jpg',
-	opacity:1, width:'100%', height:'auto', zIndex:10
+	opacity:1, top:0, width:'100%', zIndex:10
 });
 var imgWindow = Titanium.UI.createImageView({
 	image:'assets/bg/cabane.gif',
-	opacity:1, width:'auto', height:'100%', zIndex:1
+	opacity:1, top:0, height:'100%', zIndex:1
 });
 
 // sliding animation
@@ -54,34 +58,35 @@ var imgCabRight = Titanium.UI.createImageView({
 // jimmy
 var imgJimmy = Titanium.UI.createImageView({
 	image:'assets/jimmy/jimmy_red.png',
-	height:'200px',
-	center:{x:40, y:360},
+	height:rezY* 200,
+	center:{y:rezY* 360},
 	zIndex:15
 });
 
 // jimmy (intro) and friends
+/*
 var imgFriends = [
 	Titanium.UI.createImageView({
 		image:'assets/jimmy/dancing.png',
-		height:'200px', width:'200px', 
-		center:{x:135, y:356}, zIndex:2
+		height:rezY* 200, width:rezX* 200, 
+		center:{x:rezX* 135, y:rezY* 356}, zIndex:2
 	}),
 	Titanium.UI.createImageView({
 		image:'assets/friends/fernanda.png',
-		height:'150px', width:'150px',
-		center:{x:255, y:178}, zIndex:3
+		height:rezY* 150, width:rezX* 150,
+		center:{x:rezX* 255, y:rezY* 178}, zIndex:3
 	}),
 	Titanium.UI.createImageView({
 		image:'assets/friends/wulwul.png',
-		height:'270px', width:'220px',
-		center:{x:260, y:330}, zIndex:4
+		height:rezY* 270, width:rezX* 220,
+		center:{x:rezX* 260, y:rezY* 330}, zIndex:4
 	}),
 	Titanium.UI.createImageView({
 		image:'assets/friends/culan.png',
-		height:'200px', width:'200px',
-		center:{x:28, y:414}, zIndex:5
+		height:rezY* 200, width:rezX* 200,
+		center:{x:rezX* 28, y:rezY* 414}, zIndex:5
 	})
-]
+]*/
 
 // jimmy's mirror
 // var imgMirror = Titanium.UI.createImageView({
@@ -93,25 +98,25 @@ var imgFriends = [
 // door icons
 var imgDoorClose = Titanium.UI.createImageView({
 	image:'assets/ui/button_close.png',
-	height:'90px', width:'90px',
-	center:{x:25, y:400}, zIndex:99
+	height:rezY* 90, width:rezX* 90,
+	center:{x:rezX* 25, y:rezY* 400}, zIndex:99
 });
 var imgDoorExit = Titanium.UI.createImageView({
 	image:'assets/ui/button_door.png',
-	height:'90px', width:'90px',
-	center:{x:300, y:400}, zIndex:99
+	height:rezY* 90, width:rezX* 90,
+	center:{x:rezX* 300, y:rezY* 400}, zIndex:99
 });
 var imgDoorEnter = Titanium.UI.createImageView({
 	image:'assets/ui/button_door.png',
-	height:'90px', width:'90px',
-	center:{x:25, y:400}, zIndex:99
+	height:rezY* 90, width:rezX* 90,
+	center:{x:rezX* 25, y:rezY* 400}, zIndex:99
 });
 
 // some clothes
 var clothes = ["jimmy_red", "jimmy_blue", "jimmy_yellow", "jimmy_jacket", "hat1", "socks_blue", "umbrella"];
 var imgClothes = [];
-var centerClothes = [ -37, 103 ];
-var marginClothes = [ 85, 85 ];
+var centerClothes = [ rezX* -37, rezY* 103 ];
+var marginClothes = [ rezX* 85, rezY* 85 ];
 
 // loads clothes data
 {
@@ -121,7 +126,7 @@ var marginClothes = [ 85, 85 ];
 		if (col > 3) { col = 1; row++; }
 		var img = Titanium.UI.createImageView({
 			image:'assets/clothes/' + clothes[i] + '.png',
-			height: 90, width: 90,
+			height: rezY* 90, width: rezX* 90,
 			center: {x:centerClothes[0] + marginClothes[0] * col,
 				 	 y:centerClothes[1] + marginClothes[1] * row},
 			jimmyID:clothes[i], zIndex:20
@@ -130,14 +135,14 @@ var marginClothes = [ 85, 85 ];
 		// center the umbrella on top
 		switch (clothes[i]) {
 		case "umbrella": 
-			img.center = {x:'auto', y:47};
-			img.height = 140; img.width = 140;
+			img.center = {x:'auto', y:rezY* 47};
+			img.height = rezY* 140; img.width = rezX* 140;
 			//img.zIndex = 21;
 			break;
 				
 		// make the jacket bigger
 		case "jimmy_jacket": 
-			img.height = 110; img.width = 110;
+			img.height = rezY* 110; img.width = rezX* 110;
 			break;
 		}
 		

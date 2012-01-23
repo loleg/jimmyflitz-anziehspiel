@@ -13,6 +13,23 @@ gotoScreen(0);
 function showIntro() {
 	container.add(imgIntro);
 	container.add(imgWindow);
+	container.add(imgJimmy);
+	imgJimmy.touchEnabled = false;
+	var windowButton = Titanium.UI.createButton({
+		center: {x: rezX * 50, y: rezY * 50},
+		size: {width: rezX * 200, y: rezY * 200}
+	});
+	windowButton.addEventListener('click', function(e) {
+		imgIntro.hide();
+		imgWindow.hide();
+		imgJimmy.hide();
+	});
+	windows[0].addEventListener('click', function(e) {
+		imgIntro.show();
+		imgWindow.show();
+		imgJimmy.show();
+	});
+	/*
 	for (var i in imgFriends) {
 		imgFriends[i].touchEnabled = false;
 		// CENTERING CODE
@@ -32,15 +49,19 @@ function showIntro() {
 		// });
 		container.add(imgFriends[i]);
 	}
+	*/
 }
 
 function setLandscape() {
 	// choose a random landscape and conditions
 	var theLandscape = Math.floor(Math.random() * 4);
 	var fairWeather = (Math.random() > 0.5);
-	Ti.API.debug('Landscape: ' + landscapes[theLandscape] + ', ' + (fairWeather) ? 'nice weather' : 'storm');
-	
-	windows[0].setBackgroundImage
+	Ti.API.debug('Landscape: ' + landscapes[theLandscape] + ', ' 
+				+ (fairWeather) ? 'nice weather' : 'storm');
+	var path = 'assets/bg/landscape-' + 
+				landscapes[theLandscape] + '.jpg';
+	windows[0].setBackgroundImage(path);
+	windows[2].setBackgroundImage(path);
 }
 
 // draws Jimmy and all clothes
@@ -130,11 +151,14 @@ function startGame() {
 }
 
 function showResult() {
-	for (var i = 1; i < imgFriends.length; i++) {
-		container.add(imgFriends[i]);
-	}
+	// TODO: calculate the result
+	// TODO: door animation if negative
+	// TODO: landscape fly-by if positive
+	// for (var i = 1; i < imgFriends.length; i++) {
+		// container.add(imgFriends[i]);
+	// }
+	// container.add(labelResult);
 	container.add(imgJimmy);
-	container.add(labelResult);
 	soundClips.play();
 }
 
