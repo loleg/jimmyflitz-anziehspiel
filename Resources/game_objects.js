@@ -112,8 +112,19 @@ var imgDoorEnter = Titanium.UI.createImageView({
 	center:{x:rezX* 25, y:rezY* 400}, zIndex:99
 });
 
-// some clothes
-var clothes = ["jimmy_red", "jimmy_blue", "jimmy_yellow", "jimmy_jacket", "hat1", "socks_blue", "umbrella"];
+// some clothes 
+// type = score quotient - 0 (default): spring/summer, 1: winter, 2: weather
+// scale = size scaling - 1.0 is default
+// center = new position (x, y) - null is default
+var clothes = [
+	{ id: "jimmy_red" },
+	{ id: "jimmy_blue" }, 
+	{ id: "jimmy_yellow" }, 
+	{ id: "jimmy_jacket", type: 1, scale: 1.2 }, 
+	{ id: "hat1", type: 2 }, 
+	{ id: "socks_blue", type: 1 }, 
+	{ id: "umbrella", type: 2, scale: 1.5, center: {x:'auto', y:rezY* 47} }
+	];
 var imgClothes = [];
 var centerClothes = [ rezX* -37, rezY* 103 ];
 var marginClothes = [ rezX* 85, rezY* 85 ];
@@ -124,26 +135,23 @@ var marginClothes = [ rezX* 85, rezY* 85 ];
 	for (var i in clothes) {
 		col++;
 		if (col > 3) { col = 1; row++; }
+		
+		// define the image object
 		var img = Titanium.UI.createImageView({
-			image:'assets/clothes/' + clothes[i] + '.png',
-			height: rezY* 90, width: rezX* 90,
-			center: {x:centerClothes[0] + marginClothes[0] * col,
-				 	 y:centerClothes[1] + marginClothes[1] * row},
-			jimmyID:clothes[i], zIndex:20
+			info:		clothes[i],
+			image:  	'assets/clothes/' + clothes[i].id + '.png',
+			height: 	rezY* 90, width: rezX* 90, zIndex: 20,
+			center: 	{x:centerClothes[0] + marginClothes[0] * col,
+				 	 	 y:centerClothes[1] + marginClothes[1] * row}
 		});
 		
-		// center the umbrella on top
-		switch (clothes[i]) {
-		case "umbrella": 
-			img.center = {x:'auto', y:rezY* 47};
-			img.height = rezY* 140; img.width = rezX* 140;
-			//img.zIndex = 21;
-			break;
-				
-		// make the jacket bigger
-		case "jimmy_jacket": 
-			img.height = rezY* 110; img.width = rezX* 110;
-			break;
+		// update scale and position if specified
+		if (typeof clothes[i].scale != 'undefined') {
+			img.height *= clothes[i].scale; 
+			img.width  *= clothes[i].scale;
+		}
+		if (typeof clothes[i].center != 'undefined') {
+			img.center = clothes[i].center;
 		}
 		
 		img.o_height = img.height;

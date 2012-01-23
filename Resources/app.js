@@ -11,7 +11,7 @@ gotoScreen(0);
 
 // initial screen with weather, Jimmy & friends
 function showIntro() {
-	container.add(imgIntro);
+	//container.add(imgIntro);
 	container.add(imgWindow);
 	container.add(imgJimmy);
 	imgJimmy.touchEnabled = false;
@@ -71,9 +71,14 @@ function startGame() {
 	container.add(imgJimmy);
 	// container.add(imgMirror);
 	for (var i in imgClothes) {
-		// imgClothes[i].addEventListener('click', function(e) {
-			// imgJimmy.image = 'assets/jimmy/jimmy_' + this.jimmyID + '.png';
-		// });
+		imgClothes[i].addEventListener('singletap', function(e) {
+			// make Jimmy wear the item or take if off
+			if (this.wearing) {
+				wearItem(this);
+			} else {
+				unwearItem(this);
+			}
+		});
 		imgClothes[i].addEventListener('touchstart', function(e) {
 			this.offset_x = e.x;
 			this.offset_y = e.y;
@@ -94,40 +99,11 @@ function startGame() {
 			this.zIndex = 20;
 			// this.opacity = 1;
 			if (this.center.y > imgJimmy.center.y - imgJimmy.height/2) {
-				// TODO: place in function, recycle for "click" event
-				if (this.jimmyID.indexOf('jimmy') == 0) {
-					// dress up Jimmy
-					imgJimmy.image = 'assets/jimmy/' + this.jimmyID + '.png';
-					// unhide other clothes
-					for (var i in imgClothes) {
-						if (imgClothes[i].jimmyID != this.jimmyID 
-							&& imgClothes[i].jimmyID.indexOf('jimmy') == 0) {
-								imgClothes[i].opacity = 1;
-						}
-					}
-					this.center = {
-						x:this.origin.x,
-						y:this.origin.y
-					};
-					// don't "wear" the costume
-					this.opacity = 0;
-				} else {
-					// Scale images for a pop-in effect
-					// this.width = this.o_width * 0.8;
-					// this.height = this.o_height * 0.8;
-					this.wearing = true;
-				}
-				Ti.API.debug('Item placed: ' + this.center.x + ', ' + this.center.y );
+				// make Jimmy wear the item
+				wearItem(this);
 			} else {
-				// put the item back on its shelf
-				this.center = {
-					x:this.origin.x,
-					y:this.origin.y
-				};
-				// Restore size from pop-in
-				// this.width = this.o_width;
-				// this.height = this.o_height;
-				this.wearing = false;
+				// make Jimmy take it off
+				unwearItem(this);
 			}
 		});
 		// put to display
@@ -150,34 +126,76 @@ function startGame() {
     });
 }
 
-function showResult() {
-	// TODO: calculate the result
-	// TODO: door animation if negative
-	// TODO: landscape fly-by if positive
-	// for (var i = 1; i < imgFriends.length; i++) {
-		// container.add(imgFriends[i]);
-	// }
-	// container.add(labelResult);
-	container.add(imgJimmy);
-	soundClips.play();
+// dress up Jimmy
+function wearItem(obj) {
+	if (obj.info.id.indexOf('jimmy') == 0) {
+		imgJimmy.image = 'assets/jimmy/' + obj.info.id + '.png';
+		// unhide other clothes
+		for (var i in imgClothes) {
+			if (imgClothes[i].info.id != obj.info.id 
+				&& imgClothes[i].info.id.indexOf('jimmy') == 0) {
+					imgClothes[i].opacity = 1;
+			}
+		}
+		obj.center = {
+			x:obj.origin.x,
+			y:obj.origin.y
+		};
+		// don't "wear" the costume
+		obj.opacity = 0;		
+	} else {
+		// Scale images for a pop-in effect
+		// this.width = this.o_width * 0.8;
+		// this.height = this.o_height * 0.8;
+		obj.wearing = true;
+	}
+	Ti.API.debug('Item placed: ' + obj.center.x + ', ' + obj.center.y );
+} 
+
+// put the item back on its shelf
+function unwearItem(obj) {
+	// put the item back on its shelf
+	obj.center = {
+		x:obj.origin.x,
+		y:obj.origin.y
+	};
+	// Restore size from pop-in
+	// obj.width = obj.o_width;
+	// obj.height = obj.o_height;
+	obj.wearing = false;
 }
 
 var showClothes = [];
 function updateResult() {
-	labelResult.text = ' ' + Math.floor(Math.random() * 5 + 1) + ' ';
 	for (var u in showClothes) {
 		container.remove(showClothes[u])
 	}
 	showClothes = [];
+	var typeTally = 0;
+	// iterate through all worn clothing
 	for (var i in imgClothes) {
 		var item = imgClothes[i];
 		if (item.wearing) {
-			Ti.API.debug('Wearing ' + item.jimmyID);
+			Ti.API.debug('Wearing ' + item.info.id);
+			typeTally += item.info.type;
 		//	item.touchEnabled = false;
 			showClothes.push(item);
 			container.add(item);
 		}
 	}
+	// Win if the weather is nice & we're dressed lightly,
+	// or the weather is heavy and we're dressed warm
+	var typeOK = 
+		(theLandscape < 2 && fairWeather && typeTally < 3) ||
+		(theLandscape > 1 && typeTally > 2);
+	// switch (theLandscape) {
+	// case 0: // spring
+	// case 1: // summer
+	// case 2: // autumn
+	// case 3: // winter
+	// }
+	Ti.API.debug('Result score: ' + typeTally + ' weather: ' + fairWeather + ' season: ' + landscapes[theLandscape]);
+	labelResult.text = typeOK ? 'Go!' : 'No..';
 }
 
 // event handler
@@ -212,7 +230,10 @@ function gotoScreen(s) {
 			container.add(imgDoorExit);
 			break;
 		case 2:
-			showResult();
+			container.add(imgJimmy);
+			container.add(labelResult);
+			// play end game music
+			soundClips.play(); 
 			imgDoorEnter.addEventListener('click',function(e) {
 				gotoScreen(1);
 			});
