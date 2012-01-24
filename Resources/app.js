@@ -37,7 +37,7 @@ function showIntro() {
 	
 	container.add(buttonRestart);
 	buttonRestart.addEventListener('click', function(e) {
-		Titanium.App.restart;
+		Titanium.App.exit();
 	});
 	/*
 	for (var i in imgFriends) {
