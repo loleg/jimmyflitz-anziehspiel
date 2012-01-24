@@ -20,7 +20,7 @@ function showIntro() {
 	imgButtonWindow.o_width = imgButtonWindow.width = rezX * 114;
 	imgButtonWindow.o_height = imgButtonWindow.height = rezY * 172;
 	imgButtonWindow.o_center = imgButtonWindow.center =
-		{x: rezX * 104, y: rezY * 201};
+		{x: rezX * 104, y: rezY * 203};
 
 	imgButtonWindow.addEventListener('click', function(e) {
 		container.opacity = (container.opacity) ? 0 : 1;
@@ -34,6 +34,11 @@ function showIntro() {
 			Ti.Platform.displayCaps.getPlatformHeight();
 	});
 	windows[0].add(imgButtonWindow);
+	
+	container.add(buttonRestart);
+	buttonRestart.addEventListener('click', function(e) {
+		Titanium.App.restart;
+	});
 	/*
 	for (var i in imgFriends) {
 		imgFriends[i].touchEnabled = false;
@@ -60,7 +65,7 @@ function showIntro() {
 function setLandscape() {
 	// choose a random landscape and conditions
 	theLandscape = Math.floor(Math.random() * 4);
-	fairWeather = false; //(Math.random() > 0.5);
+	fairWeather = (Math.random() > 0.5);
 	Ti.API.debug('Landscape: ' + landscapes[theLandscape] + ', ' 
 				+ (fairWeather) ? 'nice weather' : 'storm');
 	var path = 'assets/bg/landscape-' + 
@@ -177,6 +182,7 @@ function unwearItem(obj) {
 }
 
 var showClothes = [];
+var typeOK = false;
 function updateResult() {
 	for (var u in showClothes) {
 		container.remove(showClothes[u])
@@ -196,7 +202,7 @@ function updateResult() {
 	}
 	// Win if the weather is nice & we're dressed lightly,
 	// or the weather is heavy and we're dressed warm
-	var typeOK = 
+	typeOK = 
 		(theLandscape < 2 && fairWeather && typeTally < 3) ||
 		(theLandscape > 1 && typeTally > 2);
 	// switch (theLandscape) {
@@ -206,15 +212,22 @@ function updateResult() {
 	// case 3: // winter
 	// }
 	Ti.API.debug('Result score: ' + typeTally + ' weather: ' + fairWeather + ' season: ' + landscapes[theLandscape]);
-	labelResult.text = typeOK ? 'Go!' : 'No..';
+	// labelResult.text = typeOK ? 'Go!' : 'No..';
+	
+		// check if Jimmy goes out
+	if (typeOK) {
+		// play end game music
+		soundClips.play();
+		imgDoor.opacity = 0;
+		imgDoor.hide();
+		container.add(buttonRestart);
+	}
 }
 
 function endGame() {
 	imgDoor.right = 0;
 	container.add(imgJimmy);
 	container.add(imgDoor);
-	// play end game music
-	soundClips.play();
 }
 
 // event handler

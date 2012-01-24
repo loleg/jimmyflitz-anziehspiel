@@ -24,7 +24,7 @@ var fairWeather = false;
 var imgWeather = Titanium.UI.createImageView({
 	image:'assets/ui/rain.png', 
 //	width:Ti.Platform.displayCaps.getPlatformWidth(), 
-	top: 0, height: Ti.Platform.displayCaps.getPlatformHeight(), 
+	height: '100%', width: '100%', 
 	zIndex: 0, touchEnabled:false
 });
 
@@ -35,7 +35,12 @@ var labelResult = Titanium.UI.createLabel({
 	width: "auto", height: "auto",
 	shadowColor: "#ddd", shadowOffset: {x:2, y:2},
 	center: {y: rezY* 180}
-})
+});
+var buttonRestart = Titanium.UI.createButton({
+	title: 'Start', zIndex: 55,
+	size: {width: 80, height: 20},
+	center: {x: rezX * 30, y: rezY* 340}
+});
 
 // end game music
 var soundClips = Titanium.Media.createSound({
@@ -55,7 +60,7 @@ var imgButtonWindow = Titanium.UI.createImageView({
 	opacity:1, zIndex:11
 });
 var imgDoor = Titanium.UI.createImageView({
-	image:'assets/bg/cabane_door.jpg',
+	image:'assets/ui/cabane_door.png',
 	opacity:1, top:0, height:Ti.Platform.displayCaps.getPlatformHeight(), zIndex:2
 });
 
