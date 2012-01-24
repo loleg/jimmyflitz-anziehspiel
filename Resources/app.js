@@ -16,13 +16,14 @@ function showIntro() {
 	container.add(imgJimmy);
 	container.opacity = 1;
 	imgJimmy.touchEnabled = false;
+	
+	imgButtonWindow.o_width = imgButtonWindow.width = rezX * 114;
+	imgButtonWindow.o_height = imgButtonWindow.height = rezY * 172;
+	imgButtonWindow.o_center = imgButtonWindow.center =
+		{x: rezX * 104, y: rezY * 201};
+
 	imgButtonWindow.addEventListener('click', function(e) {
 		container.opacity = (container.opacity) ? 0 : 1;
-		if (typeof this.o_center == "undefined") {
-			this.o_center = this.center;
-			this.o_height = this.height;
-			this.o_width = this.width;
-		}
 		this.center = (container.opacity) ? {
 			x:this.o_center.x,
 			y:this.o_center.y
@@ -58,14 +59,18 @@ function showIntro() {
 
 function setLandscape() {
 	// choose a random landscape and conditions
-	var theLandscape = Math.floor(Math.random() * 4);
-	var fairWeather = (Math.random() > 0.5);
+	theLandscape = Math.floor(Math.random() * 4);
+	fairWeather = false; //(Math.random() > 0.5);
 	Ti.API.debug('Landscape: ' + landscapes[theLandscape] + ', ' 
 				+ (fairWeather) ? 'nice weather' : 'storm');
 	var path = 'assets/bg/landscape-' + 
 				landscapes[theLandscape] + '.jpg';
 	windows[0].setBackgroundImage(path);
 	windows[2].setBackgroundImage(path);
+	if (!fairWeather) {
+		windows[0].add(imgWeather);
+		windows[2].add(imgWeather);
+	}
 }
 
 // draws Jimmy and all clothes
@@ -92,6 +97,8 @@ function startGame() {
 			this.zIndex = 50;
 		});
 		imgClothes[i].addEventListener('touchmove', function(e) {
+			// only in edit mode
+			if (currentScreen != 1) return;
 			// Ti.API.debug('Our event tells us the center is ' + e.x + ', ' + e.y ); 
 			this.center = {
 					x:this.center.x + (e.x - this.offset_x), 
@@ -202,6 +209,14 @@ function updateResult() {
 	labelResult.text = typeOK ? 'Go!' : 'No..';
 }
 
+function endGame() {
+	imgDoor.right = 0;
+	container.add(imgJimmy);
+	container.add(imgDoor);
+	// play end game music
+	soundClips.play();
+}
+
 // event handler
 function gotoScreen(s) {
 	Ti.API.debug('Opening screen ' + s);
@@ -234,10 +249,7 @@ function gotoScreen(s) {
 			container.add(imgDoorExit);
 			break;
 		case 2:
-			container.add(imgJimmy);
-			container.add(labelResult);
-			// play end game music
-			soundClips.play(); 
+			endGame(); 
 			imgDoorEnter.addEventListener('click',function(e) {
 				gotoScreen(1);
 			});
@@ -261,10 +273,6 @@ function gotoScreen(s) {
 		imgJimmy.zIndex = 30;
 	case 1:
 		imgJimmy.zIndex = 15;
-		// Re-enable clothes
-		for (var i in imgClothes) {
-			//imgClothes[i].touchEnabled = true;
-		}
 	case 2:
 		// End game result
 		updateResult();

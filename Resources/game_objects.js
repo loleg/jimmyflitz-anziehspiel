@@ -17,9 +17,16 @@ var windows = [
 ];
 for (var u in windows) { windows[u].isPainted = false; }
 
+// seasons and weather fx
 var landscapes = ['spring', 'summer', 'autumn', 'winter'];
-var fairWeather = true;
 var theLandscape = 0;
+var fairWeather = false;
+var imgWeather = Titanium.UI.createImageView({
+	image:'assets/ui/rain.png', 
+//	width:Ti.Platform.displayCaps.getPlatformWidth(), 
+	top: 0, height: Ti.Platform.displayCaps.getPlatformHeight(), 
+	zIndex: 0, touchEnabled:false
+});
 
 // score
 var labelResult = Titanium.UI.createLabel({
@@ -41,13 +48,15 @@ var imgIntro = Titanium.UI.createImageView({
 });
 var imgWindow = Titanium.UI.createImageView({
 	image:'assets/bg/cabane.gif',
-	opacity:1, top:0, height:'100%', zIndex:1
+	opacity:1, top:0, height:'100%', zIndex:2
 });
 var imgButtonWindow = Titanium.UI.createImageView({
 	image:'assets/ui/window.png',
-	opacity:1, zIndex:11,
-	center: {x: rezX * 104, y: rezY * 201},
-	width: rezX * 114, height: rezY * 176
+	opacity:1, zIndex:11
+});
+var imgDoor = Titanium.UI.createImageView({
+	image:'assets/bg/cabane_door.jpg',
+	opacity:1, top:0, height:Ti.Platform.displayCaps.getPlatformHeight(), zIndex:2
 });
 
 // sliding animation
@@ -125,11 +134,14 @@ var imgDoorEnter = Titanium.UI.createImageView({
 var clothes = [
 	{ id: "jimmy_red" },
 	{ id: "jimmy_blue" }, 
-	{ id: "jimmy_yellow" }, 
-	{ id: "jimmy_jacket", type: 1, scale: 1.2 }, 
+	// { id: "jimmy_yellow" }, 
+	{ id: "jimmy_jacket", type: 1, scale: 1.2 },
+	{ id: "jimmy_parka", type: 2, scale: 1.2 }, 
 	{ id: "hat1", type: 2 }, 
-	{ id: "socks_blue", type: 1 }, 
-	{ id: "umbrella", type: 2, scale: 1.5, center: {x:'auto', y:rezY* 47} }
+	{ id: "scarf1", type: 2 },
+	{ id: "socks_blue" },
+	{ id: "boots", type: 2 },   
+	{ id: "umbrella", type: 1, scale: 1.5, center: {x:'auto', y:rezY* 47} }
 	];
 var imgClothes = [];
 var centerClothes = [ rezX* -37, rezY* 103 ];
