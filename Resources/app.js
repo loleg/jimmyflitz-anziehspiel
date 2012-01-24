@@ -9,26 +9,30 @@ var currentScreen = -1;
 setLandscape();
 gotoScreen(0);
 
-// initial screen with weather, Jimmy & friends
+// initial screen with window
 function showIntro() {
 	//container.add(imgIntro);
 	container.add(imgWindow);
 	container.add(imgJimmy);
+	container.opacity = 1;
 	imgJimmy.touchEnabled = false;
-	var windowButton = Titanium.UI.createButton({
-		center: {x: rezX * 50, y: rezY * 50},
-		size: {width: rezX * 200, y: rezY * 200}
+	imgButtonWindow.addEventListener('click', function(e) {
+		container.opacity = (container.opacity) ? 0 : 1;
+		if (typeof this.o_center == "undefined") {
+			this.o_center = this.center;
+			this.o_height = this.height;
+			this.o_width = this.width;
+		}
+		this.center = (container.opacity) ? {
+			x:this.o_center.x,
+			y:this.o_center.y
+		} : {}; // screen center
+		this.width = (container.opacity) ? this.o_width : 
+			Ti.Platform.displayCaps.getPlatformWidth();
+		this.height = (container.opacity) ? this.o_height : 
+			Ti.Platform.displayCaps.getPlatformHeight();
 	});
-	windowButton.addEventListener('click', function(e) {
-		imgIntro.hide();
-		imgWindow.hide();
-		imgJimmy.hide();
-	});
-	windows[0].addEventListener('click', function(e) {
-		imgIntro.show();
-		imgWindow.show();
-		imgJimmy.show();
-	});
+	windows[0].add(imgButtonWindow);
 	/*
 	for (var i in imgFriends) {
 		imgFriends[i].touchEnabled = false;
@@ -110,7 +114,7 @@ function startGame() {
 		container.add(imgClothes[i]);
 	}
 	// but hide the first
-	imgClothes[0].opacity = 0;
+	// imgClothes[0].opacity = 0;
 	// animate sliding doors
 	imgCabLeft.animate({
         left: -900,
@@ -241,6 +245,8 @@ function gotoScreen(s) {
 			break;
 		}
 		windows[s].add(container);
+	} else {
+		container = windows[s].container;
 	}
 	
 	// Close the currently open window
@@ -251,7 +257,10 @@ function gotoScreen(s) {
 	
 	// Refresh end screen
 	switch (s) {
+	case 0:
+		imgJimmy.zIndex = 30;
 	case 1:
+		imgJimmy.zIndex = 15;
 		// Re-enable clothes
 		for (var i in imgClothes) {
 			//imgClothes[i].touchEnabled = true;

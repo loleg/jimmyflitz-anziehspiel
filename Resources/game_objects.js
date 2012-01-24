@@ -43,6 +43,12 @@ var imgWindow = Titanium.UI.createImageView({
 	image:'assets/bg/cabane.gif',
 	opacity:1, top:0, height:'100%', zIndex:1
 });
+var imgButtonWindow = Titanium.UI.createImageView({
+	image:'assets/ui/window.png',
+	opacity:1, zIndex:11,
+	center: {x: rezX * 104, y: rezY * 201},
+	width: rezX * 114, height: rezY * 176
+});
 
 // sliding animation
 var imgCabLeft = Titanium.UI.createImageView({
@@ -57,7 +63,7 @@ var imgCabRight = Titanium.UI.createImageView({
 
 // jimmy
 var imgJimmy = Titanium.UI.createImageView({
-	image:'assets/jimmy/jimmy_red.png',
+	image:'assets/jimmy/jimmy_white.png',
 	height:rezY* 200,
 	center:{y:rezY* 360},
 	zIndex:15
