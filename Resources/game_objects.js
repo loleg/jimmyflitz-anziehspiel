@@ -36,11 +36,11 @@ var labelResult = Titanium.UI.createLabel({
 	shadowColor: "#ddd", shadowOffset: {x:2, y:2},
 	center: {y: rezY* 180}
 });
-var buttonRestart = Titanium.UI.createButton({
-	title: 'Start', zIndex: 55,
-	size: {width: 80, height: 20},
-	center: {x: rezX * 30, y: rezY* 340}
-});
+// var buttonRestart = Titanium.UI.createButton({
+	// title: 'Start', zIndex: 55,
+	// size: {width: 80, height: 20},
+	// center: {x: rezX * 30, y: rezY* 340}
+// });
 
 // end game music
 var soundClips = Titanium.Media.createSound({

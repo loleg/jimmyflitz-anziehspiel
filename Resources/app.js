@@ -35,10 +35,10 @@ function showIntro() {
 	});
 	windows[0].add(imgButtonWindow);
 	
-	container.add(buttonRestart);
-	buttonRestart.addEventListener('click', function(e) {
-		Titanium.App.exit();
-	});
+	// container.add(buttonRestart);
+	// buttonRestart.addEventListener('click', function(e) {
+		// Titanium.App.exit();
+	// });
 	/*
 	for (var i in imgFriends) {
 		imgFriends[i].touchEnabled = false;
@@ -220,7 +220,7 @@ function updateResult() {
 		soundClips.play();
 		imgDoor.opacity = 0;
 		imgDoor.hide();
-		container.add(buttonRestart);
+		// container.add(buttonRestart);
 	}
 }
 
