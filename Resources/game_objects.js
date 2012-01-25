@@ -139,9 +139,9 @@ var imgDoorEnter = Titanium.UI.createImageView({
 var clothes = [
 	{ id: "jimmy_red" },
 	{ id: "jimmy_blue" }, 
-	// { id: "jimmy_yellow" }, 
+	{ id: "jimmy_yellow" }, 
 	{ id: "jimmy_jacket", type: 1, scale: 1.2 },
-	{ id: "jimmy_parka", type: 2, scale: 1.2 }, 
+	// { id: "jimmy_parka", type: 2, scale: 1.2 }, 
 	{ id: "hat1", type: 2 }, 
 	{ id: "scarf1", type: 2 },
 	{ id: "socks_blue" },
