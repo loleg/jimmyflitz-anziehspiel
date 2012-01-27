@@ -5,14 +5,14 @@ var rezY = Ti.Platform.displayCaps.getPlatformHeight() / 480;
 // create root windows
 var windows = [
 	Titanium.UI.createWindow({  
-	    title:'Welcome'	    
+	    // title:'Intro'	    
 	}),
 	Titanium.UI.createWindow({  
-	    title:'Game',
-	    backgroundImage:'assets/bg/kleiderschrank1-open.jpg'
+	    // title:'Cabinet',
+	    backgroundImage:'assets/bg/kleiderschrank1-open-left.jpg'
 	}),
 	Titanium.UI.createWindow({  
-	    title:'Jury'
+	    // title:'Finale'
 	})
 ];
 for (var u in windows) { windows[u].isPainted = false; }
@@ -22,8 +22,7 @@ var landscapes = ['spring', 'summer', 'autumn', 'winter'];
 var theLandscape = 0;
 var fairWeather = false;
 var imgWeather = Titanium.UI.createImageView({
-	image:'assets/ui/rain.png', 
-//	width:Ti.Platform.displayCaps.getPlatformWidth(), 
+	image:'assets/ui/rain.png',
 	height: '100%', width: '100%', 
 	zIndex: 0, touchEnabled:false
 });
@@ -149,13 +148,15 @@ var clothes = [
 	{ id: "boots", type: 2, x: 185, y: 431, z: 3 },   
 	{ id: "umbrella", type: 1, scale: 1.2, center: {x:'auto', y:rezY* 47}, z: 5 }
 	];
+	
 var imgClothes = [];
 var centerClothes = [ rezX* -37, rezY* 108 ];
 var marginClothes = [ rezX* 85, rezY* 85 ];
+var clothesPerSide = 6;
 
 // loads clothes data
 {
-	var col = 0, row = 0;
+	var col = 0, row = 0, rowClothes = 0;
 	for (var i in clothes) {
 		col++;
 		if (col > 3) { col = 1; row++; }
@@ -176,6 +177,11 @@ var marginClothes = [ rezX* 85, rezY* 85 ];
 		}
 		if (typeof clothes[i].center != 'undefined') {
 			img.center = clothes[i].center;
+		} else {
+			rowClothes++;
+			if (rowClothes == clothesPerSide) {
+				rowClothes = col = row = 0;
+			}
 		}
 		
 		img.o_height = img.height;
