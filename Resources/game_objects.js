@@ -140,14 +140,14 @@ var clothes = [
 	{ id: "jimmy_red" },
 	{ id: "jimmy_blue" }, 
 	{ id: "jimmy_yellow" }, 
-	{ id: "jacket", type: 1, scale: 1.2 },
+	{ id: "jacket", type: 1, scale: 0.9, x: 178, y: 365 },
 	{ id: "parka", type: 2, scale: 1.2 }, 
-	{ id: "hat1", type: 2 }, 
-	{ id: "scarf1", type: 2 },
-	{ id: "socks_blue" },
-	{ id: "mittens" },
-	{ id: "boots", type: 2, scale: 0.9 },   
-	{ id: "umbrella", type: 1, scale: 1.5, center: {x:'auto', y:rezY* 47} }
+	{ id: "hat1", type: 2, scale: 0.8, x: 166, y: 291 }, 
+	{ id: "scarf1", type: 2, x: 176, y: 352 },
+	{ id: "socks_blue", x: 190, y: 445 },
+	{ id: "mittens", x: 183, y: 392 },
+	{ id: "boots", type: 2, x: 185, y: 431 },   
+	{ id: "umbrella", type: 1, scale: 1.2, center: {x:'auto', y:rezY* 47} }
 	];
 var imgClothes = [];
 var centerClothes = [ rezX* -37, rezY* 103 ];

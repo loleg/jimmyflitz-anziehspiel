@@ -140,13 +140,17 @@ function wearItem(obj) {
 		// don't "wear" the costume
 		obj.opacity = 0;		
 	} else {
-		// Scale images for a pop-in effect
-		// this.width = this.o_width * 0.8;
-		// this.height = this.o_height * 0.8;
-		imgClothes[i].image = 'assets/jimmy/' + obj.info.id + '.png';
+		if (typeof obj.info.x != 'undefined') {
+			obj.center = {
+				x:obj.info.x,
+				y:obj.info.y
+			};
+		} else {
+			Ti.API.debug('Item placed: ' + obj.center.x + ', ' + obj.center.y );
+		}
+		obj.image = 'assets/jimmy/' + obj.info.id + '.png';
 		obj.wearing = true;
 	}
-	Ti.API.debug('Item placed: ' + obj.center.x + ', ' + obj.center.y );
 } 
 
 // put the item back on its shelf
@@ -159,7 +163,7 @@ function unwearItem(obj) {
 	// Restore size from pop-in
 	// obj.width = obj.o_width;
 	// obj.height = obj.o_height;
-	imgClothes[i].image = 'assets/clothes/' + obj.info.id + '.png';
+	obj.image = 'assets/clothes/' + obj.info.id + '.png';
 	obj.wearing = false;
 }
 
