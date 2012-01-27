@@ -14,13 +14,15 @@ function showIntro() {
 	//container.add(imgIntro);
 	container.add(imgWindow);
 	container.add(imgJimmy);
-	container.opacity = 1;
+	
+	container.opacity = 0;
 	imgJimmy.touchEnabled = false;
 	
-	imgButtonWindow.o_width = imgButtonWindow.width = rezX * 114;
-	imgButtonWindow.o_height = imgButtonWindow.height = rezY * 172;
-	imgButtonWindow.o_center = imgButtonWindow.center =
-		{x: rezX * 104, y: rezY * 203};
+	imgButtonWindow.o_width = rezX * 110;
+	imgButtonWindow.o_height = rezY * 162;
+	imgButtonWindow.o_center = {x: rezX * 106, y: rezY * 201};
+	imgButtonWindow.width = Ti.Platform.displayCaps.getPlatformWidth();
+	imgButtonWindow.height = Ti.Platform.displayCaps.getPlatformHeight();
 
 	imgButtonWindow.addEventListener('click', function(e) {
 		container.opacity = (container.opacity) ? 0 : 1;
@@ -39,27 +41,6 @@ function showIntro() {
 	// buttonRestart.addEventListener('click', function(e) {
 		// Titanium.App.exit();
 	// });
-	/*
-	for (var i in imgFriends) {
-		imgFriends[i].touchEnabled = false;
-		// CENTERING CODE
-		// imgFriends[i].addEventListener('touchstart', function(e) {
-			// this.offset_x = e.x; this.offset_y = e.y;
-			// if (typeof this.origin == 'undefined') {
-				// this.origin = this.center;
-			// }
-			// this.zIndex = 50;
-		// });
-		// imgFriends[i].addEventListener('touchmove', function(e) {
-			// this.center = {
-					// x:this.center.x + (e.x - this.offset_x), 
-					// y:this.center.y + (e.y - this.offset_y)
-			// };
-			// Ti.API.debug('Center: ' + this.center.x + ', ' + this.center.y ); 
-		// });
-		container.add(imgFriends[i]);
-	}
-	*/
 }
 
 function setLandscape() {
@@ -104,7 +85,6 @@ function startGame() {
 		imgClothes[i].addEventListener('touchmove', function(e) {
 			// only in edit mode
 			if (currentScreen != 1) return;
-			// Ti.API.debug('Our event tells us the center is ' + e.x + ', ' + e.y ); 
 			this.center = {
 					x:this.center.x + (e.x - this.offset_x), 
 					y:this.center.y + (e.y - this.offset_y)
@@ -163,6 +143,7 @@ function wearItem(obj) {
 		// Scale images for a pop-in effect
 		// this.width = this.o_width * 0.8;
 		// this.height = this.o_height * 0.8;
+		imgClothes[i].image = 'assets/jimmy/' + obj.info.id + '.png';
 		obj.wearing = true;
 	}
 	Ti.API.debug('Item placed: ' + obj.center.x + ', ' + obj.center.y );
@@ -178,6 +159,7 @@ function unwearItem(obj) {
 	// Restore size from pop-in
 	// obj.width = obj.o_width;
 	// obj.height = obj.o_height;
+	imgClothes[i].image = 'assets/clothes/' + obj.info.id + '.png';
 	obj.wearing = false;
 }
 

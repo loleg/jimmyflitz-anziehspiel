@@ -56,8 +56,8 @@ var imgWindow = Titanium.UI.createImageView({
 	opacity:1, top:0, height:'100%', zIndex:2
 });
 var imgButtonWindow = Titanium.UI.createImageView({
-	image:'assets/ui/window.png',
-	opacity:1, zIndex:11
+	backgroundImage:'assets/ui/window.png',
+	opacity:1, zIndex:11, width:640, height:903
 });
 var imgDoor = Titanium.UI.createImageView({
 	image:'assets/ui/cabane_door.png',
@@ -79,7 +79,7 @@ var imgCabRight = Titanium.UI.createImageView({
 var imgJimmy = Titanium.UI.createImageView({
 	image:'assets/jimmy/jimmy_white.png',
 	height:rezY* 200,
-	center:{y:rezY* 360},
+	center:{y:rezY* 365},
 	zIndex:15
 });
 
@@ -140,12 +140,13 @@ var clothes = [
 	{ id: "jimmy_red" },
 	{ id: "jimmy_blue" }, 
 	{ id: "jimmy_yellow" }, 
-	{ id: "jimmy_jacket", type: 1, scale: 1.2 },
-	// { id: "jimmy_parka", type: 2, scale: 1.2 }, 
+	{ id: "jacket", type: 1, scale: 1.2 },
+	{ id: "parka", type: 2, scale: 1.2 }, 
 	{ id: "hat1", type: 2 }, 
 	{ id: "scarf1", type: 2 },
 	{ id: "socks_blue" },
-	{ id: "boots", type: 2 },   
+	{ id: "mittens" },
+	{ id: "boots", type: 2, scale: 0.9 },   
 	{ id: "umbrella", type: 1, scale: 1.5, center: {x:'auto', y:rezY* 47} }
 	];
 var imgClothes = [];
