@@ -59,13 +59,37 @@ function setLandscape() {
 	}
 }
 
-// draws Jimmy and all clothes
+var clothesWhichView = 0;
+
+// for main game
 function startGame() {
 	container.add(imgCabLeft);
 	container.add(imgCabRight);
 	container.add(imgJimmy);
-	// container.add(imgMirror);
+	
+	drawClothes();
+	
+	// animate sliding doors
+	imgCabLeft.animate({
+        left: -900,
+        duration: 1500
+    }, function() {
+    	container.remove(imgCabLeft);
+    });
+    imgCabRight.animate({
+        left: 1200,
+        duration: 2100
+    }, function() {
+    	container.remove(imgCabRight);
+    });
+}
+
+// draws all clothes
+function drawClothes() {
+	// Iterate through all clothes
 	for (var i in imgClothes) {
+			 	  	
+		// Create event listeners for objects
 		imgClothes[i].addEventListener('click', function(e) {
 			// only in edit mode
 			if (currentScreen != 1) return;
@@ -107,22 +131,10 @@ function startGame() {
 		});
 		// put to display
 		container.add(imgClothes[i]);
+		
+		// but show only if on current cabinet
+		if (i > clothesPerSide) imgClothes[i].opacity = 0;
 	}
-	// but hide the first
-	// imgClothes[0].opacity = 0;
-	// animate sliding doors
-	imgCabLeft.animate({
-        left: -900,
-        duration: 1500
-    }, function() {
-    	container.remove(imgCabLeft);
-    });
-    imgCabRight.animate({
-        left: 1200,
-        duration: 2100
-    }, function() {
-    	container.remove(imgCabRight);
-    });
 }
 
 // dress up Jimmy

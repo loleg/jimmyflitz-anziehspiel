@@ -115,20 +115,15 @@ var imgFriends = [
 // });
 
 // door icons
-var imgDoorClose = Titanium.UI.createImageView({
-	image:'assets/ui/button_close.png',
-	height:rezY* 90, width:rezX* 90, opacity:0.5,
-	center:{x:rezX* 25, y:rezY* 450}, zIndex:99
+var imgNavButtonLeft = Titanium.UI.createImageView({
+	image:'assets/ui/mousefeet.png',
+	height:rezY* 90, width:rezX* 90, 
+	center:{x:rezX* 45, y:rezY* 400}, zIndex:99
 });
-var imgDoorExit = Titanium.UI.createImageView({
-	image:'assets/ui/button_door.png',
-	height:rezY* 90, width:rezX* 90, opacity:0.5,
+var imgNavButtonRight = Titanium.UI.createImageView({
+	image:'assets/ui/mousefeet.png',
+	height:rezY* 90, width:rezX* 90, 
 	center:{x:rezX* 300, y:rezY* 450}, zIndex:99
-});
-var imgDoorEnter = Titanium.UI.createImageView({
-	image:'assets/ui/button_door.png',
-	height:rezY* 90, width:rezX* 90, opacity:0.5,
-	center:{x:rezX* 25, y:rezY* 450}, zIndex:99
 });
 
 // some clothes 
