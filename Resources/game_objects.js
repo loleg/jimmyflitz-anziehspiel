@@ -60,8 +60,8 @@ var imgButtonWindow = Titanium.UI.createImageView({
 	opacity:1, zIndex:11, width:640, height:903
 });
 var imgDoor = Titanium.UI.createImageView({
-	image:'assets/ui/cabane_door.png',
-	opacity:1, top:0, height:Ti.Platform.displayCaps.getPlatformHeight(), zIndex:2
+	backgroundImage:'assets/ui/cabane_door.gif', zIndex:2,
+	opacity:1, top:0, height:'100%', width:'100%'
 });
 
 // sliding animation
@@ -118,18 +118,18 @@ var imgFriends = [
 // door icons
 var imgDoorClose = Titanium.UI.createImageView({
 	image:'assets/ui/button_close.png',
-	height:rezY* 90, width:rezX* 90,
-	center:{x:rezX* 25, y:rezY* 400}, zIndex:99
+	height:rezY* 90, width:rezX* 90, opacity:0.5,
+	center:{x:rezX* 25, y:rezY* 450}, zIndex:99
 });
 var imgDoorExit = Titanium.UI.createImageView({
 	image:'assets/ui/button_door.png',
-	height:rezY* 90, width:rezX* 90,
-	center:{x:rezX* 300, y:rezY* 400}, zIndex:99
+	height:rezY* 90, width:rezX* 90, opacity:0.5,
+	center:{x:rezX* 300, y:rezY* 450}, zIndex:99
 });
 var imgDoorEnter = Titanium.UI.createImageView({
 	image:'assets/ui/button_door.png',
-	height:rezY* 90, width:rezX* 90,
-	center:{x:rezX* 25, y:rezY* 400}, zIndex:99
+	height:rezY* 90, width:rezX* 90, opacity:0.5,
+	center:{x:rezX* 25, y:rezY* 450}, zIndex:99
 });
 
 // some clothes 
@@ -137,20 +137,20 @@ var imgDoorEnter = Titanium.UI.createImageView({
 // scale = size scaling - 1.0 is default
 // center = new position (x, y) - null is default
 var clothes = [
-	{ id: "jimmy_red" },
-	{ id: "jimmy_blue" }, 
-	{ id: "jimmy_yellow" }, 
-	{ id: "jacket", type: 1, scale: 0.9, x: 178, y: 365 },
-	{ id: "parka", type: 2, scale: 1.2 }, 
+	{ id: "jimmy_red", type: 0 },
+	{ id: "jimmy_blue", type: 0 }, 
+	{ id: "jimmy_yellow", type: 0 }, 
+	{ id: "jacket", type: 1, scale: 0.9, x: 178, y: 365, z: 1 },
+	{ id: "parka", type: 2, scale: 1.2, z: 2 }, 
 	{ id: "hat1", type: 2, scale: 0.8, x: 166, y: 291 }, 
-	{ id: "scarf1", type: 2, x: 176, y: 352 },
-	{ id: "socks_blue", x: 190, y: 445 },
-	{ id: "mittens", x: 183, y: 392 },
-	{ id: "boots", type: 2, x: 185, y: 431 },   
-	{ id: "umbrella", type: 1, scale: 1.2, center: {x:'auto', y:rezY* 47} }
+	{ id: "scarf1", type: 2, x: 176, y: 352, z: 3 },
+	{ id: "socks_blue", type: 0, x: 190, y: 445, z: 1 },
+	{ id: "mittens", type: 1, x: 183, y: 392 },
+	{ id: "boots", type: 2, x: 185, y: 431, z: 3 },   
+	{ id: "umbrella", type: 1, scale: 1.2, center: {x:'auto', y:rezY* 47}, z: 5 }
 	];
 var imgClothes = [];
-var centerClothes = [ rezX* -37, rezY* 103 ];
+var centerClothes = [ rezX* -37, rezY* 108 ];
 var marginClothes = [ rezX* 85, rezY* 85 ];
 
 // loads clothes data

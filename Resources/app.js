@@ -66,7 +66,9 @@ function startGame() {
 	container.add(imgJimmy);
 	// container.add(imgMirror);
 	for (var i in imgClothes) {
-		imgClothes[i].addEventListener('singletap', function(e) {
+		imgClothes[i].addEventListener('click', function(e) {
+			// only in edit mode
+			if (currentScreen != 1) return;
 			// make Jimmy wear the item or take if off
 			if (this.wearing) {
 				wearItem(this);
@@ -85,6 +87,7 @@ function startGame() {
 		imgClothes[i].addEventListener('touchmove', function(e) {
 			// only in edit mode
 			if (currentScreen != 1) return;
+			// move the item
 			this.center = {
 					x:this.center.x + (e.x - this.offset_x), 
 					y:this.center.y + (e.y - this.offset_y)
@@ -140,6 +143,9 @@ function wearItem(obj) {
 		// don't "wear" the costume
 		obj.opacity = 0;		
 	} else {
+		if (typeof obj.info.z != 'undefined') {
+			obj.zIndex = 50 + obj.info.z;
+		}
 		if (typeof obj.info.x != 'undefined') {
 			obj.center = {
 				x:obj.info.x,
@@ -175,10 +181,12 @@ function updateResult() {
 	}
 	showClothes = [];
 	var typeTally = 0;
+	var count = 0;
 	// iterate through all worn clothing
 	for (var i in imgClothes) {
 		var item = imgClothes[i];
 		if (item.wearing) {
+			count++;
 			Ti.API.debug('Wearing ' + item.info.id);
 			typeTally += item.info.type;
 		//	item.touchEnabled = false;
@@ -189,15 +197,19 @@ function updateResult() {
 	// Win if the weather is nice & we're dressed lightly,
 	// or the weather is heavy and we're dressed warm
 	typeOK = 
-		(theLandscape < 2 && fairWeather && typeTally < 3) ||
-		(theLandscape > 1 && typeTally > 2);
+		(theLandscape < 2 && fairWeather && typeTally < 3 && count > 0) ||
+		(theLandscape < 2 && !fairWeather && typeTally > 3) ||
+		(theLandscape > 1 && typeTally > 2) ||
+		(theLandscape > 1 && !fairWeather && typeTally > 5);
+		
 	// switch (theLandscape) {
 	// case 0: // spring
 	// case 1: // summer
 	// case 2: // autumn
 	// case 3: // winter
 	// }
-	Ti.API.debug('Result score: ' + typeTally + ' weather: ' + fairWeather + ' season: ' + landscapes[theLandscape]);
+	Ti.API.debug('Tally: ' + typeTally + ' Count: ' + count + ' / Sun: ' + fairWeather + 
+				 ' Season: ' + theLandscape + ' ' + landscapes[theLandscape]);
 	// labelResult.text = typeOK ? 'Go!' : 'No..';
 	
 		// check if Jimmy goes out
@@ -270,11 +282,14 @@ function gotoScreen(s) {
 	switch (s) {
 	case 0:
 		imgJimmy.zIndex = 30;
+		break;
 	case 1:
 		imgJimmy.zIndex = 15;
+		break;
 	case 2:
 		// End game result
 		updateResult();
+		break;
 	}
 	windows[s].open();
 }
