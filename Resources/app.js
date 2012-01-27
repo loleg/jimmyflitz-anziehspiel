@@ -199,7 +199,7 @@ function updateResult() {
 	typeOK = 
 		(theLandscape < 2 && fairWeather && typeTally < 3 && count > 0) ||
 		(theLandscape < 2 && !fairWeather && typeTally > 3) ||
-		(theLandscape > 1 && typeTally > 2) ||
+		(theLandscape > 1 && fairWeather && typeTally > 2) ||
 		(theLandscape > 1 && !fairWeather && typeTally > 5);
 		
 	// switch (theLandscape) {
