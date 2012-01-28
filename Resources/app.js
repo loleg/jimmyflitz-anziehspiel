@@ -16,33 +16,24 @@ function showIntro() {
 	//container.add(imgIntro);
 	container.add(imgWindow);
 	container.add(imgJimmy);
+	imgJimmy.touchEnabled = false;	
 	
+	// set to 1 to start with zoomed window
 	container.opacity = 0;
-	imgJimmy.touchEnabled = false;
-	
-	imgButtonWindow.o_width = rezX * 112;
-	imgButtonWindow.o_height = rezY * 162;
-	imgButtonWindow.o_center = {x: rezX * 104, y: rezY * 201};
-	imgButtonWindow.width = Ti.Platform.displayCaps.getPlatformWidth();
-	imgButtonWindow.height = Ti.Platform.displayCaps.getPlatformHeight();
-
-	imgButtonWindow.addEventListener('click', function(e) {
-		container.opacity = (container.opacity) ? 0 : 1;
-		this.center = (container.opacity) ? {
-			x:this.o_center.x,
-			y:this.o_center.y
-		} : {}; // screen center
-		this.width = (container.opacity) ? this.o_width : 
-			Ti.Platform.displayCaps.getPlatformWidth();
-		this.height = (container.opacity) ? this.o_height : 
-			Ti.Platform.displayCaps.getPlatformHeight();
-	});
-	windows[0].add(imgButtonWindow);
+	imgButtonWindow.zoom();
+	windows[windowsIx.intro].add(imgButtonWindow);
 	
 	// container.add(buttonRestart);
 	// buttonRestart.addEventListener('click', function(e) {
 		// Titanium.App.exit();
 	// });
+	
+	imgIntro.addEventListener('click',function(e) {
+		this.hide();
+	});
+	imgWindow.addEventListener('click',function(e) {
+		gotoScreen(1);
+	});
 }
 
 function setLandscape() {
@@ -57,25 +48,35 @@ function setLandscape() {
 	// set the UI background
 	Titanium.UI.setBackgroundImage(path);
 	if (!fairWeather) {
-		windows[0].add(imgWeather);
-		windows[2].add(imgWeather);
+		windows[windowsIx.intro].add(imgWeather);
+		windows[windowsIx.outro].add(imgWeather);
 	}
 }
 
 // animate sliding doors
-function slideOpen() {
-	imgCabLeft.animate({
-        left: -900,
-        duration: 1500
-    }, function() {
-    	container.remove(imgCabLeft);
-    });
-    imgCabRight.animate({
-        left: 1200,
-        duration: 2100
-    }, function() {
-    	container.remove(imgCabRight);
-    });
+function slideDoors(isOpening, targetWindow) {
+  container.add(imgCabLeft);
+  container.add(imgCabRight);
+  imgCabLeft.left = (isOpening) ? 
+    imgCabLeft.showX : imgCabLeft.hideX;
+  imgCabLeft.animate({
+      left: (isOpening) ? imgCabLeft.hideX : imgCabLeft.showX,
+      duration: 1500
+  }, function() {
+	  container.remove(imgCabLeft);
+  });
+  imgCabRight.left = (isOpening) ? 
+    imgCabRight.showX : imgCabRight.hideX;
+  imgCabRight.animate({
+      left: (isOpening) ? imgCabRight.hideX : imgCabRight.showX,
+      duration: 2100
+  }, function() {
+	  container.remove(imgCabRight);
+	  // jump to end game after completing animation
+	  if (typeof targetWindow != 'undefined') {
+      gotoScreen(targetWindow);
+    }
+  });
 }
 
 // draws all clothes
@@ -95,7 +96,7 @@ function drawInventory() {
 			if (typeof this.origin == 'undefined') {
 				this.origin = this.center;
 			}
-			this.zIndex = 50;
+			this.zIndex = 90;
 		});
 		imgClothes[i].addEventListener('touchmove', function(e) {
 			// only in edit mode
@@ -105,11 +106,8 @@ function drawInventory() {
 					x:this.center.x + (e.x - this.offset_x), 
 					y:this.center.y + (e.y - this.offset_y)
 			};
-			// this.opacity = 0.8;
 		});
 		imgClothes[i].addEventListener('touchend', function(e) {
-			this.zIndex = 20;
-			// this.opacity = 1;
 			if (this.center.y > imgJimmy.center.y - imgJimmy.height/2) {
 				// make Jimmy wear the item
 				wearItem(this);
@@ -133,7 +131,7 @@ function switchInventory() {
 				 i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
 		}
 	}
-	windows[1].setBackgroundImage(
+	windows[windowsIx.game].setBackgroundImage(
 		(currentInventory == 0) ?
 			'assets/bg/kleiderschrank1-open-left.jpg' :
 			'assets/bg/kleiderschrank1-open-right.jpg');
@@ -141,13 +139,18 @@ function switchInventory() {
 
 // dress up Jimmy
 function wearItem(obj) {
+  if (typeof obj.info.z != 'undefined') {
+	  obj.zIndex = 50 + obj.info.z;
+  } else {
+    obj.zIndex = 20;
+  }
 	if (obj.info.id.indexOf('jimmy') == 0) {
 		imgJimmy.image = 'assets/jimmy/' + obj.info.id + '.png';
 		// unhide other clothes
 		for (var i in imgClothes) {
 			if (imgClothes[i].info.id != obj.info.id 
 				&& imgClothes[i].info.id.indexOf('jimmy') == 0) {
-					imgClothes[i].opacity = 1;
+					obj.wearing = false;
 			}
 		}
 		obj.center = {
@@ -156,10 +159,9 @@ function wearItem(obj) {
 		};
 		// don't "wear" the costume
 		obj.opacity = 0;
+		// redraw the inventory to restore other shirts
+		switchInventory();
 	} else {
-		if (typeof obj.info.z != 'undefined') {
-			obj.zIndex = 50 + obj.info.z;
-		}
 		if (typeof obj.info.x != 'undefined') {
 			obj.center = {
 				x:obj.info.x,
@@ -257,14 +259,46 @@ function updateResult() {
 	}
 }
 
+function startGame() {
+  container.add(imgJimmy);
+  drawInventory();
+  imgNavButtonLeft.addEventListener('click',function(e) {
+	  if (currentInventory == 0) {
+		  gotoScreen(windowsIx.intro);
+	  } else {
+		  currentInventory = 0;
+		  switchInventory();
+	  }
+  });
+  container.add(imgNavButtonLeft);
+  imgNavButtonRight.addEventListener('click',function(e) {
+	  if (currentInventory == 1) {
+      // open doors and go to end game
+		  slideDoors(false, windowsIx.outro);
+	  } else {
+		  currentInventory = 1;
+		  switchInventory();
+	  }
+  });
+  container.add(imgNavButtonRight);
+}
+
 function endGame() {
 	imgDoor.right = 0;
 	container.add(imgJimmy);
 	container.add(imgDoor);
+	// tap to return to game
+	windows[s].addEventListener('click',function(e) {
+		gotoScreen(windowsIx.game);
+	});
 }
 
 // event handler
+var switchingScreen = false;
 function gotoScreen(s) {
+  // Manage contention on window switch
+  if (switchingScreen) return;
+  switchingScreen = true;
 	Ti.API.debug('Opening screen ' + s);
 	// Create contents of the window
 	if (!windows[s].isPainted) {
@@ -274,46 +308,17 @@ function gotoScreen(s) {
 		});
 		windows[s].isPainted = true;
 		switch(s) {
-		case 0:
+		case windowsIx.menu:
+		  showMenu();
+		  break;
+		case windowsIx.intro:
 			showIntro();
-			imgIntro.addEventListener('click',function(e) {
-				this.hide();
-			});
-			imgWindow.addEventListener('click',function(e) {
-				gotoScreen(1);
-			});
 			break;
-		case 1:
-			container.add(imgCabLeft);
-			container.add(imgCabRight);
-			container.add(imgJimmy);
-			drawInventory();
-			imgNavButtonLeft.addEventListener('click',function(e) {
-				if (currentInventory == 0) {
-					gotoScreen(0);
-				} else {
-					currentInventory = 0;
-					switchInventory();
-				}
-			});
-			container.add(imgNavButtonLeft);
-			imgNavButtonRight.addEventListener('click',function(e) {
-				if (currentInventory == 1) {
-					gotoScreen(2);
-				} else {
-					currentInventory = 1;
-					switchInventory();
-				}
-			});
-			container.add(imgNavButtonRight);
-			slideOpen();
+		case windowsIx.game:
+			startGame();
 			break;
-		case 2:
+		case windowsIx.outro:
 			endGame(); 
-			windows[s].addEventListener('click',function(e) {
-				gotoScreen(1);
-			});
-			// container.add(imgNavButtonLeft);
 			break;
 		}
 		windows[s].add(container);
@@ -325,22 +330,25 @@ function gotoScreen(s) {
 	if (currentScreen != -1) {
 		windows[currentScreen].close();
 	}
+	var prevScreen = currentScreen;
 	currentScreen = s;
 	
 	// Refresh end screen
 	switch (s) {
-	case 0:
+	case windowsIx.intro:
 		imgJimmy.zIndex = 30;
 		updateWearing();
 		break;
-	case 1:
+	case windowsIx.game:
+ 	  slideDoors(true);
 		imgJimmy.zIndex = 15;
 		break;
-	case 2:
+	case windowsIx.outro:
 		// End game result
 		updateWearing();
 		updateResult();
 		break;
 	}
 	windows[s].open();
+	switchingScreen = false;
 }

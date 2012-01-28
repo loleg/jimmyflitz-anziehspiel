@@ -3,7 +3,12 @@ var rezX = Ti.Platform.displayCaps.getPlatformWidth()  / 320;
 var rezY = Ti.Platform.displayCaps.getPlatformHeight() / 480;
 
 // create root windows
+var windowsIx = { menu: 0, intro: 1, game: 2, outro: 3 };
 var windows = [
+	Titanium.UI.createWindow({  
+	    // title:'Menu'
+	    backgroundImage:'assets/bg/jimmy-jump-intro.jpg'
+	}),
 	Titanium.UI.createWindow({  
 	    // title:'Intro'	    
 	}),
@@ -40,24 +45,37 @@ var imgWindow = Titanium.UI.createImageView({
 	image:'assets/bg/cabane.gif',
 	opacity:1, top:0, height:'100%', zIndex:2
 });
-var imgButtonWindow = Titanium.UI.createImageView({
-	backgroundImage:'assets/ui/window.png',
-	opacity:1, zIndex:11, width:640, height:903
-});
 var imgDoor = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/cabane_door.gif', zIndex:2,
 	opacity:1, top:0, height:'100%', width:'100%'
 });
 
+// zoom window
+var imgButtonWindow = Titanium.UI.createImageView({
+	backgroundImage:'assets/ui/window.png',
+	opacity:1, zIndex:11, width:640, height:903
+});
+imgButtonWindow.zoom = function(e) {
+	container.opacity = (container.opacity) ? 0 : 1;
+	this.center = (container.opacity) ? 
+	  {x: rezX * 104, y: rezY * 201} : {};
+	this.width = (container.opacity) ? rezX * 112 : 
+		Ti.Platform.displayCaps.getPlatformWidth();
+	this.height = (container.opacity) ? rezY * 162 : 
+		Ti.Platform.displayCaps.getPlatformHeight();
+};
+imgButtonWindow.addEventListener('click', imgButtonWindow.zoom);
+
 // sliding animation
 var imgCabLeft = Titanium.UI.createImageView({
 	image:'assets/bg/kleiderschrank1-closed-LEFT.jpg',
-	left:-Ti.Platform.displayCaps.getPlatformWidth()/2, 
+	showX:-Ti.Platform.displayCaps.getPlatformWidth()/2, hideX:-900,
 	height:'100%', zIndex:55
 });
 var imgCabRight = Titanium.UI.createImageView({
 	image:'assets/bg/kleiderschrank1-closed-RIGHT.jpg',
-	left:'50%',	height:'100%', zIndex:55
+	showX:'50%',	hideX:1200,
+	height:'100%', zIndex:55
 });
 
 // jimmy
