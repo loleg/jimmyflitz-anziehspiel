@@ -27,20 +27,6 @@ var imgWeather = Titanium.UI.createImageView({
 	zIndex: 0, touchEnabled:false
 });
 
-// score
-var labelResult = Titanium.UI.createLabel({
-	backgroundColor: "#fff", color: "#000",
-	font: {fontSize: "72px"},
-	width: "auto", height: "auto",
-	shadowColor: "#ddd", shadowOffset: {x:2, y:2},
-	center: {y: rezY* 180}
-});
-// var buttonRestart = Titanium.UI.createButton({
-	// title: 'Start', zIndex: 55,
-	// size: {width: 80, height: 20},
-	// center: {x: rezX * 30, y: rezY* 340}
-// });
-
 // end game music
 var soundClips = Titanium.Media.createSound({
 	url: "sound/21-DAJANA-MASTERMIX_02.mp3" });
@@ -107,23 +93,21 @@ var imgFriends = [
 	})
 ]*/
 
-// jimmy's mirror
-// var imgMirror = Titanium.UI.createImageView({
-	// image:'assets/jimmy/mirror.png',
-	// height:'140px', width:'80px',
-	// center:{x:240, y:340}
-// });
-
-// door icons
+// UI elements
+var buttonRestart = Titanium.UI.createButton({
+	title: 'Start', zIndex: 55,
+	size: {width: 80, height: 20},
+	center: {x: rezX * 30, y: rezY* 340}
+});
 var imgNavButtonLeft = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 0, y:rezY* 420}, zIndex:99
+	center:{x:rezX* 0, y:rezY* 300}, zIndex:99
 });
 var imgNavButtonRight = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 320, y:rezY* 420}, zIndex:99
+	center:{x:rezX* 320, y:rezY* 300}, zIndex:99
 });
 
 // some clothes 
@@ -137,16 +121,16 @@ var clothes = [
 	{ id: "hat1", type: 2, scale: 0.8, x: 166, y: 291 }, 
 	{ id: "scarf1", type: 2, x: 176, y: 352, z: 3 },
 	{ id: "mittens", type: 1, x: 183, y: 392 },
-	{ id: "jacket", type: 1, scale: 0.9, x: 178, y: 365, z: 1 },
+	{ id: "jacket", type: 1, scale: 1.1, scaleTo: 0.9, x: 178, y: 365, z: 1 },
 	{ id: "parka", type: 2, scale: 1.2, z: 2 }, 
 	{ id: "socks_blue", type: 0, x: 190, y: 445, z: 1 },
 	{ id: "boots", type: 2, x: 185, y: 431, z: 3 },   
-	{ id: "umbrella", type: 1, scale: 1.2, center: {x:'auto', y:rezY* 47}, z: 5 }
+	{ id: "umbrella", type: 1, scale: 1.4, z: 5, center: {x:rezX* 180, y:rezY* 214} }
 	];
 	
 var imgClothes = [];
 var centerClothes = [ rezX* -37, rezY* 108 ];
-var marginClothes = [ rezX* 85, rezY* 85 ];
+var marginClothes = [ rezX* 85, rezY* 100 ];
 var clothesPerSide = 6;
 
 // loads clothes data
@@ -155,25 +139,25 @@ var clothesPerSide = 6;
 	for (var i in clothes) {
 		col++;
 		if (col > 3) { col = 1; row++; }
-		
-		var paddingLeft = (i < clothesPerSide) ? 60 : 0;
-		
+		// scoot the clothes over to fit cabinet
+		var paddingLeft = (i < clothesPerSide) ? 58 : 0;
+		var paddingTop = (i < clothesPerSide) ? 0 : -14;
 		// define the image object
 		var img = Titanium.UI.createImageView({
 			info:		clothes[i],
 			image:  	'assets/clothes/' + clothes[i].id + '.png',
 			height: 	rezY* 90, width: rezX* 90, zIndex: 20,
 			center: 	{x:centerClothes[0] + (marginClothes[0] * col) + paddingLeft,
-				 	 	 y:centerClothes[1] + (marginClothes[1] * row)}
+				 	 	 y:centerClothes[1] + (marginClothes[1] * row) + paddingTop}
 		});
 		
 		// update scale and position if specified
-		if (typeof clothes[i].scale != 'undefined') {
-			img.height *= clothes[i].scale; 
-			img.width  *= clothes[i].scale;
+		if (typeof img.info.scale != 'undefined') {
+			img.height *= img.info.scale; 
+			img.width  *= img.info.scale;
 		}
-		if (typeof clothes[i].center != 'undefined') {
-			img.center = clothes[i].center;
+		if (typeof img.info.center != 'undefined') {
+			img.center = img.info.center;
 		} else {
 			rowClothes++;
 			if (rowClothes == clothesPerSide) {

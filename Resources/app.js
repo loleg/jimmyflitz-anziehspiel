@@ -51,25 +51,19 @@ function setLandscape() {
 	fairWeather = (Math.random() > 0.5);
 	Ti.API.debug('Landscape: ' + landscapes[theLandscape] + ', ' 
 				+ (fairWeather) ? 'nice weather' : 'storm');
+	// background asset
 	var path = 'assets/bg/landscape-' + 
 				landscapes[theLandscape] + '.jpg';
-	windows[0].setBackgroundImage(path);
-	windows[2].setBackgroundImage(path);
+	// set the UI background
+	Titanium.UI.setBackgroundImage(path);
 	if (!fairWeather) {
 		windows[0].add(imgWeather);
 		windows[2].add(imgWeather);
 	}
 }
 
-// for main game
-function startGame() {
-	container.add(imgCabLeft);
-	container.add(imgCabRight);
-	container.add(imgJimmy);
-	
-	drawInventory();
-	
-	// animate sliding doors
+// animate sliding doors
+function slideOpen() {
 	imgCabLeft.animate({
         left: -900,
         duration: 1500
@@ -86,20 +80,15 @@ function startGame() {
 
 // draws all clothes
 function drawInventory() {
-	// Iterate through all clothes
 	for (var i in imgClothes) {
-			 	  	
-		// Create event listeners for objects
-		imgClothes[i].addEventListener('singletap', function(e) {
-			// only in edit mode
-			if (!windows[1].visible) return;
-			// make Jimmy wear the item or take if off
-			if (this.wearing) {
-				wearItem(this);
-			} else {
-				unwearItem(this);
-			}
-		});
+		// imgClothes[i].addEventListener('click', function(e) {
+			// if (currentScreen != 1) return;
+			// if (this.wearing) {
+				// wearItem(this);
+			// } else {
+				// unwearItem(this);
+			// }
+		// });
 		imgClothes[i].addEventListener('touchstart', function(e) {
 			this.offset_x = e.x;
 			this.offset_y = e.y;
@@ -110,7 +99,7 @@ function drawInventory() {
 		});
 		imgClothes[i].addEventListener('touchmove', function(e) {
 			// only in edit mode
-			if (!windows[1].visible) return;
+			if (currentScreen != 1) return;
 			// move the item
 			this.center = {
 					x:this.center.x + (e.x - this.offset_x), 
@@ -138,9 +127,11 @@ function drawInventory() {
 function switchInventory() {
 	Ti.API.debug('Updating inventory ' + currentInventory);
 	for (var i in imgClothes) {
-		imgClothes[i].opacity = 
-			(i >= clothesPerSide * currentInventory &&
-			 i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
+		if (!imgClothes[i].wearing) {
+			imgClothes[i].opacity = 
+				(i >= clothesPerSide * currentInventory &&
+				 i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
+		}
 	}
 	windows[1].setBackgroundImage(
 		(currentInventory == 0) ?
@@ -164,7 +155,7 @@ function wearItem(obj) {
 			y:obj.origin.y
 		};
 		// don't "wear" the costume
-		obj.opacity = 0;		
+		obj.opacity = 0;
 	} else {
 		if (typeof obj.info.z != 'undefined') {
 			obj.zIndex = 50 + obj.info.z;
@@ -177,9 +168,15 @@ function wearItem(obj) {
 		} else {
 			Ti.API.debug('Item placed: ' + obj.center.x + ', ' + obj.center.y );
 		}
+		// if a target scale is defined
+		if (typeof obj.info.scaleTo != 'undefined') {
+			obj.height = obj.o_height * obj.info.scaleTo; 
+			obj.width  = obj.o_width * obj.info.scaleTo;
+		}
+		// swap to worn asset
 		obj.image = 'assets/jimmy/' + obj.info.id + '.png';
-		obj.wearing = true;
 	}
+	obj.wearing = true;
 } 
 
 // put the item back on its shelf
@@ -190,39 +187,56 @@ function unwearItem(obj) {
 		y:obj.origin.y
 	};
 	// Restore size from pop-in
-	// obj.width = obj.o_width;
-	// obj.height = obj.o_height;
+	if (typeof obj.info.scaleTo != 'undefined') {
+		obj.height = obj.o_height * obj.info.scale; 
+		obj.width  = obj.o_width * obj.info.scale;
+	}
+	// Restore to shelf image
 	obj.image = 'assets/clothes/' + obj.info.id + '.png';
 	obj.wearing = false;
+	// Check shown inventory
+	switchInventory();
 }
 
-var showClothes = [];
+// var showClothes = [];
+function updateWearing() {
+	// for (var u in showClothes) {
+		// container.remove(showClothes[u])
+	// }
+	// showClothes = [];
+	// iterate through all worn clothing
+	for (var i in imgClothes) {
+		var item = imgClothes[i];
+		if (item.wearing) {
+			Ti.API.debug('Wearing ' + item.info.id);
+			// add to shown clothes
+			// showClothes.push(item);
+			container.add(item);
+		} else {
+			container.remove(item);
+		}
+	}	
+}
+
 function updateResult() {
-	for (var u in showClothes) {
-		container.remove(showClothes[u])
-	}
-	showClothes = [];
-	var typeTally = 0;
-	var count = 0;
+	var count = 0, typeTally = 0, hazRainThing = false;
 	// iterate through all worn clothing
 	for (var i in imgClothes) {
 		var item = imgClothes[i];
 		if (item.wearing) {
 			count++;
-			Ti.API.debug('Wearing ' + item.info.id);
+			// tally up item properties
 			typeTally += item.info.type;
-		//	item.touchEnabled = false;
-			showClothes.push(item);
-			container.add(item);
+			hazRainThing = (item.info.id == 'umbrella');
 		}
 	}
 	// Win if the weather is nice & we're dressed lightly,
 	// or the weather is heavy and we're dressed warm
 	var typeOK = 
 		(theLandscape < 2 && fairWeather && typeTally < 3 && count > 0) ||
-		(theLandscape < 2 && !fairWeather && typeTally > 3) ||
-		(theLandscape > 1 && fairWeather && typeTally > 2) ||
-		(theLandscape > 1 && !fairWeather && typeTally > 5);
+		(theLandscape < 2 && !fairWeather && typeTally > 2 && hazRainThing) ||
+		(theLandscape > 1 && fairWeather && typeTally >= theLandscape) ||
+		(theLandscape > 1 && !fairWeather && typeTally >= theLandscape + 2);
 		
 	// switch (theLandscape) {
 	// case 0: // spring
@@ -232,9 +246,8 @@ function updateResult() {
 	// }
 	Ti.API.debug(typeOK + '! Tally: ' + typeTally + ' Count: ' + count + ' / Sun: ' + fairWeather + 
 				 ' Season: ' + theLandscape + ' ' + landscapes[theLandscape]);
-	// labelResult.text = typeOK ? 'Go!' : 'No..';
 	
-		// check if Jimmy goes out
+	// check if Jimmy goes out
 	if (typeOK) {
 		// play end game music
 		soundClips.play();
@@ -271,7 +284,10 @@ function gotoScreen(s) {
 			});
 			break;
 		case 1:
-			startGame();
+			container.add(imgCabLeft);
+			container.add(imgCabRight);
+			container.add(imgJimmy);
+			drawInventory();
 			imgNavButtonLeft.addEventListener('click',function(e) {
 				if (currentInventory == 0) {
 					gotoScreen(0);
@@ -290,6 +306,7 @@ function gotoScreen(s) {
 				}
 			});
 			container.add(imgNavButtonRight);
+			slideOpen();
 			break;
 		case 2:
 			endGame(); 
@@ -314,12 +331,14 @@ function gotoScreen(s) {
 	switch (s) {
 	case 0:
 		imgJimmy.zIndex = 30;
+		updateWearing();
 		break;
 	case 1:
 		imgJimmy.zIndex = 15;
 		break;
 	case 2:
 		// End game result
+		updateWearing();
 		updateResult();
 		break;
 	}
