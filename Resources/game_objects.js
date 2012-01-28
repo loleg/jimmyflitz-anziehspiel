@@ -156,18 +156,15 @@ var clothesPerSide = 6;
 		col++;
 		if (col > 3) { col = 1; row++; }
 		
-		// align to closet side
-		if (i <= clothesPerSide) {
-			centerClothes[0] += 60;
-		}
+		var paddingLeft = (i < clothesPerSide) ? 60 : 0;
 		
 		// define the image object
 		var img = Titanium.UI.createImageView({
 			info:		clothes[i],
 			image:  	'assets/clothes/' + clothes[i].id + '.png',
 			height: 	rezY* 90, width: rezX* 90, zIndex: 20,
-			center: 	{x:centerClothes[0] + marginClothes[0] * col,
-				 	 	 y:centerClothes[1] + marginClothes[1] * row}
+			center: 	{x:centerClothes[0] + (marginClothes[0] * col) + paddingLeft,
+				 	 	 y:centerClothes[1] + (marginClothes[1] * row)}
 		});
 		
 		// update scale and position if specified

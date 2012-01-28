@@ -20,9 +20,9 @@ function showIntro() {
 	container.opacity = 0;
 	imgJimmy.touchEnabled = false;
 	
-	imgButtonWindow.o_width = rezX * 110;
+	imgButtonWindow.o_width = rezX * 112;
 	imgButtonWindow.o_height = rezY * 162;
-	imgButtonWindow.o_center = {x: rezX * 106, y: rezY * 201};
+	imgButtonWindow.o_center = {x: rezX * 104, y: rezY * 201};
 	imgButtonWindow.width = Ti.Platform.displayCaps.getPlatformWidth();
 	imgButtonWindow.height = Ti.Platform.displayCaps.getPlatformHeight();
 
@@ -90,9 +90,9 @@ function drawInventory() {
 	for (var i in imgClothes) {
 			 	  	
 		// Create event listeners for objects
-		imgClothes[i].addEventListener('click', function(e) {
+		imgClothes[i].addEventListener('singletap', function(e) {
 			// only in edit mode
-			if (currentScreen != 1) return;
+			if (!windows[1].visible) return;
 			// make Jimmy wear the item or take if off
 			if (this.wearing) {
 				wearItem(this);
@@ -110,7 +110,7 @@ function drawInventory() {
 		});
 		imgClothes[i].addEventListener('touchmove', function(e) {
 			// only in edit mode
-			if (currentScreen != 1) return;
+			if (!windows[1].visible) return;
 			// move the item
 			this.center = {
 					x:this.center.x + (e.x - this.offset_x), 
@@ -142,7 +142,7 @@ function switchInventory() {
 			(i >= clothesPerSide * currentInventory &&
 			 i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
 	}
-	windows[currentScreen].setBackgroundImage(
+	windows[1].setBackgroundImage(
 		(currentInventory == 0) ?
 			'assets/bg/kleiderschrank1-open-left.jpg' :
 			'assets/bg/kleiderschrank1-open-right.jpg');
