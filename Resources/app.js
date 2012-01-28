@@ -6,6 +6,8 @@ Ti.UI.setBackgroundColor('#cdf');
 // open root window
 var container;
 var currentScreen = -1;
+var currentInventory = 0;
+
 setLandscape();
 gotoScreen(0);
 
@@ -59,15 +61,13 @@ function setLandscape() {
 	}
 }
 
-var clothesWhichView = 0;
-
 // for main game
 function startGame() {
 	container.add(imgCabLeft);
 	container.add(imgCabRight);
 	container.add(imgJimmy);
 	
-	drawClothes();
+	drawInventory();
 	
 	// animate sliding doors
 	imgCabLeft.animate({
@@ -85,7 +85,7 @@ function startGame() {
 }
 
 // draws all clothes
-function drawClothes() {
+function drawInventory() {
 	// Iterate through all clothes
 	for (var i in imgClothes) {
 			 	  	
@@ -131,10 +131,21 @@ function drawClothes() {
 		});
 		// put to display
 		container.add(imgClothes[i]);
-		
-		// but show only if on current cabinet
-		if (i > clothesPerSide) imgClothes[i].opacity = 0;
 	}
+	switchInventory();
+}
+
+function switchInventory() {
+	Ti.API.debug('Updating inventory ' + currentInventory);
+	for (var i in imgClothes) {
+		imgClothes[i].opacity = 
+			(i >= clothesPerSide * currentInventory &&
+			 i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
+	}
+	windows[currentScreen].setBackgroundImage(
+		(currentInventory == 0) ?
+			'assets/bg/kleiderschrank1-open-left.jpg' :
+			'assets/bg/kleiderschrank1-open-right.jpg');
 }
 
 // dress up Jimmy
@@ -186,7 +197,6 @@ function unwearItem(obj) {
 }
 
 var showClothes = [];
-var typeOK = false;
 function updateResult() {
 	for (var u in showClothes) {
 		container.remove(showClothes[u])
@@ -208,7 +218,7 @@ function updateResult() {
 	}
 	// Win if the weather is nice & we're dressed lightly,
 	// or the weather is heavy and we're dressed warm
-	typeOK = 
+	var typeOK = 
 		(theLandscape < 2 && fairWeather && typeTally < 3 && count > 0) ||
 		(theLandscape < 2 && !fairWeather && typeTally > 3) ||
 		(theLandscape > 1 && fairWeather && typeTally > 2) ||
@@ -220,7 +230,7 @@ function updateResult() {
 	// case 2: // autumn
 	// case 3: // winter
 	// }
-	Ti.API.debug('Tally: ' + typeTally + ' Count: ' + count + ' / Sun: ' + fairWeather + 
+	Ti.API.debug(typeOK + '! Tally: ' + typeTally + ' Count: ' + count + ' / Sun: ' + fairWeather + 
 				 ' Season: ' + theLandscape + ' ' + landscapes[theLandscape]);
 	// labelResult.text = typeOK ? 'Go!' : 'No..';
 	
@@ -262,21 +272,31 @@ function gotoScreen(s) {
 			break;
 		case 1:
 			startGame();
-			imgDoorClose.addEventListener('click',function(e) {
-				gotoScreen(0);
+			imgNavButtonLeft.addEventListener('click',function(e) {
+				if (currentInventory == 0) {
+					gotoScreen(0);
+				} else {
+					currentInventory = 0;
+					switchInventory();
+				}
 			});
-			container.add(imgDoorClose);
-			imgDoorExit.addEventListener('click',function(e) {
-				gotoScreen(2);
+			container.add(imgNavButtonLeft);
+			imgNavButtonRight.addEventListener('click',function(e) {
+				if (currentInventory == 1) {
+					gotoScreen(2);
+				} else {
+					currentInventory = 1;
+					switchInventory();
+				}
 			});
-			container.add(imgDoorExit);
+			container.add(imgNavButtonRight);
 			break;
 		case 2:
 			endGame(); 
-			imgDoorEnter.addEventListener('click',function(e) {
+			windows[s].addEventListener('click',function(e) {
 				gotoScreen(1);
 			});
-			container.add(imgDoorEnter);
+			// container.add(imgNavButtonLeft);
 			break;
 		}
 		windows[s].add(container);

@@ -118,12 +118,12 @@ var imgFriends = [
 var imgNavButtonLeft = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 45, y:rezY* 400}, zIndex:99
+	center:{x:rezX* 0, y:rezY* 420}, zIndex:99
 });
 var imgNavButtonRight = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 300, y:rezY* 450}, zIndex:99
+	center:{x:rezX* 320, y:rezY* 420}, zIndex:99
 });
 
 // some clothes 
@@ -134,12 +134,12 @@ var clothes = [
 	{ id: "jimmy_red", type: 0 },
 	{ id: "jimmy_blue", type: 0 }, 
 	{ id: "jimmy_yellow", type: 0 }, 
-	{ id: "jacket", type: 1, scale: 0.9, x: 178, y: 365, z: 1 },
-	{ id: "parka", type: 2, scale: 1.2, z: 2 }, 
 	{ id: "hat1", type: 2, scale: 0.8, x: 166, y: 291 }, 
 	{ id: "scarf1", type: 2, x: 176, y: 352, z: 3 },
-	{ id: "socks_blue", type: 0, x: 190, y: 445, z: 1 },
 	{ id: "mittens", type: 1, x: 183, y: 392 },
+	{ id: "jacket", type: 1, scale: 0.9, x: 178, y: 365, z: 1 },
+	{ id: "parka", type: 2, scale: 1.2, z: 2 }, 
+	{ id: "socks_blue", type: 0, x: 190, y: 445, z: 1 },
 	{ id: "boots", type: 2, x: 185, y: 431, z: 3 },   
 	{ id: "umbrella", type: 1, scale: 1.2, center: {x:'auto', y:rezY* 47}, z: 5 }
 	];
@@ -155,6 +155,11 @@ var clothesPerSide = 6;
 	for (var i in clothes) {
 		col++;
 		if (col > 3) { col = 1; row++; }
+		
+		// align to closet side
+		if (i <= clothesPerSide) {
+			centerClothes[0] += 60;
+		}
 		
 		// define the image object
 		var img = Titanium.UI.createImageView({
