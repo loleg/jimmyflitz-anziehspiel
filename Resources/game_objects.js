@@ -137,19 +137,23 @@ var clothes = [
 	{ id: "jimmy_blue", type: 0 }, 
 	{ id: "jimmy_yellow", type: 0 }, 
 	{ id: "hat1", type: 2, scale: 0.8, x: 166, y: 291 }, 
-	{ id: "scarf1", type: 2, x: 176, y: 352, z: 3 },
-	{ id: "mittens", type: 1, x: 183, y: 392 },
+	{ id: "hat2", type: 2, scale: 0.8, x: 166, y: 291 }, 
+	{ id: "hat3", type: 2, scale: 0.8, x: 166, y: 291 }, 
+	{ id: "shades1", type: 2, scale: 0.8, x: 166, y: 291 }, 
+	
 	{ id: "jacket", type: 1, scale: 1.1, scaleTo: 0.9, x: 178, y: 365, z: 1 },
 	{ id: "parka", type: 2, scale: 1.2, z: 2 }, 
+	{ id: "scarf1", type: 2, x: 176, y: 352, z: 3 },
+	{ id: "mittens", type: 1, x: 183, y: 392 },
 	{ id: "socks_blue", type: 0, x: 190, y: 445, z: 1 },
 	{ id: "boots", type: 2, x: 185, y: 431, z: 3 },   
-	{ id: "umbrella", type: 1, scale: 1.4, z: 5, center: {x:rezX* 180, y:rezY* 214} }
+	{ id: "umbrella", type: 1, scale: 1.4, z: 5, center: {x:rezX* 280, y:rezY* 160} }
 	];
 	
 var imgClothes = [];
 var centerClothes = [ rezX* -37, rezY* 108 ];
 var marginClothes = [ rezX* 85, rezY* 100 ];
-var clothesPerSide = 6;
+var clothesPerSide = 7;
 
 // loads clothes data
 {

@@ -11,6 +11,25 @@ var currentInventory = 0;
 setLandscape();
 gotoScreen(0);
 
+// menu screen
+function showMenu() {
+	var menuImg = [];
+	for (var l in landscapes) {
+		var img = Titanium.UI.createImageView({
+			image:'assets/ui/window.png',
+			backgroundImage:'assets/bg/landscape-' + landscapes[l] + '.jpg',
+			opacity:1, zIndex:11, width:rezX* 100, height:rezY* 141,
+			top: (l < 2) ? '30%' : '65%', left: (l % 2 == 0) ? '15%' : '50%',
+		});
+		img.addEventListener('click',function(e) {
+			gotoScreen(windowsIx.intro);
+		});
+		menuImg.push(img);
+		container.add(img);
+	}
+	
+}
+
 // initial screen with window
 function showIntro() {
 	//container.add(imgIntro);
@@ -32,7 +51,7 @@ function showIntro() {
 		this.hide();
 	});
 	imgWindow.addEventListener('click',function(e) {
-		gotoScreen(1);
+		gotoScreen(windowsIx.game);
 	});
 }
 
@@ -100,7 +119,7 @@ function drawInventory() {
 		});
 		imgClothes[i].addEventListener('touchmove', function(e) {
 			// only in edit mode
-			if (currentScreen != 1) return;
+			if (currentScreen != windowsIx.game) return;
 			// move the item
 			this.center = {
 					x:this.center.x + (e.x - this.offset_x), 
