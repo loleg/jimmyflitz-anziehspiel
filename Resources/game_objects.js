@@ -120,12 +120,12 @@ var buttonRestart = Titanium.UI.createButton({
 var imgNavButtonLeft = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 0, y:rezY* 340}, zIndex:99
+	center:{x:rezX* 0, y:rezY* 355}, zIndex:99
 });
 var imgNavButtonRight = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 320, y:rezY* 340}, zIndex:99
+	center:{x:rezX* 320, y:rezY* 355}, zIndex:99
 });
 
 // some clothes 
@@ -140,8 +140,8 @@ var clothes = [
 	{ id: "hat1", type: 2, scale: 1, x: 170, y: 298 }, 
 	{ id: "hat2", type: 2, scale: 0.7, x: 170, y: 297 }, 
 	{ id: "hat3", type: 2, scale: 0.8, scaleTo: 1.1, x: 163, y: 289 }, 
-	{ id: "shades1", type: 2, scale: 0.8, x: 171, y: 305 },
-	{ id: "shades2", type: 2, scale: 0.8, x: 170, y: 310 }, 
+	{ id: "shades1", type: 2, scale: 0.8, x: 171, y: 305, center: {x:rezX* 136, y:rezY* 170} },
+	{ id: "shades2", type: 2, scale: 0.8, x: 170, y: 310, center: {x:rezX* 230, y:rezY* 170} }, 
 	
 	{ id: "scarf1", type: 2, x: 176, y: 352, z: 3 },
 	{ id: "parka", type: 2, scale: 1.2, x: 181, y: 353, z: 2, scaleTo: 1.4 }, 
@@ -149,8 +149,9 @@ var clothes = [
 	{ id: "mittens", type: 1, x: 183, y: 392 },
 	{ id: "mittens2", type: 1, x: 184, y: 394, scaleTo: 1.1 },
 	{ id: "socks_blue", type: 0, x: 190, y: 445, z: 1 },
-	{ id: "boots", type: 2, x: 185, y: 431, z: 3 },   
-	{ id: "umbrella", type: 1, scale: 1.4, z: -1, center: {x:rezX* 277, y:rezY* 110} }
+	{ id: "boots", type: 2, x: 185, y: 431, z: 3 },
+	   
+	{ id: "umbrella", type: 1, scale: 1.4, z: -1, center: {x:rezX* 277, y:rezY* 100} }
 	];
 	
 var imgClothes = [];
@@ -182,11 +183,11 @@ var marginClothes = [ rezX* 85, rezY* 100 ];
 		}
 		if (typeof img.info.center != 'undefined') {
 			img.center = img.info.center;
-		} else {
-			rowClothes++;
-			if (rowClothes == clothesPerSide) {
-				rowClothes = col = row = 0;
-			}
+		}
+
+		rowClothes++;
+		if (rowClothes == clothesPerSide) {
+			rowClothes = col = row = 0;
 		}
 		
 		img.o_height = img.height;

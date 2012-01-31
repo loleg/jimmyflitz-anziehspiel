@@ -161,6 +161,7 @@ function switchInventory() {
 
 // dress up Jimmy
 function wearItem(obj) {
+	obj.wearing = true;
 	if (typeof obj.info.z != 'undefined') {
 		obj.zIndex = 50 + obj.info.z;
 	} else {
@@ -168,11 +169,11 @@ function wearItem(obj) {
 	}
 	if (obj.info.id.indexOf('jimmy') == 0) {
 		imgJimmy.image = 'assets/jimmy/' + obj.info.id + '.png';
-		// unhide other clothes
+		// unhide other Jimmy clothes
 		for (var i in imgClothes) {
 			if (imgClothes[i].info.id != obj.info.id 
-				&& imgClothes[i].info.id.indexOf('jimmy') == 0) {
-					obj.wearing = false;
+			&& imgClothes[i].info.id.indexOf('jimmy') == 0) {
+				imgClothes[i].wearing = false; 
 			}
 		}
 		obj.center = {
@@ -202,7 +203,6 @@ function wearItem(obj) {
 		// swap to worn asset
 		obj.image = 'assets/jimmy/' + obj.info.id + '.png';
 	}
-	obj.wearing = true;
 } 
 
 // put the item back on its shelf
