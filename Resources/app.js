@@ -17,11 +17,13 @@ function showMenu() {
 	for (var l in landscapes) {
 		var img = Titanium.UI.createImageView({
 			image:'assets/ui/window.png',
+			landscapeIndex:l,
 			backgroundImage:'assets/bg/landscape-' + landscapes[l] + '.jpg',
 			opacity:1, zIndex:11, width:rezX* 100, height:rezY* 141,
 			top: (l < 2) ? '30%' : '65%', left: (l % 2 == 0) ? '15%' : '50%',
 		});
 		img.addEventListener('click',function(e) {
+			setLandscape(this.landscapeIndex);
 			gotoScreen(windowsIx.intro);
 		});
 		menuImg.push(img);
@@ -55,9 +57,10 @@ function showIntro() {
 	});
 }
 
-function setLandscape() {
+function setLandscape(index) {
 	// choose a random landscape and conditions
-	theLandscape = Math.floor(Math.random() * 4);
+	theLandscape = (typeof index != 'undefined') ? 
+				index : Math.floor(Math.random() * 4);
 	fairWeather = (Math.random() > 0.5);
 	Ti.API.debug('Landscape: ' + landscapes[theLandscape] + ', ' 
 				+ (fairWeather) ? 'nice weather' : 'storm');
@@ -158,11 +161,11 @@ function switchInventory() {
 
 // dress up Jimmy
 function wearItem(obj) {
-  if (typeof obj.info.z != 'undefined') {
-	  obj.zIndex = 50 + obj.info.z;
-  } else {
-    obj.zIndex = 20;
-  }
+	if (typeof obj.info.z != 'undefined') {
+		obj.zIndex = 50 + obj.info.z;
+	} else {
+		obj.zIndex = 20;
+	}
 	if (obj.info.id.indexOf('jimmy') == 0) {
 		imgJimmy.image = 'assets/jimmy/' + obj.info.id + '.png';
 		// unhide other clothes
@@ -181,13 +184,15 @@ function wearItem(obj) {
 		// redraw the inventory to restore other shirts
 		switchInventory();
 	} else {
-		if (typeof obj.info.x != 'undefined') {
+		// snap object to its defined center
+		if (false && typeof obj.info.x != 'undefined') {
 			obj.center = {
 				x:obj.info.x,
 				y:obj.info.y
 			};
 		} else {
-			Ti.API.debug('Item placed: ' + obj.center.x + ', ' + obj.center.y );
+			Ti.API.debug('Item ' + obj.info.id + ' at: ' 
+				+ obj.center.x + ', ' + obj.center.y );
 		}
 		// if a target scale is defined
 		if (typeof obj.info.scaleTo != 'undefined') {

@@ -83,7 +83,7 @@ var imgJimmy = Titanium.UI.createImageView({
 	image:'assets/jimmy/jimmy_white.png',
 	height:rezY* 200,
 	center:{y:rezY* 365},
-	zIndex:15
+	zIndex:50
 });
 
 // jimmy (intro) and friends
@@ -120,40 +120,42 @@ var buttonRestart = Titanium.UI.createButton({
 var imgNavButtonLeft = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 0, y:rezY* 300}, zIndex:99
+	center:{x:rezX* 0, y:rezY* 340}, zIndex:99
 });
 var imgNavButtonRight = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 320, y:rezY* 300}, zIndex:99
+	center:{x:rezX* 320, y:rezY* 340}, zIndex:99
 });
 
 // some clothes 
 // type = score quotient - 0 (default): spring/summer, 1: winter, 2: weather
 // scale = size scaling - 1.0 is default
 // center = new position (x, y) - null is default
+var clothesPerSide = 8;
 var clothes = [
 	{ id: "jimmy_red", type: 0 },
 	{ id: "jimmy_blue", type: 0 }, 
 	{ id: "jimmy_yellow", type: 0 }, 
-	{ id: "hat1", type: 2, scale: 0.8, x: 166, y: 291 }, 
-	{ id: "hat2", type: 2, scale: 0.8, x: 166, y: 291 }, 
-	{ id: "hat3", type: 2, scale: 0.8, x: 166, y: 291 }, 
-	{ id: "shades1", type: 2, scale: 0.8, x: 166, y: 291 }, 
+	{ id: "hat1", type: 2, scale: 1, x: 170, y: 298 }, 
+	{ id: "hat2", type: 2, scale: 0.7, x: 170, y: 297 }, 
+	{ id: "hat3", type: 2, scale: 0.8, scaleTo: 1.1, x: 163, y: 289 }, 
+	{ id: "shades1", type: 2, scale: 0.8, x: 171, y: 305 },
+	{ id: "shades2", type: 2, scale: 0.8, x: 170, y: 310 }, 
 	
-	{ id: "jacket", type: 1, scale: 1.1, scaleTo: 0.9, x: 178, y: 365, z: 1 },
-	{ id: "parka", type: 2, scale: 1.2, z: 2 }, 
 	{ id: "scarf1", type: 2, x: 176, y: 352, z: 3 },
+	{ id: "parka", type: 2, scale: 1.2, x: 181, y: 353, z: 2, scaleTo: 1.4 }, 
+	{ id: "jacket", type: 1, scale: 1.1, scaleTo: 0.9, x: 178, y: 365, z: 1 },
 	{ id: "mittens", type: 1, x: 183, y: 392 },
+	{ id: "mittens2", type: 1, x: 184, y: 394, scaleTo: 1.1 },
 	{ id: "socks_blue", type: 0, x: 190, y: 445, z: 1 },
 	{ id: "boots", type: 2, x: 185, y: 431, z: 3 },   
-	{ id: "umbrella", type: 1, scale: 1.4, z: 5, center: {x:rezX* 280, y:rezY* 160} }
+	{ id: "umbrella", type: 1, scale: 1.4, z: -1, center: {x:rezX* 277, y:rezY* 110} }
 	];
 	
 var imgClothes = [];
 var centerClothes = [ rezX* -37, rezY* 108 ];
 var marginClothes = [ rezX* 85, rezY* 100 ];
-var clothesPerSide = 7;
 
 // loads clothes data
 {
