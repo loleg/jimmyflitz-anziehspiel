@@ -128,6 +128,12 @@ var imgNavButtonRight = Titanium.UI.createImageView({
 	height:rezY* 90, width:rezX* 90, 
 	center:{x:rezX* 320, y:rezY* 355}, zIndex:99
 });
+var imgIconWarning = Titanium.UI.createImageView({
+	image:'assets/ui/warn_cloud.png',
+	height:rezY* 60,
+	center:{x:rezX* 150, y:rezY* 245},
+	zIndex:90, opacity:0
+});
 
 // some clothes 
 // type = score quotient - 0 (default): spring/summer, 1: winter, 2: weather

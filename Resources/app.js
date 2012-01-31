@@ -8,7 +8,7 @@ var container;
 var currentScreen = -1;
 var currentInventory = 0;
 
-setLandscape();
+//setLandscape();
 gotoScreen(0);
 
 // menu screen
@@ -279,6 +279,10 @@ function updateResult() {
 	Ti.API.debug(typeOK + '! Tally: ' + typeTally + ' Count: ' + count + ' / Sun: ' + fairWeather + 
 				 ' Season: ' + theLandscape + ' ' + landscapes[theLandscape]);
 	
+	// show warning
+	imgIconWarning.image = (fairWeather) ? 'assets/ui/warn_shirt.png' : 'assets/ui/warn_cloud.png';
+	imgIconWarning.opacity = (typeOK) ? 0 : 1;
+	
 	// check if Jimmy goes out
 	if (typeOK) {
 		// play end game music
@@ -303,8 +307,9 @@ function startGame() {
   container.add(imgNavButtonLeft);
   imgNavButtonRight.addEventListener('click',function(e) {
 	  if (currentInventory == 1) {
-      // open doors and go to end game
-		  slideDoors(false, windowsIx.outro);
+		// close doors and go to end game
+		  //slideDoors(false, windowsIx.outro);
+		  gotoScreen(windowsIx.outro);
 	  } else {
 		  currentInventory = 1;
 		  switchInventory();
@@ -317,8 +322,9 @@ function endGame() {
 	imgDoor.right = 0;
 	container.add(imgJimmy);
 	container.add(imgDoor);
+	container.add(imgIconWarning);
 	// tap to return to game
-	windows[s].addEventListener('click',function(e) {
+	windows[windowsIx.outro].addEventListener('click',function(e) {
 		gotoScreen(windowsIx.game);
 	});
 }
@@ -370,7 +376,7 @@ function gotoScreen(s) {
 		updateWearing();
 		break;
 	case windowsIx.game:
- 	  slideDoors(true);
+		slideDoors(true);
 		imgJimmy.zIndex = 15;
 		break;
 	case windowsIx.outro:
