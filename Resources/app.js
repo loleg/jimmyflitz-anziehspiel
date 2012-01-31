@@ -20,7 +20,7 @@ function showMenu() {
 			landscapeIndex:l,
 			backgroundImage:'assets/bg/landscape-' + landscapes[l] + '.jpg',
 			opacity:1, zIndex:11, width:rezX* 100, height:rezY* 141,
-			top: (l < 2) ? '30%' : '65%', left: (l % 2 == 0) ? '15%' : '50%',
+			top: (l < 2) ? '20%' : '55%', left: (l % 2 == 0) ? '15%' : '55%',
 		});
 		img.addEventListener('click',function(e) {
 			setLandscape(this.landscapeIndex);
@@ -165,7 +165,7 @@ function wearItem(obj) {
 	if (typeof obj.info.z != 'undefined') {
 		obj.zIndex = 50 + obj.info.z;
 	} else {
-		obj.zIndex = 20;
+		obj.zIndex = 51;
 	}
 	if (obj.info.id.indexOf('jimmy') == 0) {
 		imgJimmy.image = 'assets/jimmy/' + obj.info.id + '.png';
@@ -185,8 +185,16 @@ function wearItem(obj) {
 		// redraw the inventory to restore other shirts
 		switchInventory();
 	} else {
+		// check item swaps
+		var baseName = obj.info.id.replace(/\d/, "");
+		for (var i in imgClothes) {
+			if (imgClothes[i].wearing && imgClothes[i].info.id != obj.info.id
+			 && imgClothes[i].info.id.replace(/\d/, "") == baseName) {
+				unwearItem(imgClothes[i]);
+			}
+		}		
 		// snap object to its defined center
-		if (false && typeof obj.info.x != 'undefined') {
+		if (typeof obj.info.x != 'undefined') {
 			obj.center = {
 				x:obj.info.x,
 				y:obj.info.y
@@ -213,10 +221,8 @@ function unwearItem(obj) {
 		y:obj.origin.y
 	};
 	// Restore size from pop-in
-	if (typeof obj.info.scaleTo != 'undefined') {
-		obj.height = obj.o_height * obj.info.scale; 
-		obj.width  = obj.o_width * obj.info.scale;
-	}
+	obj.height = obj.o_height; 
+	obj.width  = obj.o_width;
 	// Restore to shelf image
 	obj.image = 'assets/clothes/' + obj.info.id + '.png';
 	obj.wearing = false;
