@@ -131,7 +131,7 @@ var imgNavButtonRight = Titanium.UI.createImageView({
 var imgIconWarning = Titanium.UI.createImageView({
 	image:'assets/ui/warn_cloud.png',
 	height:rezY* 60,
-	center:{x:rezX* 150, y:rezY* 245},
+	center:{y:rezY* 240},
 	zIndex:90, opacity:0
 });
 
@@ -144,11 +144,11 @@ var clothes = [
 	{ id: "jimmy_red", type: 0 },
 	{ id: "jimmy_blue", type: 0 }, 
 	{ id: "jimmy_yellow", type: 0 }, 
-	{ id: "hat1", type: 2, scale: 1, x: 173, y: 293, z: 3 }, 
-	{ id: "hat2", type: 2, scale: 0.7, scaleTo: 1.2, x: 170, y: 297 }, 
-	{ id: "hat3", type: 2, scale: 0.8, scaleTo: 1.1, x: 163, y: 289 }, 
-	{ id: "shades1", type: 2, scale: 0.8, x: 171, y: 305, center: {x:rezX* 136, y:rezY* 170} },
-	{ id: "shades2", type: 2, scale: 0.8, x: 170, y: 310, center: {x:rezX* 230, y:rezY* 170} }, 
+	{ id: "hat1", type: 1, scale: 1, x: 173, y: 293, z: 3 }, 
+	{ id: "hat2", type: 1, scale: 0.7, scaleTo: 1.2, x: 170, y: 297 }, 
+	{ id: "hat3", type: 1, scale: 0.8, scaleTo: 1.1, x: 163, y: 289 }, 
+	{ id: "shades1", type: 0, scale: 0.8, x: 171, y: 305, center: {x:rezX* 136, y:rezY* 170} },
+	{ id: "shades2", type: 0, scale: 0.8, x: 170, y: 310, center: {x:rezX* 230, y:rezY* 170} }, 
 	
 	{ id: "scarf1", type: 2, x: 176, y: 352, z: 3 },
 	{ id: "jacket2", type: 2, scale: 1.2, x: 181, y: 353, z: 2, scaleTo: 1.4 }, 

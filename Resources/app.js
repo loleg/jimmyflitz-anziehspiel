@@ -39,8 +39,11 @@ function showIntro() {
 	container.add(imgJimmy);
 	imgJimmy.touchEnabled = false;	
 	
-	// set to 1 to start with zoomed window
+	// set opacity to 1 to start with zoomed window
 	container.opacity = 0;
+	container.zIndex = 1;
+	
+	imgButtonWindow.zIndex = 0;
 	imgButtonWindow.zoom();
 	windows[windowsIx.intro].add(imgButtonWindow);
 	
@@ -77,15 +80,15 @@ function setLandscape(index) {
 
 // animate sliding doors
 function slideDoors(isOpening, targetWindow) {
-  container.add(imgCabLeft);
-  container.add(imgCabRight);
+  imgCabLeft.show();
+  imgCabRight.show();
   imgCabLeft.left = (isOpening) ? 
     imgCabLeft.showX : imgCabLeft.hideX;
   imgCabLeft.animate({
       left: (isOpening) ? imgCabLeft.hideX : imgCabLeft.showX,
       duration: 1500
   }, function() {
-	  container.remove(imgCabLeft);
+	  imgCabLeft.hide();
   });
   imgCabRight.left = (isOpening) ? 
     imgCabRight.showX : imgCabRight.hideX;
@@ -93,7 +96,7 @@ function slideDoors(isOpening, targetWindow) {
       left: (isOpening) ? imgCabRight.hideX : imgCabRight.showX,
       duration: 2100
   }, function() {
-	  container.remove(imgCabRight);
+	  imgCabRight.hide();
 	  // jump to end game after completing animation
 	  if (typeof targetWindow != 'undefined') {
       gotoScreen(targetWindow);
@@ -283,6 +286,15 @@ function updateResult() {
 	imgIconWarning.image = (fairWeather) ? 'assets/ui/warn_shirt.png' : 'assets/ui/warn_cloud.png';
 	imgIconWarning.opacity = (typeOK) ? 0 : 1;
 	
+	// animate warning
+	if (!typeOK) {
+		imgIconWarning.top = rezY* 10;
+		imgIconWarning.animate({
+		      top: rezY* 240,
+		      duration: 500
+		  });
+	}
+	
 	// check if Jimmy goes out
 	if (typeOK) {
 		// play end game music
@@ -294,6 +306,9 @@ function updateResult() {
 }
 
 function startGame() {
+  container.add(imgCabLeft);
+  container.add(imgCabRight);
+  // add Jimmy and set up game
   container.add(imgJimmy);
   drawInventory();
   imgNavButtonLeft.addEventListener('click',function(e) {
@@ -345,8 +360,8 @@ function gotoScreen(s) {
 		windows[s].isPainted = true;
 		switch(s) {
 		case windowsIx.menu:
-		  showMenu();
-		  break;
+			showMenu();
+			break;
 		case windowsIx.intro:
 			showIntro();
 			break;
