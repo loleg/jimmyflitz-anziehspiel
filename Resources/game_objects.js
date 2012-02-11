@@ -2,31 +2,7 @@
 var rezX = Ti.Platform.displayCaps.getPlatformWidth()  / 320;
 var rezY = Ti.Platform.displayCaps.getPlatformHeight() / 480;
 
-// create root windows
-var windowsIx = { menu: 0, intro: 1, game: 2, outro: 3 };
-var windows = [
-	Titanium.UI.createWindow({  
-	    // title:'Menu'
-	    backgroundColor:'#fff'
-	    //backgroundImage:'assets/bg/jimmy-jump-intro.jpg'
-	}),
-	Titanium.UI.createWindow({  
-	    // title:'Intro'	    
-	}),
-	Titanium.UI.createWindow({  
-	    // title:'Cabinet',
-	    backgroundImage:'assets/bg/kleiderschrank1-open-left.jpg'
-	}),
-	Titanium.UI.createWindow({  
-	    // title:'Finale'
-	})
-];
-for (var u in windows) { windows[u].isPainted = false; }
-
 // seasons and weather fx
-var landscapes = ['spring', 'summer', 'autumn', 'winter'];
-var theLandscape = 0;
-var fairWeather = false;
 var imgWeather = Titanium.UI.createImageView({
 	image:'assets/ui/rain.png',
 	height: '100%', width: '100%', 
