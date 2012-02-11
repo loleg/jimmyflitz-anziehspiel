@@ -2,11 +2,29 @@
 var rezX = Ti.Platform.displayCaps.getPlatformWidth()  / 320;
 var rezY = Ti.Platform.displayCaps.getPlatformHeight() / 480;
 
+// create root windows
+var container;
+var windowsIx = { menu: 0, intro: 1, game: 2, outro: 3 };
+var windows = [
+	Titanium.UI.createWindow({ 
+		backgroundColor:'#fff' }), 	// Menu
+	Titanium.UI.createWindow({ }),	// title:'Intro'
+	Titanium.UI.createWindow({ 		// title:'Cabinet', 
+	    backgroundImage:'assets/bg/kleiderschrank1-open-left.jpg'
+	}),
+	Titanium.UI.createWindow({ })	// title:'Finale'
+];
+
+// define landscapes
+var landscapes = ['spring', 'summer', 'autumn', 'winter'];
+var theLandscape = 0;
+var fairWeather = false;
+
 // seasons and weather fx
 var imgWeather = Titanium.UI.createImageView({
 	image:'assets/ui/rain.png',
-	height: '100%', width: '100%', 
-	zIndex: 0, touchEnabled:false
+	height: '100%', width: '100%',
+	zIndex: 0, opacity: 0, touchEnabled:false
 });
 
 // end game music
@@ -28,11 +46,11 @@ var imgDoor = Titanium.UI.createImageView({
 });
 
 // zoom window
-var imgButtonWindow = Titanium.UI.createImageView({
+var imgZoomWindow = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/window.png',
 	opacity:1, zIndex:11, width:640, height:903
 });
-imgButtonWindow.zoom = function(e) {
+imgZoomWindow.zoom = function(e) {
 	container.opacity = (container.opacity) ? 0 : 1;
 	this.center = (container.opacity) ? 
 	  {x: rezX * 104, y: rezY * 201} : {};
@@ -41,7 +59,7 @@ imgButtonWindow.zoom = function(e) {
 	this.height = (container.opacity) ? rezY * 162 : 
 		Ti.Platform.displayCaps.getPlatformHeight();
 };
-imgButtonWindow.addEventListener('click', imgButtonWindow.zoom);
+imgZoomWindow.addEventListener('click', imgZoomWindow.zoom);
 
 // sliding animation
 var imgCabLeft = Titanium.UI.createImageView({

@@ -34,9 +34,12 @@ function showIntro() {
 	container.opacity = 0;
 	container.zIndex = 1;
 
-	imgButtonWindow.zIndex = 90;
-	imgButtonWindow.zoom();
-	windows[windowsIx.intro].add(imgButtonWindow);
+	imgZoomWindow.zIndex = 14;
+	imgZoomWindow.zoom();
+	windows[windowsIx.intro].add(imgZoomWindow);
+	
+	windows[windowsIx.intro].add(imgWeather);
+	windows[windowsIx.outro].add(imgWeather);
 
 	container.add(buttonRestart);
 	buttonRestart.addEventListener('click', function(e) {
@@ -99,10 +102,8 @@ function setLandscape(index) {
 	var path = 'assets/bg/landscape-' + landscapes[theLandscape] + '.jpg';
 	// set the UI background
 	Titanium.UI.setBackgroundImage(path);
-	if(!fairWeather) {
-		windows[windowsIx.intro].add(imgWeather);
-		windows[windowsIx.outro].add(imgWeather);
-	}
+	// show or hide the weather 'fx'
+	imgWeather.opacity = (fairWeather) ? 0 : 1;
 }
 
 // animate sliding doors
@@ -253,17 +254,11 @@ function unwearItem(obj) {
 
 // var showClothes = [];
 function updateWearing() {
-	// for (var u in showClothes) {
-	// container.remove(showClothes[u])
-	// }
-	// showClothes = [];
 	// iterate through all worn clothing
 	for(var i in imgClothes) {
 		var item = imgClothes[i];
-		if(item.wearing) {
+		if (item.wearing) {
 			Ti.API.debug('Wearing ' + item.info.id);
-			// add to shown clothes
-			// showClothes.push(item);
 			container.add(item);
 		} else {
 			container.remove(item);
@@ -272,6 +267,7 @@ function updateWearing() {
 }
 
 function updateResult() {
+	// calculate the items worn
 	var count = 0, typeTally = 0, hazRainThing = false;
 	// iterate through all worn clothing
 	for(var i in imgClothes) {
@@ -283,9 +279,13 @@ function updateResult() {
 			hazRainThing = (item.info.id == 'umbrella');
 		}
 	}
+	
 	// Win if the weather is nice & we're dressed lightly,
 	// or the weather is heavy and we're dressed warm
-	var typeOK = (theLandscape < 2 && fairWeather && typeTally < 3 && count > 0) || (theLandscape < 2 && !fairWeather && typeTally > 2 && hazRainThing) || (theLandscape > 1 && fairWeather && typeTally >= theLandscape) || (theLandscape > 1 && !fairWeather && typeTally >= theLandscape + 2);
+	var typeOK = (theLandscape < 2 && fairWeather && typeTally < 3 && count > 0) 
+			  || (theLandscape < 2 && !fairWeather && typeTally > 2 && hazRainThing) 
+			  || (theLandscape > 1 && fairWeather && typeTally >= theLandscape) 
+			  || (theLandscape > 1 && !fairWeather && typeTally >= theLandscape + 2);
 
 	// switch (theLandscape) {
 	// case 0: // spring
@@ -293,7 +293,9 @@ function updateResult() {
 	// case 2: // autumn
 	// case 3: // winter
 	// }
-	Ti.API.debug(typeOK + '! Tally: ' + typeTally + ' Count: ' + count + ' / Sun: ' + fairWeather + ' Season: ' + theLandscape + ' ' + landscapes[theLandscape]);
+	
+	Ti.API.debug(typeOK + '! Tally: ' + typeTally + ' Count: ' + count + 
+		' / Sun: ' + fairWeather + ' Season: ' + theLandscape + ' ' + landscapes[theLandscape]);
 
 	// show warning
 	imgIconWarning.image = (fairWeather) ? 'assets/ui/warn_shirt.png' : 'assets/ui/warn_cloud.png';

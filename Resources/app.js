@@ -1,33 +1,23 @@
 Ti.include('game_objects.js');
 Ti.include('game_screens.js');
 
-// create root windows
-var container;
-var windowsIx = { menu: 0, intro: 1, game: 2, outro: 3 };
-var windows = [
-	Titanium.UI.createWindow({ 
-		backgroundColor:'#fff' }), 	// Menu
-	Titanium.UI.createWindow({ }),	// title:'Intro'
-	Titanium.UI.createWindow({ 		// title:'Cabinet', 
-	    backgroundImage:'assets/bg/kleiderschrank1-open-left.jpg'
-	}),
-	Titanium.UI.createWindow({ })	// title:'Finale'
-];
-
-// define landscapes
-var landscapes = ['spring', 'summer', 'autumn', 'winter'];
-var theLandscape = 0;
-var fairWeather = false;
-
 // state tracking
-var switchingScreen = false;
 var currentScreen = -1;
 var currentInventory = 0;
+var switchingScreen = false;
+
+function setUp() {
+	// background color of the master UIView
+	Ti.UI.setBackgroundColor('#cdf');
+	
+	// quit the game when returning home
+	Ti.App.addEventListener('pause', function() {
+		gotoScreen(0);
+	})
+}
 
 // game screen loader
 function loadScreens(s) {
-	// background color of the master UIView
-	Ti.UI.setBackgroundColor('#cdf');
 	//for (var s in windows) { 
 		container = windows[s].container = 
 			Ti.UI.createView({
@@ -78,14 +68,14 @@ function gotoScreen(scr) {
 	switch (scr) {
 		case windowsIx.intro:
 			imgJimmy.zIndex = 30;
-			//updateWearing();
+			updateWearing();
 			break;
 		case windowsIx.game:
 			slideDoors(true);
 			imgJimmy.zIndex = 15;
 			break;
 		case windowsIx.outro:
-			//updateWearing();
+			updateWearing();
 			updateResult();
 			break;
 	}
@@ -93,10 +83,13 @@ function gotoScreen(scr) {
 	switchingScreen = false;
 }
 
+setUp(); // application settings
 //setLandscape(); // set random landscape
+
 // the following can't be a loop.. don't ask why!
 loadScreens(0);
 loadScreens(1);
 loadScreens(2);
 loadScreens(3);
+
 gotoScreen(0); // start game
