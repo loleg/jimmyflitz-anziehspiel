@@ -107,11 +107,11 @@ var imgFriends = [
 ]*/
 
 // UI elements
-var buttonRestart = Titanium.UI.createButton({
-	title: 'Start', zIndex: 55,
-	size: {width: 80, height: 20},
-	center: {x: rezX * 30, y: rezY* 340}
-});
+// var buttonRestart = Titanium.UI.createButton({
+	// title: 'Start', zIndex: 55,
+	// size: {width: 80, height: 20},
+	// center: {x: rezX * 30, y: rezY* 340}
+// });
 var imgNavButtonLeft = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 

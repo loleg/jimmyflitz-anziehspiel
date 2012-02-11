@@ -52,15 +52,8 @@ function gotoScreen(scr) {
 		return;
 	switchingScreen = true;
 	
-	//loadScreens(scr);
-	container = windows[scr].container;
-	
 	Ti.API.debug('Opening screen ' + scr);
-
-	// Close the currently open window
-	if(currentScreen != -1) {
-		windows[currentScreen].close();
-	}
+	container = windows[scr].container;
 	var prevScreen = currentScreen;
 	currentScreen = scr;
 
@@ -71,7 +64,6 @@ function gotoScreen(scr) {
 			updateWearing();
 			break;
 		case windowsIx.game:
-			slideDoors(true);
 			imgJimmy.zIndex = 15;
 			break;
 		case windowsIx.outro:
@@ -79,11 +71,23 @@ function gotoScreen(scr) {
 			updateResult();
 			break;
 	}
+	
+	// Close the currently open window
+	if(prevScreen != -1) {
+		windows[prevScreen].close();
+	}
 	windows[scr].open();
+	
+	// Run animations here
+	if (scr == windowsIx.game) {
+		slideDoors(true);
+	}
+	
 	switchingScreen = false;
 }
 
 setUp(); // application settings
+
 //setLandscape(); // set random landscape
 
 // the following can't be a loop.. don't ask why!

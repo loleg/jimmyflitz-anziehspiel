@@ -41,10 +41,10 @@ function showIntro() {
 	windows[windowsIx.intro].add(imgWeather);
 	windows[windowsIx.outro].add(imgWeather);
 
-	container.add(buttonRestart);
-	buttonRestart.addEventListener('click', function(e) {
-		gotoScreen(windowsIx.menu);
-	});
+	// container.add(buttonRestart);
+	// buttonRestart.addEventListener('click', function(e) {
+		// gotoScreen(windowsIx.menu);
+	// });
 
 	imgIntro.addEventListener('click', function(e) {
 		this.hide();
@@ -57,6 +57,8 @@ function showIntro() {
 function showGame() {
 	container.add(imgCabLeft);
 	container.add(imgCabRight);
+	imgCabLeft.hide();
+	imgCabRight.hide();
 	// add Jimmy and set up game
 	container.add(imgJimmy);
 	drawInventory();
