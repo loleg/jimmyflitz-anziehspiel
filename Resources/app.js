@@ -94,7 +94,9 @@ function gotoScreen(scr) {
 }
 
 //setLandscape(); // set random landscape
-for (var s in windows) {
-	loadScreens(s);	
-}
+// the following can't be a loop.. don't ask why!
+loadScreens(0);
+loadScreens(1);
+loadScreens(2);
+loadScreens(3);
 gotoScreen(0); // start game
