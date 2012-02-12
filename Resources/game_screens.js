@@ -286,7 +286,7 @@ function updateWearing() {
 
 function updateResult() {
 	// calculate the items worn
-	var count = 0, typeTally = 0, hazRainThing = false;
+	var count = typeTally = sunTally = rainTally = 0;
 	// iterate through all worn clothing
 	for(var i in imgClothes) {
 		var item = imgClothes[i];
@@ -294,26 +294,34 @@ function updateResult() {
 			count++;
 			// tally up item properties
 			typeTally += item.info.type;
-			hazRainThing = (item.info.id == 'umbrella');
+			sunTally += item.info.sunny;
+			rainTally += item.info.rainy;
 		}
 	}
 	
 	// Win if the weather is nice & we're dressed lightly,
 	// or the weather is heavy and we're dressed warm
-	var typeOK = (theLandscape < 2 && fairWeather && typeTally < 3 && count > 0) 
-			  || (theLandscape < 2 && !fairWeather && typeTally > 2 && hazRainThing) 
-			  || (theLandscape > 1 && fairWeather && typeTally >= theLandscape) 
-			  || (theLandscape > 1 && !fairWeather && typeTally >= theLandscape + 2);
-
-	// switch (theLandscape) {
-	// case 0: // spring
-	// case 1: // summer
-	// case 2: // autumn
-	// case 3: // winter
-	// }
+	var typeOK = false;
+	switch(theLandscape) {
+		case 0: // spring
+		case 2: // autumn
+			typeOK = (fairWeather && typeTally > 1 && typeTally < 5)	
+			 	  || (!fairWeather && typeTally > 1 && typeTally > 5 && rainTally > 0);
+			break;
+		case 1: // summer
+			typeOK = (fairWeather && typeTally > 0 && typeTally < 3 && sunTally > 0)
+			      || (!fairWeather && typeTally > 0 && typeTally < 3 && rainTally > 0);
+			break;
+		case 3: // winter
+			typeOK = (typeTally > 5);
+			break;
+	}		  
 	
-	Ti.API.debug(typeOK + '! Tally: ' + typeTally + ' Count: ' + count + 
-		' / Sun: ' + fairWeather + ' Season: ' + theLandscape + ' ' + landscapes[theLandscape]);
+	Ti.API.debug(typeOK + '! Why? ' +
+		' FairWeather: ' + fairWeather + ' Season: ' + theLandscape + ' ' + landscapes[theLandscape] +
+		' Tally: ' + typeTally + ' Rain: ' + rainTally + 
+		' Sun: ' + sunTally + ' Count: ' + count + 
+		'');
 
 	// show warning
 	imgIconWarning.image = (fairWeather) ? 'assets/ui/warn_shirt.png' : 'assets/ui/warn_cloud.png';
