@@ -146,7 +146,7 @@ var imgIconBook = Titanium.UI.createImageView({
 var imgIconAudioBook = Titanium.UI.createImageView({
 	image:'assets/ui/icon_audiobook.png',
 	height:rezY* 90, width:rezY* 90,
-	center:{x:rezX* 160, y:rezY* 280}
+	center:{x:rezX* 220, y:rezY* 280}
 });
 
 // some clothes 

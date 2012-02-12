@@ -114,6 +114,7 @@ function setLandscape(index) {
 	// choose a random landscape and conditions
 	theLandscape = ( typeof index != 'undefined') ? index : Math.floor(Math.random() * 4);
 	fairWeather = (Math.random() > 0.5);
+	if (theLandscape == 3) fairWeather = true;
 	Ti.API.debug('Landscape: ' + landscapes[theLandscape] + ', ' + (fairWeather) ? 'nice weather' : 'storm');
 	// background asset
 	var path = 'assets/bg/landscape-' + landscapes[theLandscape] + '.jpg';
