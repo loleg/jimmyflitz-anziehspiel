@@ -12,8 +12,21 @@ function setUp() {
 	
 	// quit the game when returning home
 	Ti.App.addEventListener('pause', function() {
-		gotoScreen(0);
+		newGame();
 	})
+}
+
+function newGame() {
+	// reset Jimmy
+	for(var i in imgClothes) {
+		if (imgClothes[i].wearing) {
+			unwearItem(imgClothes[i]);
+		}
+	}
+	// stop music effects
+	soundClips.stop();
+	// return to menu
+	gotoScreen(0);
 }
 
 // game screen loader
@@ -39,6 +52,9 @@ function loadScreens(s) {
 				break;
 			case windowsIx.outro:
 				showOutro();
+				break;
+			case windowsIx.credits:
+				showCredits();
 				break;
 		}
 		windows[s].add(container);
@@ -95,5 +111,6 @@ loadScreens(0);
 loadScreens(1);
 loadScreens(2);
 loadScreens(3);
+loadScreens(4);
 
 gotoScreen(0); // start game

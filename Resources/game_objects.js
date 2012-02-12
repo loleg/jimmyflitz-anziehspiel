@@ -4,15 +4,18 @@ var rezY = Ti.Platform.displayCaps.getPlatformHeight() / 480;
 
 // create root windows
 var container;
-var windowsIx = { menu: 0, intro: 1, game: 2, outro: 3 };
+var windowsIx = { menu: 0, intro: 1, game: 2, outro: 3, credits: 4 };
 var windows = [
 	Titanium.UI.createWindow({ 
 		backgroundColor:'#fff' }), 	// Menu
-	Titanium.UI.createWindow({ }),	// title:'Intro'
-	Titanium.UI.createWindow({ 		// title:'Cabinet', 
+	Titanium.UI.createWindow({ }),// title:'Intro'
+	Titanium.UI.createWindow({ 		// title:'Cabinet'
 	    backgroundImage:'assets/bg/kleiderschrank1-open-left.jpg'
 	}),
-	Titanium.UI.createWindow({ })	// title:'Finale'
+	Titanium.UI.createWindow({ }),// title:'Outro'
+	Titanium.UI.createWindow({ 		// title:'Credits'
+	    backgroundImage:'assets/bg/credits.jpg'
+	}),
 ];
 
 // define landscapes
@@ -122,11 +125,28 @@ var imgNavButtonRight = Titanium.UI.createImageView({
 	height:rezY* 90, width:rezX* 90, 
 	center:{x:rezX* 320, y:rezY* 355}, zIndex:99
 });
+
+/* various icons */
 var imgIconWarning = Titanium.UI.createImageView({
 	image:'assets/ui/warn_cloud.png',
 	height:rezY* 60,
 	center:{y:rezY* 240},
 	zIndex:90, opacity:0
+});
+var imgIconCD = Titanium.UI.createImageView({
+	image:'assets/ui/icon_disc.png',
+	height:rezY* 90, width:rezY* 90,
+	center:{x:rezX* 60, y:rezY* 280}
+});
+var imgIconBook = Titanium.UI.createImageView({
+	image:'assets/ui/icon_book.png',
+	height:rezY* 90, width:rezY* 90,
+	center:{y:rezY* 280}
+});
+var imgIconAudioBook = Titanium.UI.createImageView({
+	image:'assets/ui/icon_audiobook.png',
+	height:rezY* 90, width:rezY* 90,
+	center:{x:rezX* 160, y:rezY* 280}
 });
 
 // some clothes 

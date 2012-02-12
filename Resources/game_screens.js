@@ -89,10 +89,25 @@ function showOutro() {
 	container.add(imgJimmy);
 	container.add(imgDoor);
 	container.add(imgIconWarning);
-	// tap to return to game
+	// tap to return to cabinet or go to credits
 	windows[windowsIx.outro].addEventListener('click', function(e) {
-		gotoScreen(windowsIx.game);
+		if (windows[windowsIx.outro].endgame) {
+			gotoScreen(windowsIx.credits);
+		} else { 
+			gotoScreen(windowsIx.game);
+		}
 	});
+}
+
+function showFinale() {
+	// play end game music
+	soundClips.play();
+}
+
+function showCredits() {
+	container.add(imgIconCD);
+	container.add(imgIconBook);
+	container.add(imgIconAudioBook);
 }
 
 function setLandscape(index) {
@@ -313,11 +328,11 @@ function updateResult() {
 	}
 
 	// check if Jimmy goes out
+	windows[windowsIx.outro].endgame = typeOK;
 	if(typeOK) {
-		// play end game music
-		soundClips.play();
 		imgDoor.opacity = 0;
 		imgDoor.hide();
+		showFinale();
 	} else {
 		imgDoor.opacity = 1;
 		imgDoor.show();
