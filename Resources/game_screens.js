@@ -1,6 +1,7 @@
 // menu screen
 function showMenu() {
 	var menuImg = [];
+	// draw all four seasons
 	for(var l in landscapes) {
 		var img = Titanium.UI.createImageView({
 			image : 'assets/ui/window.png',
@@ -20,7 +21,11 @@ function showMenu() {
 		menuImg.push(img);
 		container.add(img);
 	}
-
+	// add credits link
+	container.add(buttonCredits);
+	buttonCredits.addEventListener('click', function(e) {
+		gotoScreen(windowsIx.credits);
+	});
 }
 
 // initial screen with window
@@ -93,7 +98,13 @@ function showOutro() {
 	windows[windowsIx.outro].container.addEventListener('click', function(e) {
 		if (currentScreen != windowsIx.outro) return;
 		if (windows[windowsIx.outro].endgame) {
-			gotoScreen(windowsIx.credits);
+			container.animate({
+		      left: 1000,
+		      duration: 500,
+		      curve: Titanium.UI.ANIMATION_CURVE_EASE_IN
+		    }, function(e) {
+		    	gotoScreen(windowsIx.credits);
+			});
 		} else { 
 			gotoScreen(windowsIx.game);
 		}
@@ -101,6 +112,13 @@ function showOutro() {
 }
 
 function showFinale() {
+	// animate Jimmy
+	container.left = -500;
+	container.animate({
+      left: 0,
+      duration: 500,
+      curve: Titanium.UI.ANIMATION_CURVE_EASE_OUT
+    });
 	// play end game music
 	soundClips.play();
 }
@@ -109,6 +127,24 @@ function showCredits() {
 	container.add(imgIconCD);
 	container.add(imgIconBook);
 	container.add(imgIconAudioBook);
+	container.add(imgIconWebsite);
+	// return to menu
+	windows[windowsIx.credits].container.addEventListener('click', function(e) {
+		newGame();
+	});
+	// assign links
+	imgIconCD.addEventListener('click', function(e) {
+		Ti.Platform.openURL("http://itunes.apple.com/ch/album/hits-mit-jimmy-flitz-remastered/id493925667");
+	});
+	imgIconBook.addEventListener('click', function(e) {
+		Ti.Platform.openURL("http://itunes.apple.com/ch/book/jimmy-flitz-die-schweizermaus/id464844865?mt=11#");
+	});
+	imgIconAudioBook.addEventListener('click', function(e) {
+		Ti.Platform.openURL("http://itunes.apple.com/ch/album/honigmelonemond/id387316259");
+	});
+	imgIconWebsite.addEventListener('click', function(e) {
+		Ti.Platform.openURL("http://www.jimmyflitz.ch");
+	});
 }
 
 function setLandscape(index) {
@@ -314,11 +350,14 @@ function updateResult() {
 		case 0: // spring
 		case 2: // autumn
 			typeOK = (fairWeather && typeTally > 1 && typeTally < 5)	
-			 	  || (!fairWeather && typeTally > 3 && rainTally > 0);
+			 	  || (!fairWeather && typeTally > 2 && typeTally < 7 && rainTally > 0);
+			typeWarn = (typeTally < 2) ? 'snow' : typeTally;
+			typeWarn = (typeTally > 4) ? 'sun' : typeWarn;
 			break;
 		case 1: // summer
 			typeOK = (fairWeather && typeTally > 0 && typeTally < 3 && sunTally > 0)
-			      || (!fairWeather && typeTally > 0 && typeTally < 3 && rainTally > 0);
+			      || (!fairWeather && typeTally > 0 && typeTally < 4 && rainTally > 0);
+			typeWarn = (typeTally > 4) ? 'sun' : typeWarn;
 			break;
 		case 3: // winter
 			typeOK = (typeTally > 5);

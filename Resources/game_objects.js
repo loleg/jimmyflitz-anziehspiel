@@ -148,6 +148,12 @@ var imgIconAudioBook = Titanium.UI.createImageView({
 	height:rezY* 90, width:rezY* 90,
 	center:{x:'80%', y:rezY* 280}
 });
+var imgIconWebsite = Titanium.UI.createImageView({
+	image:'assets/ui/credits_url.png', height:rezY* 100, bottom:'5%'
+});
+var buttonCredits = Titanium.UI.createButton({
+	title: 'Credits', size: {width: 80, height: 25}, bottom:'5%'
+});
 
 // some clothes 
 // type = score quotient - 0 (default): spring/summer, 1: winter, 2: weather
