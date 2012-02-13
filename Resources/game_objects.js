@@ -68,12 +68,12 @@ imgZoomWindow.addEventListener('click', imgZoomWindow.zoom);
 var imgCabLeft = Titanium.UI.createImageView({
 	image:'assets/bg/kleiderschrank1-closed-LEFT.jpg',
 	showX:-Ti.Platform.displayCaps.getPlatformWidth()/2, hideX:-900,
-	height:'100%', zIndex:55
+	height:'100%', zIndex:95
 });
 var imgCabRight = Titanium.UI.createImageView({
 	image:'assets/bg/kleiderschrank1-closed-RIGHT.jpg',
 	showX:'50%',	hideX:1200,
-	height:'100%', zIndex:55
+	height:'100%', zIndex:95
 });
 
 // jimmy
@@ -81,7 +81,7 @@ var imgJimmy = Titanium.UI.createImageView({
 	image:'assets/jimmy/jimmy_white.png',
 	height:rezY* 200,
 	center:{y:rezY* 365},
-	zIndex:50
+	zIndex:50, touchEnabled:false
 });
 
 // jimmy (intro) and friends
@@ -129,14 +129,14 @@ var imgNavButtonRight = Titanium.UI.createImageView({
 /* various icons */
 var imgIconWarning = Titanium.UI.createImageView({
 	image:'assets/ui/warn_cloud.png',
-	height:rezY* 60,
-	center:{y:rezY* 240},
+	height:rezY* 80,
+	center:{y:rezY* 235},
 	zIndex:90, opacity:0
 });
 var imgIconCD = Titanium.UI.createImageView({
 	image:'assets/ui/icon_disc.png',
 	height:rezY* 90, width:rezY* 90,
-	center:{x:rezX* 60, y:rezY* 280}
+	center:{x:'20%', y:rezY* 280}
 });
 var imgIconBook = Titanium.UI.createImageView({
 	image:'assets/ui/icon_book.png',
@@ -146,7 +146,7 @@ var imgIconBook = Titanium.UI.createImageView({
 var imgIconAudioBook = Titanium.UI.createImageView({
 	image:'assets/ui/icon_audiobook.png',
 	height:rezY* 90, width:rezY* 90,
-	center:{x:rezX* 220, y:rezY* 280}
+	center:{x:'80%', y:rezY* 280}
 });
 
 // some clothes 
@@ -172,7 +172,7 @@ var clothes = [
 	{ id: "socks_blue", type: 1, x: 190, y: 445, z: 1 },
 	{ id: "boots", type: 1, sunny:-1, rainy:1, x: 185, y: 431, z: 3 },
 	   
-	{ id: "umbrella", type: 0, sunny:-5, rainy:2, scale: 1.4, x: 231, y: 339, z: -40, center: {x:rezX* 277, y:rezY* 100} }
+	{ id: "umbrella", type: 0, sunny:-5, rainy:2, scale: 1.4, x: 238, y: 339, z: -40, center: {x:rezX* 277, y:rezY* 100} }
 	];
 	
 var imgClothes = [];
@@ -190,24 +190,33 @@ var marginClothes = [ rezX* 85, rezY* 100 ];
 		var paddingTop = (i < clothesPerSide) ? 0 : -14;
 		// define the image object
 		var img = Titanium.UI.createImageView({
-			info:		clothes[i],
-			image:  	'assets/clothes/' + clothes[i].id + '.png',
-			height: 	rezY* 90, width: rezX* 90, zIndex: 20,
-			center: 	{x:centerClothes[0] + (marginClothes[0] * col) + paddingLeft,
-				 	 	 y:centerClothes[1] + (marginClothes[1] * row) + paddingTop}
+			info:	{
+						id: clothes[i].id,
+						type: clothes[i].type ? clothes[i].type : 0,
+						sunny: clothes[i].sunny ? clothes[i].sunny : 0,
+						rainy: clothes[i].rainy ? clothes[i].rainy : 0,
+						scale: clothes[i].scale ? clothes[i].scale : 1,
+						scaleTo: clothes[i].scaleTo ? clothes[i].scaleTo : false,
+						center: clothes[i].center ? clothes[i].center : false,
+						x: clothes[i].x ? clothes[i].x : false,
+						y: clothes[i].y ? clothes[i].y : false,
+						z: clothes[i].z ? clothes[i].z : false,
+						wearing: false
+					},
+			image:  'assets/clothes/' + clothes[i].id + '.png',
+			height: rezY* 90, width: rezX* 90, zIndex: 20,
+			center: {x:centerClothes[0] + (marginClothes[0] * col) + paddingLeft,
+				 	 y:centerClothes[1] + (marginClothes[1] * row) + paddingTop}
 		});
 		
 		// update scale and position if specified
-		if (typeof img.info.scale != 'undefined') {
+		if (img.info.scale) {
 			img.height *= img.info.scale; 
 			img.width  *= img.info.scale;
-		} else {
-			img.info.scale = 1;
 		}
-		if (typeof img.info.center != 'undefined') {
+		if (img.info.center) {
 			img.center = img.info.center;
 		}
-
 		rowClothes++;
 		if (rowClothes == clothesPerSide) {
 			rowClothes = col = row = 0;
@@ -216,13 +225,6 @@ var marginClothes = [ rezX* 85, rezY* 100 ];
 		img.o_height = img.height;
 		img.o_width = img.width;
 		img.wearing = false;
-		
-		if (typeof img.info.sunny == 'undefined') {
-			img.info.sunny = 0;
-		}
-		if (typeof img.info.rainy == 'undefined') {
-			img.info.rainy = 0;
-		}
 		
 		// add to stack
 		imgClothes.push(img);

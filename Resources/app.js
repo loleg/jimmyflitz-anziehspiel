@@ -23,9 +23,11 @@ function newGame() {
 			unwearItem(imgClothes[i]);
 		}
 	}
+	imgJimmy.image = 'assets/jimmy/jimmy_white.png';
 	// stop music effects
 	soundClips.stop();
 	// return to menu
+	currentInventory = 0;
 	gotoScreen(0);
 }
 

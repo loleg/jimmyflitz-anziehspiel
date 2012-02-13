@@ -28,7 +28,6 @@ function showIntro() {
 	//container.add(imgIntro);
 	container.add(imgWindow);
 	container.add(imgJimmy);
-	imgJimmy.touchEnabled = false;
 
 	// set opacity to 1 to start with zoomed window
 	container.opacity = 0;
@@ -50,6 +49,7 @@ function showIntro() {
 		this.hide();
 	});
 	imgWindow.addEventListener('click', function(e) {
+		Ti.API.debug('Window clicked');
 		gotoScreen(windowsIx.game);
 	});
 }
@@ -90,7 +90,8 @@ function showOutro() {
 	container.add(imgDoor);
 	container.add(imgIconWarning);
 	// tap to return to cabinet or go to credits
-	windows[windowsIx.outro].addEventListener('click', function(e) {
+	windows[windowsIx.outro].container.addEventListener('click', function(e) {
+		if (currentScreen != windowsIx.outro) return;
 		if (windows[windowsIx.outro].endgame) {
 			gotoScreen(windowsIx.credits);
 		} else { 
@@ -112,7 +113,7 @@ function showCredits() {
 
 function setLandscape(index) {
 	// choose a random landscape and conditions
-	theLandscape = ( typeof index != 'undefined') ? index : Math.floor(Math.random() * 4);
+	theLandscape = (typeof index !== 'undefined') ? index : Math.floor(Math.random() * 4);
 	fairWeather = (Math.random() > 0.5);
 	if (theLandscape == 3) fairWeather = true;
 	Ti.API.debug('Landscape: ' + landscapes[theLandscape] + ', ' + (fairWeather) ? 'nice weather' : 'storm');
@@ -125,7 +126,7 @@ function setLandscape(index) {
 }
 
 // animate sliding doors
-function slideDoors(isOpening, targetWindow) {
+function slideDoors(isOpening) {
 	imgCabLeft.show();
 	imgCabRight.show();
 	imgCabLeft.left = (isOpening) ? imgCabLeft.showX : imgCabLeft.hideX;
@@ -141,10 +142,6 @@ function slideDoors(isOpening, targetWindow) {
 		duration : 2100
 	}, function() {
 		imgCabRight.hide();
-		// jump to end game after completing animation
-		if( typeof targetWindow != 'undefined') {
-			gotoScreen(targetWindow);
-		}
 	});
 }
 
@@ -162,7 +159,7 @@ function drawInventory() {
 		imgClothes[i].addEventListener('touchstart', function(e) {
 			this.offset_x = e.x;
 			this.offset_y = e.y;
-			if( typeof this.origin == 'undefined') {
+			if (typeof this.origin === 'undefined') {
 				this.origin = this.center;
 			}
 			this.zIndex = 90;
@@ -194,10 +191,14 @@ function drawInventory() {
 
 function switchInventory() {
 	Ti.API.debug('Updating inventory ' + currentInventory);
-	windows[windowsIx.game].setBackgroundImage((currentInventory == 0) ? 'assets/bg/kleiderschrank1-open-left.jpg' : 'assets/bg/kleiderschrank1-open-right.jpg');
+	windows[windowsIx.game].setBackgroundImage((currentInventory == 0) ? 
+		'assets/bg/kleiderschrank1-open-left.jpg' : 
+		'assets/bg/kleiderschrank1-open-right.jpg');
 	for(var i in imgClothes) {
 		if(!imgClothes[i].wearing) {
-			imgClothes[i].opacity = (i >= clothesPerSide * currentInventory && i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
+			imgClothes[i].opacity = 
+				(i >= clothesPerSide * currentInventory 
+				&& i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
 		}
 	}
 }
@@ -205,12 +206,12 @@ function switchInventory() {
 // dress up Jimmy
 function wearItem(obj) {
 	obj.wearing = true;
-	if( typeof obj.info.z != 'undefined') {
+	if (obj.info.z) {
 		obj.zIndex = 50 + obj.info.z;
 	} else {
 		obj.zIndex = 51;
 	}
-	if(obj.info.id.indexOf('jimmy') == 0) {
+	if (obj.info.id.indexOf('jimmy') == 0) {
 		imgJimmy.image = 'assets/jimmy/' + obj.info.id + '.png';
 		// unhide other Jimmy clothes
 		for(var i in imgClothes) {
@@ -229,13 +230,14 @@ function wearItem(obj) {
 	} else {
 		// check item swaps
 		var baseName = obj.info.id.replace(/\d/, "");
-		for(var i in imgClothes) {
-			if(imgClothes[i].wearing && imgClothes[i].info.id != obj.info.id && imgClothes[i].info.id.replace(/\d/, "") == baseName) {
+		for (var i in imgClothes) {
+			if (imgClothes[i].wearing && imgClothes[i].info.id != obj.info.id && 
+				imgClothes[i].info.id.replace(/\d/, "") == baseName) {
 				unwearItem(imgClothes[i]);
 			}
 		}
 		// snap object to its defined center
-		if( typeof obj.info.x != 'undefined') {
+		if (obj.info.x) {
 			obj.center = {
 				x : obj.info.x,
 				y : obj.info.y
@@ -244,7 +246,7 @@ function wearItem(obj) {
 			Ti.API.debug('Item ' + obj.info.id + ' at: ' + obj.center.x + ', ' + obj.center.y);
 		}
 		// if a target scale is defined
-		if( typeof obj.info.scaleTo != 'undefined') {
+		if (obj.info.scaleTo) {
 			obj.height = obj.o_height * obj.info.scaleTo;
 			obj.width = obj.o_width * obj.info.scaleTo;
 		}
@@ -286,11 +288,15 @@ function updateWearing() {
 
 function updateResult() {
 	// calculate the items worn
-	var count = typeTally = sunTally = rainTally = 0;
+	var count = 0, 
+		typeTally = 0,
+		sunTally = 0,
+		rainTally = 0;
+		
 	// iterate through all worn clothing
 	for(var i in imgClothes) {
 		var item = imgClothes[i];
-		if(item.wearing) {
+		if (item.wearing) {
 			count++;
 			// tally up item properties
 			typeTally += item.info.type;
@@ -301,12 +307,14 @@ function updateResult() {
 	
 	// Win if the weather is nice & we're dressed lightly,
 	// or the weather is heavy and we're dressed warm
-	var typeOK = false;
-	switch(theLandscape) {
+	var typeOK = false, typeWarn = 'shirt';
+	if (count > 0) {
+		typeWarn = (fairWeather) ? 'sun' : 'cloud';
+		switch (parseInt(theLandscape)) {
 		case 0: // spring
 		case 2: // autumn
 			typeOK = (fairWeather && typeTally > 1 && typeTally < 5)	
-			 	  || (!fairWeather && typeTally > 1 && typeTally > 5 && rainTally > 0);
+			 	  || (!fairWeather && typeTally > 3 && rainTally > 0);
 			break;
 		case 1: // summer
 			typeOK = (fairWeather && typeTally > 0 && typeTally < 3 && sunTally > 0)
@@ -314,8 +322,10 @@ function updateResult() {
 			break;
 		case 3: // winter
 			typeOK = (typeTally > 5);
+			typeWarn = 'snow';
 			break;
-	}		  
+		}
+	}
 	
 	Ti.API.debug(typeOK + '! Why? ' +
 		' FairWeather: ' + fairWeather + ' Season: ' + theLandscape + ' ' + landscapes[theLandscape] +
@@ -324,7 +334,7 @@ function updateResult() {
 		'');
 
 	// show warning
-	imgIconWarning.image = (fairWeather) ? 'assets/ui/warn_shirt.png' : 'assets/ui/warn_cloud.png';
+	imgIconWarning.image = 'assets/ui/warn_' + typeWarn + '.png';
 	imgIconWarning.opacity = (typeOK) ? 0 : 1;
 
 	// animate warning
