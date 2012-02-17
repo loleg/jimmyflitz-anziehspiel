@@ -101,6 +101,7 @@ function gotoScreen(scr) {
 		slideDoors(true);
 	}
 	
+	Ti.API.debug('Screen open: ' + currentScreen + ' inv: ' + currentInventory);
 	switchingScreen = false;
 }
 
