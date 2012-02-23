@@ -1,6 +1,5 @@
 // menu screen
 function showMenu() {
-	var menuImg = [];
 	// draw all four seasons
 	for(var l in landscapes) {
 		var img = Titanium.UI.createImageView({
@@ -91,6 +90,7 @@ function showGame() {
 
 function showOutro() {
 	imgDoor.right = 0;
+	imgDoor.opacity = 1;
 	container.add(imgJimmy);
 	container.add(imgDoor);
 	container.add(imgIconWarning);
@@ -103,6 +103,8 @@ function showOutro() {
 		      duration: 500,
 		      curve: Titanium.UI.ANIMATION_CURVE_EASE_IN
 		    }, function(e) {
+		    	// What to do after animation finishes
+		    	windows[windowsIx.outro].endgame = false;
 		    	gotoScreen(windowsIx.credits);
 			});
 		} else { 
@@ -225,7 +227,8 @@ function drawInventory() {
 	switchInventory();
 }
 
-function switchInventory() {
+function switchInventory(i) {
+	if (typeof i != "undefined") currentInventory = i;
 	Ti.API.debug('Updating inventory ' + currentInventory);
 	windows[windowsIx.game].setBackgroundImage((currentInventory == 0) ? 
 		'assets/bg/kleiderschrank1-open-left.jpg' : 
@@ -355,9 +358,9 @@ function updateResult() {
 			typeWarn = (typeTally > 4) ? 'sun' : typeWarn;
 			break;
 		case 1: // summer
-			typeOK = (fairWeather && typeTally > 0 && typeTally < 3 && sunTally > 0)
-			      || (!fairWeather && typeTally > 0 && typeTally < 4 && rainTally > 0);
-			typeWarn = (typeTally > 4) ? 'sun' : typeWarn;
+			typeOK = (fairWeather && typeTally > 0 && typeTally < 4 && sunTally > 0)
+			      || (!fairWeather && typeTally > 0 && typeTally < 5 && rainTally > 0);
+			typeWarn = (typeTally > 3) ? 'sun' : typeWarn;
 			break;
 		case 3: // winter
 			typeOK = (typeTally > 5);
@@ -366,7 +369,7 @@ function updateResult() {
 		}
 	}
 	
-	Ti.API.debug(typeOK + '! Why? ' +
+	Ti.API.debug(typeOK + '! ' + typeWarn + ' Why? ' +
 		' FairWeather: ' + fairWeather + ' Season: ' + theLandscape + ' ' + landscapes[theLandscape] +
 		' Tally: ' + typeTally + ' Rain: ' + rainTally + 
 		' Sun: ' + sunTally + ' Count: ' + count + 
@@ -389,10 +392,10 @@ function updateResult() {
 	windows[windowsIx.outro].endgame = typeOK;
 	if(typeOK) {
 		imgDoor.opacity = 0;
-		imgDoor.hide();
+//		imgDoor.hide();
 		showFinale();
 	} else {
 		imgDoor.opacity = 1;
-		imgDoor.show();
+//		imgDoor.show();
 	}
 }

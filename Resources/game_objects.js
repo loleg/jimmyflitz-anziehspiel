@@ -20,6 +20,7 @@ var windows = [
 
 // define landscapes
 var landscapes = ['spring', 'summer', 'autumn', 'winter'];
+var menuImg = []; // container for season buttons
 var theLandscape = 0;
 var fairWeather = false;
 
@@ -152,7 +153,7 @@ var imgIconWebsite = Titanium.UI.createImageView({
 	image:'assets/ui/credits_url.png', height:rezY* 100, bottom:'5%'
 });
 var buttonCredits = Titanium.UI.createButton({
-	title: 'Credits', size: {width: 80, height: 25}, bottom:'5%'
+	title: 'Impressum', size: {width: 110, height: 25}, bottom:'5%'
 });
 
 // some clothes 
@@ -170,7 +171,7 @@ var clothes = [
 	{ id: "shades1", type: 0, sunny:1, rainy:-3, scale: 0.8, x: 171, y: 305, center: {x:rezX* 136, y:rezY* 170} },
 	{ id: "shades2", type: 0, scale: 0.8, x: 170, y: 310, center: {x:rezX* 230, y:rezY* 170} }, 
 	
-	{ id: "scarf1", type: 2, x: 176, y: 352, z: 3 },
+	{ id: "scarf1", type: 2, x: 176, y: 352, z: 4 },
 	{ id: "jacket2", type: 3, scale: 1.2, x: 181, y: 353, z: 2, scaleTo: 1.4 }, 
 	{ id: "jacket1", type: 2, scale: 1.1, scaleTo: 0.9, x: 178, y: 365, z: 1 },
 	{ id: "mittens1", type: 2, x: 183, y: 392, z: 3 },

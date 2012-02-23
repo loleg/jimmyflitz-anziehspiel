@@ -1,6 +1,36 @@
 Ti.include('game_objects.js');
 Ti.include('game_screens.js');
 
+/*
+ * Art:
+ * TODO: * original logo, no subtext on menu and credits
+ * TODO: * credits all texts together, smaller at bottom
+ * TODO: * improve appicon and splash screen
+ * TODO: names of seasons underneath
+ * TODO: handwritten 'Impressum'
+ * TODO: warning icon all B&W
+ * TODO: draw a zipper on jacket
+ * TODO: white border around nav buttons
+ * TODO: 'Loading' screen, original mouse
+ * TODO: turn feet in the other direction
+ *  
+ * Code:
+ * TODO: * fix new game bug
+ * TODO: * sound effects: place clothes, rain, etc.
+ * TODO: dancing animation in finale
+ * TODO: moving backgrounds in finale?
+ * TODO: ([m]) mute sound
+ * TODO: tap to wear?
+ * TODO: ([o]) take a photo in finale
+ * TODO: speech bubble intro
+ * TODO: ([i]) button for instructions
+ * TODO: closet opens with Jimmy in front
+ * TODO: add coathanger to intro
+ * TODO: improved navigation (swipe), layout
+ * TODO: friends picture frame intro
+ * TODO: friends in distance finale
+ */
+
 // state tracking
 var currentScreen = -1;
 var currentInventory = 0;
@@ -24,16 +54,21 @@ function newGame() {
 		}
 	}
 	imgJimmy.image = 'assets/jimmy/jimmy_white.png';
+	// reset inventory
+	switchInventory(0);
+	loadScreens(windowsIx.outro);
 	// stop music effects
 	soundClips.stop();
 	// return to menu
-	currentInventory = 0;
 	gotoScreen(0);
 }
 
 // game screen loader
 function loadScreens(s) {
 	//for (var s in windows) { 
+		if (windows[s].container) {
+			windows[s].remove(windows[s].container);
+		}
 		container = windows[s].container = 
 			Ti.UI.createView({
 				width : '100%',
