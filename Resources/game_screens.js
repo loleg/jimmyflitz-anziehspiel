@@ -104,7 +104,6 @@ function showOutro() {
 		      curve: Titanium.UI.ANIMATION_CURVE_EASE_IN
 		    }, function(e) {
 		    	// What to do after animation finishes
-		    	windows[windowsIx.outro].endgame = false;
 		    	gotoScreen(windowsIx.credits);
 			});
 		} else { 
@@ -115,10 +114,16 @@ function showOutro() {
 
 function showFinale() {
 	// animate Jimmy
-	container.left = -500;
+	var danceMatrix = Ti.UI.create2DMatrix();
+	danceMatrix.rotate(90);
+	container.left = -500; // starting point
 	container.animate({
       left: 0,
       duration: 500,
+      transform: danceMatrix,
+      duration: 1000,
+      repeat: 5,
+      autoreverse: true,
       curve: Titanium.UI.ANIMATION_CURVE_EASE_OUT
     });
 	// play end game music
@@ -354,7 +359,7 @@ function updateResult() {
 		case 2: // autumn
 			typeOK = (fairWeather && typeTally > 1 && typeTally < 5)	
 			 	  || (!fairWeather && typeTally > 2 && typeTally < 7 && rainTally > 0);
-			typeWarn = (typeTally < 2) ? 'snow' : typeTally;
+			typeWarn = (typeTally < 2) ? 'snow' : typeWarn;
 			typeWarn = (typeTally > 4) ? 'sun' : typeWarn;
 			break;
 		case 1: // summer
@@ -369,7 +374,7 @@ function updateResult() {
 		}
 	}
 	
-	Ti.API.debug(typeOK + '! ' + typeWarn + ' Why? ' +
+	Ti.API.debug(typeOK + '! (' + typeWarn + ') Why? ' +
 		' FairWeather: ' + fairWeather + ' Season: ' + theLandscape + ' ' + landscapes[theLandscape] +
 		' Tally: ' + typeTally + ' Rain: ' + rainTally + 
 		' Sun: ' + sunTally + ' Count: ' + count + 

@@ -54,6 +54,7 @@ function newGame() {
 		}
 	}
 	imgJimmy.image = 'assets/jimmy/jimmy_white.png';
+	windows[windowsIx.outro].endgame = false;
 	// reset inventory
 	switchInventory(0);
 	loadScreens(windowsIx.outro);
