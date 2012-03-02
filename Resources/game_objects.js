@@ -57,20 +57,18 @@ var imgDoor = Titanium.UI.createImageView({
 });
 
 // zoom window
+var imgSmallWindow = Titanium.UI.createImageView({
+	backgroundImage:'assets/ui/window.png',
+	opacity:1, zIndex:11, 
+	width:rezX * 112, height:rezY * 162,
+	center:{x: rezX * 104, y: rezY * 201}
+});
 var imgZoomWindow = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/window.png',
-	opacity:1, zIndex:11, width:640, height:903
+	opacity:1, zIndex:99, 
+	width:Ti.Platform.displayCaps.getPlatformWidth(), 
+	height:Ti.Platform.displayCaps.getPlatformHeight()
 });
-imgZoomWindow.zoom = function(e) {
-	container.opacity = (container.opacity) ? 0 : 1;
-	this.center = (container.opacity) ? 
-	  {x: rezX * 104, y: rezY * 201} : {};
-	this.width = (container.opacity) ? rezX * 112 : 
-		Ti.Platform.displayCaps.getPlatformWidth();
-	this.height = (container.opacity) ? rezY * 162 : 
-		Ti.Platform.displayCaps.getPlatformHeight();
-};
-imgZoomWindow.addEventListener('click', imgZoomWindow.zoom);
 
 // sliding animation
 var imgCabLeft = Titanium.UI.createImageView({

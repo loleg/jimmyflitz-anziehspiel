@@ -45,7 +45,9 @@ function showMenu() {
 			left : img.left + img.width / 2,
 			shadowColor:'#444', shadowOffset:{x:1, y:1}
 		});
+		// Choose a landscape
 		img.addEventListener('click', function(e) {
+			setLandscape(this.landscapeIndex);
 			gotoScreen(windowsIx.intro);
 		});
 		menuImg.push(img);
@@ -63,15 +65,18 @@ function showMenu() {
 function showIntro() {
 	container.add(imgWindow);
 	container.add(imgJimmy);
-
-	// set opacity to 1 to start with zoomed window
-	container.opacity = 0;
-	container.zIndex = 1;
-
-	imgZoomWindow.zIndex = 14;
-	imgZoomWindow.zoom();
+	container.add(imgSmallWindow);
+	container.opacity = 1;
+	imgZoomWindow.opacity = 0;
 	windows[windowsIx.intro].add(imgZoomWindow);
 	
+	var fSwitchZoom = function(e) {
+		container.opacity = (container.opacity) ? 0 : 1;
+		imgZoomWindow.opacity = (container.opacity) ? 0 : 1;
+	}
+	imgZoomWindow.addEventListener('click', fSwitchZoom);
+	imgSmallWindow.addEventListener('click', fSwitchZoom);
+
 	// add weather effects
 	windows[windowsIx.intro].add(imgWeather);
 	windows[windowsIx.outro].add(imgWeather);

@@ -135,7 +135,6 @@ function gotoScreen(scr) {
 			imgJimmy.zIndex = 30;
 			updateWearing();
 			startMusic();
-			setLandscape(this.landscapeIndex);
 			break;
 		case windowsIx.game:
 			imgJimmy.zIndex = 15;
