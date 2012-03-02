@@ -46,7 +46,6 @@ function showMenu() {
 			shadowColor:'#444', shadowOffset:{x:1, y:1}
 		});
 		img.addEventListener('click', function(e) {
-			setLandscape(this.landscapeIndex);
 			gotoScreen(windowsIx.intro);
 		});
 		menuImg.push(img);
@@ -62,7 +61,6 @@ function showMenu() {
 
 // initial screen with window
 function showIntro() {
-	//container.add(imgIntro);
 	container.add(imgWindow);
 	container.add(imgJimmy);
 
@@ -74,6 +72,7 @@ function showIntro() {
 	imgZoomWindow.zoom();
 	windows[windowsIx.intro].add(imgZoomWindow);
 	
+	// add weather effects
 	windows[windowsIx.intro].add(imgWeather);
 	windows[windowsIx.outro].add(imgWeather);
 
@@ -82,11 +81,8 @@ function showIntro() {
 		// gotoScreen(windowsIx.menu);
 	// });
 
-	imgIntro.addEventListener('click', function(e) {
-		this.hide();
-	});
+	// Click anywhere to continue
 	imgWindow.addEventListener('click', function(e) {
-		Ti.API.debug('Window clicked');
 		gotoScreen(windowsIx.game);
 	});
 }

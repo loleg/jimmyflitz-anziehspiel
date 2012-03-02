@@ -47,10 +47,6 @@ var soundClips = {
 	};
 
 // welcome images
-var imgIntro = Titanium.UI.createImageView({
-	image:'assets/bg/jimmy-jump-intro.jpg',
-	opacity:1, top:0, width:'100%', zIndex:10
-});
 var imgWindow = Titanium.UI.createImageView({
 	image:'assets/bg/cabane.gif',
 	opacity:1, top:0, height:'100%', zIndex:2

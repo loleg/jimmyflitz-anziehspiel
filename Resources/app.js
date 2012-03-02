@@ -54,8 +54,9 @@ function newGame() {
 		}
 	}
 	imgJimmy.image = 'assets/jimmy/jimmy_white.png';
-	windows[windowsIx.outro].endgame = false;
+	Titanium.UI.setBackgroundImage(null);
 	// reset inventory
+	windows[windowsIx.outro].endgame = false;
 	switchInventory(0);
 	loadScreens(windowsIx.outro);
 	// stop music effects
@@ -134,6 +135,7 @@ function gotoScreen(scr) {
 			imgJimmy.zIndex = 30;
 			updateWearing();
 			startMusic();
+			setLandscape(this.landscapeIndex);
 			break;
 		case windowsIx.game:
 			imgJimmy.zIndex = 15;
@@ -145,8 +147,8 @@ function gotoScreen(scr) {
 	}
 	
 	// Close the currently open window
-	if(prevScreen != -1) {
-		windows[prevScreen].close();
+	if (prevScreen != -1) {
+		//windows[prevScreen].close();
 	}
 	windows[scr].open();
 	
@@ -160,8 +162,6 @@ function gotoScreen(scr) {
 }
 
 setUp(); // application settings
-
-//setLandscape(); // set random landscape
 
 // the following can't be a loop.. don't ask why!
 loadScreens(0);
