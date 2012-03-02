@@ -1,5 +1,7 @@
 // menu screen
 function showMenu() {
+	// set language depending on locale
+	Ti.API.debug(Titanium.Platform.locale);
 	// draw all four seasons
 	for(var l in landscapes) {
 		var img = Titanium.UI.createImageView({
@@ -8,10 +10,20 @@ function showMenu() {
 			backgroundImage : 'assets/bg/landscape-' + landscapes[l] + '.jpg',
 			opacity : 1,
 			zIndex : 11,
-			width : rezX * 100,
-			height : rezY * 141,
-			top : (l < 2) ? '20%' : '55%',
-			left : (l % 2 == 0) ? '15%' : '55%',
+			width : rezX * 80,
+			height : rezY * 113,
+			top : (l < 2) ? '26%' : '54%',
+			left : (l % 2 == 0) ? '15%' : '56%',
+			borderColor:'white', borderWidth:2
+		});
+		var lbl = Titanium.UI.createLabel({
+			text: landscapes[l], zIndex: 12,
+			font: { fontWeight:'bold' },
+			size: {width: 110, height: 25},
+			color: 'yellow', 
+			top : (l < 2) ? '21%' : '49%',
+			left : img.left + img.width / 2,
+			shadowColor:'#444', shadowOffset:{x:1, y:1}
 		});
 		img.addEventListener('click', function(e) {
 			setLandscape(this.landscapeIndex);
@@ -19,6 +31,7 @@ function showMenu() {
 		});
 		menuImg.push(img);
 		container.add(img);
+		container.add(lbl);
 	}
 	// add credits link
 	container.add(buttonCredits);
@@ -114,18 +127,24 @@ function showOutro() {
 
 function showFinale() {
 	// animate Jimmy
-	var danceMatrix = Ti.UI.create2DMatrix();
-	danceMatrix.rotate(90);
 	container.left = -500; // starting point
 	container.animate({
       left: 0,
       duration: 500,
-      transform: danceMatrix,
-      duration: 1000,
-      repeat: 5,
-      autoreverse: true,
       curve: Titanium.UI.ANIMATION_CURVE_EASE_OUT
-    });
+    }, function(e) {
+    	// Next animation
+		var danceMatrix = Titanium.UI.create2DMatrix();
+		danceMatrix.rotate(-30);
+		danceMatrix.scale(5, 5);
+		var danceAnim = Titanium.UI.createAnimation({
+	      transform: danceMatrix,
+	      duration: 1000,
+	      repeat: 5,
+	      autoreverse: true
+	    });
+	    container.animate(danceAnim);
+	});
 	// play end game music
 	soundClips.play();
 }
@@ -397,10 +416,8 @@ function updateResult() {
 	windows[windowsIx.outro].endgame = typeOK;
 	if(typeOK) {
 		imgDoor.opacity = 0;
-//		imgDoor.hide();
 		showFinale();
 	} else {
 		imgDoor.opacity = 1;
-//		imgDoor.show();
 	}
 }

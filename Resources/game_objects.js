@@ -154,7 +154,7 @@ var imgIconWebsite = Titanium.UI.createImageView({
 	image:'assets/ui/credits_url.png', height:rezY* 100, bottom:'5%'
 });
 var buttonCredits = Titanium.UI.createButton({
-	title: 'Impressum', size: {width: 110, height: 25}, bottom:'5%'
+	title: 'Impressum', size: {width: 120, height: 28}, bottom:'3%'
 });
 
 // some clothes 
