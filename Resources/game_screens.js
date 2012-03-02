@@ -152,19 +152,7 @@ function showFinale() {
       left: 0,
       duration: 500,
       curve: Titanium.UI.ANIMATION_CURVE_EASE_OUT
-    }, function(e) {
-    	// Next animation
-		var danceMatrix = Titanium.UI.create2DMatrix();
-		danceMatrix.rotate(-30);
-		danceMatrix.scale(5, 5);
-		var danceAnim = Titanium.UI.createAnimation({
-	      transform: danceMatrix,
-	      duration: 1000,
-	      repeat: 5,
-	      autoreverse: true
-	    });
-	    container.animate(danceAnim);
-	});
+    });
 	// play end game music
 	if (!soundClips.mute) {
 		soundClips.game.setLooping(false);
