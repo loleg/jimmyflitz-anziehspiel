@@ -96,7 +96,7 @@ function showGame() {
 	container.add(imgJimmy);
 	drawInventory();
 	imgNavButtonLeft.addEventListener('click', function(e) {
-		if(currentInventory == 0) {
+		if (currentInventory == 0) {
 			gotoScreen(windowsIx.intro);
 		} else {
 			currentInventory = 0;
@@ -105,7 +105,7 @@ function showGame() {
 	});
 	container.add(imgNavButtonLeft);
 	imgNavButtonRight.addEventListener('click', function(e) {
-		if(currentInventory == 1) {
+		if (currentInventory == 1) {
 			// close doors and go to end game
 			//slideDoors(false, windowsIx.outro);
 			gotoScreen(windowsIx.outro);
@@ -127,9 +127,10 @@ function showOutro() {
 	windows[windowsIx.outro].container.addEventListener('click', function(e) {
 		if (currentScreen != windowsIx.outro) return;
 		if (windows[windowsIx.outro].endgame) {
+		    // Exit Jimmy
 			container.animate({
 		      left: 1000,
-		      duration: 500,
+		      duration: 800,
 		      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
 		    }, function(e) {
 		    	// What to do after animation finishes
@@ -137,6 +138,18 @@ function showOutro() {
 			});
 		} else { 
 			gotoScreen(windowsIx.game);
+		}
+	});
+	Titanium.Gesture.addEventListener('shake', function(e) {
+		if (currentScreen != windowsIx.outro) return;
+		if (windows[windowsIx.outro].endgame) {
+			// Jump Jimmy
+			container.animate({
+		      top: -170,
+		      autoreverse: true,
+		      duration: 350,
+		      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
+		    });
 		}
 	});
 }

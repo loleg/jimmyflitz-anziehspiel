@@ -186,7 +186,8 @@ var clothes = [
 	{ id: "socks_blue", type: 1, x: 190, y: 445, z: 1 },
 	{ id: "boots", type: 1, sunny:-1, rainy:1, x: 185, y: 431, z: 3 },
 	   
-	{ id: "umbrella", type: 0, sunny:-5, rainy:2, scale: 1.4, x: 238, y: 339, z: -40, center: {x:rezX* 305, y:rezY* 100} }
+	{ id: "umbrella", type: 0, sunny:-5, rainy:2, scale: 1.4, scaleTo: 1.4,
+	  x: 230, y: 310, z: -40, center: {x:rezX* 308, y:rezY* 85} }
 	];
 	
 var imgClothes = [];

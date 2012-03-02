@@ -148,7 +148,7 @@ function gotoScreen(scr) {
 	
 	// Close the currently open window
 	if (prevScreen != -1) {
-		//windows[prevScreen].close();
+		windows[prevScreen].close();
 	}
 	windows[scr].open();
 	
