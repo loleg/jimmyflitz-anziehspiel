@@ -134,7 +134,7 @@ function showOutro() {
 			container.animate({
 		      left: 1000,
 		      duration: 500,
-		      curve: Titanium.UI.ANIMATION_CURVE_EASE_IN
+		      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
 		    }, function(e) {
 		    	// What to do after animation finishes
 		    	gotoScreen(windowsIx.credits);
@@ -151,8 +151,17 @@ function showFinale() {
 	container.animate({
       left: 0,
       duration: 500,
-      curve: Titanium.UI.ANIMATION_CURVE_EASE_OUT
+      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
     });
+	Ti.Gesture.addEventListener('shake', function(e) {
+      container.animate({
+	      top: 0,
+	      autoreverse: true,
+	      duration: 500,
+	      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
+	    });
+    });
+
 	// play end game music
 	if (!soundClips.mute) {
 		soundClips.game.setLooping(false);

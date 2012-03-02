@@ -43,7 +43,7 @@ var soundClips = {
 	oops:	Titanium.Media.createSound({
 			url: "sound/JimmyOo_Upps_Dajana.m4a" }),
 	finale: Titanium.Media.createSound({
-			url: "sound/SchwyzerFlitzer LEAPop.mp3" })
+			url: "sound/SchwyzerFlitzerLEAPop.mp3" })
 	};
 
 // welcome images
