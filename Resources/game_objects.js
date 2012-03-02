@@ -144,17 +144,17 @@ var imgIconWarning = Titanium.UI.createImageView({
 var imgIconCD = Titanium.UI.createImageView({
 	image:'assets/ui/icon_disc.png',
 	height:rezY* 90, width:rezY* 90,
-	center:{x:'20%', y:rezY* 130}
+	center:{x:'20%', y:rezY* 150}
 });
 var imgIconBook = Titanium.UI.createImageView({
 	image:'assets/ui/icon_book.png',
 	height:rezY* 90, width:rezY* 90,
-	center:{y:rezY* 130}
+	center:{y:rezY* 150}
 });
 var imgIconAudioBook = Titanium.UI.createImageView({
 	image:'assets/ui/icon_audiobook.png',
 	height:rezY* 90, width:rezY* 90,
-	center:{x:'80%', y:rezY* 130}
+	center:{x:'80%', y:rezY* 150}
 });
 var imgIconWebsite = Titanium.UI.createImageView({
 	height:rezY* 150, bottom:'1%'

@@ -198,7 +198,7 @@ function showCredits() {
 		var lbl = Titanium.UI.createLabel({
 			text: labelTexts[l], zIndex: 12, height:30,
 			font: { fontWeight:'bold', fontSize:'14pt' },
-			color: 'white', top : '34%',
+			color: 'white', top : rezY* 185,
 			left : (14+l*27) + '%',
 			shadowColor:'#444', shadowOffset:{x:1, y:1}
 		});
