@@ -166,7 +166,11 @@ function showFinale() {
 	    container.animate(danceAnim);
 	});
 	// play end game music
-	soundClips.play();
+	if (!soundClips.mute) {
+		soundClips.game.setLooping(false);
+		soundClips.game.stop();
+		soundClips.finale.play();
+	}
 }
 
 function showCredits() {
@@ -456,9 +460,15 @@ function updateResult() {
 	// check if Jimmy goes out
 	windows[windowsIx.outro].endgame = typeOK;
 	if(typeOK) {
+		if (!soundClips.mute) {
+			soundClips.jupi.play();
+		}
 		imgDoor.opacity = 0;
 		showFinale();
 	} else {
+		if (!soundClips.mute) {
+			soundClips.oops.play();
+		}
 		imgDoor.opacity = 1;
 	}
 }

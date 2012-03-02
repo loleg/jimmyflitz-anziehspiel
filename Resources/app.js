@@ -59,9 +59,26 @@ function newGame() {
 	switchInventory(0);
 	loadScreens(windowsIx.outro);
 	// stop music effects
-	soundClips.stop();
+	stopMusic();
 	// return to menu
 	gotoScreen(0);
+}
+
+function stopMusic() {
+	soundClips.game.setLooping(false);
+	soundClips.game.stop();
+	soundClips.jupi.stop();
+	soundClips.oops.stop();
+	soundClips.finale.stop();
+	soundClips.play = false;
+}
+
+function startMusic() {
+	if (!soundClips.mute && !soundClips.play) {
+		soundClips.game.setLooping(true);
+		soundClips.game.play();
+		soundClips.play = true;
+	}
 }
 
 // game screen loader
@@ -116,6 +133,7 @@ function gotoScreen(scr) {
 		case windowsIx.intro:
 			imgJimmy.zIndex = 30;
 			updateWearing();
+			startMusic();
 			break;
 		case windowsIx.game:
 			imgJimmy.zIndex = 15;

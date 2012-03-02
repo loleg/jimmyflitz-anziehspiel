@@ -33,8 +33,18 @@ var imgWeather = Titanium.UI.createImageView({
 });
 
 // end game music
-var soundClips = Titanium.Media.createSound({
-	url: "sound/21-DAJANA-MASTERMIX_02.mp3" });
+var soundClips = {
+	mute:  	false,
+	play:	false,
+	game: 	Titanium.Media.createSound({
+			url: "sound/HintergrundLiedJF.mp3" }),
+	jupi: 	Titanium.Media.createSound({
+			url: "sound/Jimmy_Jubell_Laute.m4a" }),
+	oops:	Titanium.Media.createSound({
+			url: "sound/JimmyOo_Upps_Dajana.m4a" }),
+	finale: Titanium.Media.createSound({
+			url: "sound/SchwyzerFlitzer LEAPop.mp3" })
+	};
 
 // welcome images
 var imgIntro = Titanium.UI.createImageView({
@@ -170,17 +180,17 @@ var clothes = [
 	{ id: "hat2", type: 1, sunny:1, scale: 0.7, scaleTo: 1.2, x: 170, y: 297 }, 
 	{ id: "hat3", type: 1, sunny:1, scale: 0.8, scaleTo: 1.1, x: 163, y: 289 }, 
 	{ id: "shades1", type: 0, sunny:1, rainy:-3, scale: 0.8, x: 171, y: 305, center: {x:rezX* 136, y:rezY* 170} },
-	{ id: "shades2", type: 0, scale: 0.8, x: 170, y: 310, center: {x:rezX* 230, y:rezY* 170} }, 
+	{ id: "shades2", type: 0, scale: 0.8, x: 170, y: 310, center: {x:rezX* 233, y:rezY* 160} }, 
 	
 	{ id: "scarf1", type: 2, x: 176, y: 352, z: 4 },
-	{ id: "jacket2", type: 3, scale: 1.2, x: 181, y: 353, z: 2, scaleTo: 1.4 }, 
-	{ id: "jacket1", type: 2, scale: 1.1, scaleTo: 0.9, x: 178, y: 365, z: 1 },
+	{ id: "jacket2", type: 3, scale: 1.2, scaleTo: 1.4, x: 181, y: 353, z: 2 }, 
+	{ id: "jacket1", type: 2, scale: 1.2, scaleTo: 0.9, x: 178, y: 365, z: 1 },
 	{ id: "mittens1", type: 2, x: 183, y: 392, z: 3 },
 	{ id: "mittens2", type: 2, x: 184, y: 394, z: 3, scaleTo: 1.1 },
 	{ id: "socks_blue", type: 1, x: 190, y: 445, z: 1 },
 	{ id: "boots", type: 1, sunny:-1, rainy:1, x: 185, y: 431, z: 3 },
 	   
-	{ id: "umbrella", type: 0, sunny:-5, rainy:2, scale: 1.4, x: 238, y: 339, z: -40, center: {x:rezX* 277, y:rezY* 100} }
+	{ id: "umbrella", type: 0, sunny:-5, rainy:2, scale: 1.4, x: 238, y: 339, z: -40, center: {x:rezX* 305, y:rezY* 100} }
 	];
 	
 var imgClothes = [];
