@@ -1,7 +1,27 @@
 // menu screen
 function showMenu() {
 	// set language depending on locale
-	Ti.API.debug(Titanium.Platform.locale);
+	Ti.API.debug('User locale: ' + Titanium.Platform.locale);
+	var landscapeText = landscapes;
+	var buttonText = 'Credits';
+	switch(Titanium.Platform.locale) {
+	case 'en':
+		landscapeText = ['Spring', 'Summer', 'Autumn', 'Winter'];
+		break;
+	case 'de':
+		landscapeText = ['Frühling', 'Sommer', 'Herbst', 'Winter'];
+		buttonText = "Impressum";
+		break;
+	case 'fr':
+		landscapeText = ['Printemps', "L'été", 'Automne', 'Hiver'];
+		buttonText = "Edition";
+		break;
+	case 'it':
+		landscapeText = ['Primavera', 'Estate', 'Autunno', 'Inverna']; 
+		buttonText = "Edizione";
+		break;
+	}
+	buttonCredits.title = buttonText;
 	// draw all four seasons
 	for(var l in landscapes) {
 		var img = Titanium.UI.createImageView({
@@ -17,7 +37,7 @@ function showMenu() {
 			borderColor:'white', borderWidth:2
 		});
 		var lbl = Titanium.UI.createLabel({
-			text: landscapes[l], zIndex: 12,
+			text: landscapeText[l], zIndex: 12,
 			font: { fontWeight:'bold' },
 			size: {width: 110, height: 25},
 			color: 'yellow', 
@@ -154,6 +174,27 @@ function showCredits() {
 	container.add(imgIconBook);
 	container.add(imgIconAudioBook);
 	container.add(imgIconWebsite);
+	// add labels
+	var labelTexts = ['Music', 'Book', 'Audiobook'];
+	switch(Titanium.Platform.locale) {
+	case 'de':
+		labelTexts = ['Musik', 'Buch', 'Hörbuch']; break;
+	case 'fr':
+		labelTexts = ['Musique', 'Livre', 'Livre audio']; break;
+	case 'it':
+		labelTexts = ['Musica', 'Libro', 'Audiolibro']; break;
+	}
+	for (var l in labelTexts) {
+		var lbl = Titanium.UI.createLabel({
+			text: labelTexts[l], zIndex: 12, height:30,
+			font: { fontWeight:'bold', fontSize:'14pt' },
+			color: 'white', top : '34%',
+			left : (14+l*27) + '%',
+			shadowColor:'#444', shadowOffset:{x:1, y:1}
+		});
+		container.add(lbl);
+	}
+	
 	// return to menu
 	windows[windowsIx.credits].container.addEventListener('click', function(e) {
 		newGame();
