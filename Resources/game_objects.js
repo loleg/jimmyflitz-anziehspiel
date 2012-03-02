@@ -6,14 +6,15 @@ var rezY = Ti.Platform.displayCaps.getPlatformHeight() / 480;
 var container;
 var windowsIx = { menu: 0, intro: 1, game: 2, outro: 3, credits: 4 };
 var windows = [
-	Titanium.UI.createWindow({ 
-		backgroundColor:'#fff' }), 	// Menu
-	Titanium.UI.createWindow({ }),// title:'Intro'
-	Titanium.UI.createWindow({ 		// title:'Cabinet'
+	Titanium.UI.createWindow({ // Menu
+		backgroundImage:'assets/bg/menu.jpg' 
+	}), 
+	Titanium.UI.createWindow({ }), // title:'Intro'
+	Titanium.UI.createWindow({ // title:'Cabinet'
 	    backgroundImage:'assets/bg/kleiderschrank1-open-left.jpg'
 	}),
-	Titanium.UI.createWindow({ }),// title:'Outro'
-	Titanium.UI.createWindow({ 		// title:'Credits'
+	Titanium.UI.createWindow({ }), // title:'Outro'
+	Titanium.UI.createWindow({ // title:'Credits'
 	    backgroundImage:'assets/bg/credits.jpg'
 	}),
 ];
