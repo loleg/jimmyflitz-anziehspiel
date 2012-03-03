@@ -129,7 +129,7 @@ function showOutro() {
 	container.add(imgDoor);
 	container.add(imgIconWarning);
 	imgNavButtonRight2.opacity = 0;
-	container.add(imgNavButtonRight2);
+	windows[windowsIx.outro].add(imgNavButtonRight2);
 	// tap to return to cabinet or go to credits
 	windows[windowsIx.outro].container.addEventListener('click', function(e) {
 		if (currentScreen != windowsIx.outro) return;
@@ -153,7 +153,7 @@ function showOutro() {
 	      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
 	    }, function(e) {
 	    	// What to do after animation finishes
-	    	// imgJimmy.setTouchEnabled(false);
+	    	this.opacity = 0;
 	    	gotoScreen(windowsIx.credits);
 		});
     });
