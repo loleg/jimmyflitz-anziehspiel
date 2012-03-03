@@ -134,16 +134,13 @@ function showOutro() {
 	windows[windowsIx.outro].container.addEventListener('click', function(e) {
 		if (currentScreen != windowsIx.outro) return;
 		if (windows[windowsIx.outro].endgame) {
-		    // Exit Jimmy
-		    /*
-			container.animate({
-		      left: 1000,
-		      duration: 800,
-		      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
-		    }, function(e) {
-		    	// What to do after animation finishes
-		    	gotoScreen(windowsIx.credits);
-			}); */
+			// animate Jimmy jumping
+		    this.animate({
+			      top: -150,
+			      autoreverse: true,
+			      duration: 500,
+			      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
+			    });
 		} else { 
 			gotoScreen(windowsIx.game);
 		}
@@ -156,22 +153,22 @@ function showOutro() {
 	      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
 	    }, function(e) {
 	    	// What to do after animation finishes
-	    	imgJimmy.setTouchEnabled(false);
+	    	// imgJimmy.setTouchEnabled(false);
 	    	gotoScreen(windowsIx.credits);
 		});
     });
     // animate Jimmy jump on tap
-	imgJimmy.addEventListener('click', function(e) {
-		if (currentScreen != windowsIx.outro) return;
-		if (windows[windowsIx.outro].endgame) {
-			container.animate({
-			      top: 0,
-			      autoreverse: true,
-			      duration: 500,
-			      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
-			    });
-		}
-    });
+	// imgJimmy.addEventListener('click', function(e) {
+		// if (currentScreen != windowsIx.outro) return;
+		// if (windows[windowsIx.outro].endgame) {
+			// container.animate({
+			      // top: 0,
+			      // autoreverse: true,
+			      // duration: 500,
+			      // curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
+			    // });
+		// }
+    // });
 }
 
 function showFinale() {
@@ -184,10 +181,14 @@ function showFinale() {
     });
 	// show exit button after a little while
 	var enableNavButton = function() {
-		imgNavButtonRight2.opacity = 1
+		imgNavButtonRight2.opacity = 1;
+		imgNavButtonRight2.right = -200;
+		imgNavButtonRight2.animate({
+	      right: 0,
+	      duration: 500
+	    });
 	};
-	setTimeout(enableNavButton, 3000);
-    imgJimmy.setTouchEnabled(true);
+	setTimeout(enableNavButton, 5000);
 
 	// play end game music
 	if (!soundClips.mute) {
@@ -251,7 +252,9 @@ function setLandscape(index) {
 	// background asset
 	var path = 'assets/bg/landscape-' + landscapes[theLandscape] + '.jpg';
 	// set the UI background
-	Titanium.UI.setBackgroundImage(path);
+	// Titanium.UI.setBackgroundImage(path);
+	windows[windowsIx.intro].setBackgroundImage(path);
+	windows[windowsIx.outro].setBackgroundImage(path);
 	// show or hide the weather 'fx'
 	imgWeather.opacity = (fairWeather) ? 0 : 1;
 }
