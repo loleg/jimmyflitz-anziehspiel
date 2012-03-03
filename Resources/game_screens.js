@@ -34,7 +34,7 @@ function showMenu() {
 			height : rezY * 113,
 			top : (l < 2) ? '26%' : '54%',
 			left : (l % 2 == 0) ? '15%' : '56%',
-			borderColor:'white', borderWidth:2
+			borderColor:'white', borderWidth:1
 		});
 		var lbl = Titanium.UI.createLabel({
 			text: landscapeText[l], zIndex: 12,
@@ -128,11 +128,14 @@ function showOutro() {
 	container.add(imgJimmy);
 	container.add(imgDoor);
 	container.add(imgIconWarning);
+	imgNavButtonRight2.opacity = 0;
+	container.add(imgNavButtonRight2);
 	// tap to return to cabinet or go to credits
 	windows[windowsIx.outro].container.addEventListener('click', function(e) {
 		if (currentScreen != windowsIx.outro) return;
 		if (windows[windowsIx.outro].endgame) {
 		    // Exit Jimmy
+		    /*
 			container.animate({
 		      left: 1000,
 		      duration: 800,
@@ -140,41 +143,51 @@ function showOutro() {
 		    }, function(e) {
 		    	// What to do after animation finishes
 		    	gotoScreen(windowsIx.credits);
-			});
+			}); */
 		} else { 
 			gotoScreen(windowsIx.game);
 		}
 	});
-	Titanium.Gesture.addEventListener('shake', function(e) {
+	// animate Jimmy exit
+    imgNavButtonRight2.addEventListener('click', function(e) {
+    	container.animate({
+	      left: 1000,
+	      duration: 800,
+	      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
+	    }, function(e) {
+	    	// What to do after animation finishes
+	    	imgJimmy.setTouchEnabled(false);
+	    	gotoScreen(windowsIx.credits);
+		});
+    });
+    // animate Jimmy jump on tap
+	imgJimmy.addEventListener('click', function(e) {
 		if (currentScreen != windowsIx.outro) return;
 		if (windows[windowsIx.outro].endgame) {
-			// Jump Jimmy
 			container.animate({
-		      top: -170,
-		      autoreverse: true,
-		      duration: 350,
-		      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
-		    });
+			      top: 0,
+			      autoreverse: true,
+			      duration: 500,
+			      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
+			    });
 		}
-	});
+    });
 }
 
 function showFinale() {
-	// animate Jimmy
+	// animate Jimmy entrance
 	container.left = -500; // starting point
 	container.animate({
       left: 0,
       duration: 500,
       curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
     });
-	Ti.Gesture.addEventListener('shake', function(e) {
-      container.animate({
-	      top: 0,
-	      autoreverse: true,
-	      duration: 500,
-	      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
-	    });
-    });
+	// show exit button after a little while
+	var enableNavButton = function() {
+		imgNavButtonRight2.opacity = 1
+	};
+	setTimeout(enableNavButton, 3000);
+    imgJimmy.setTouchEnabled(true);
 
 	// play end game music
 	if (!soundClips.mute) {

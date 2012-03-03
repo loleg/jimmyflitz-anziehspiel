@@ -131,6 +131,11 @@ var imgNavButtonRight = Titanium.UI.createImageView({
 	height:rezY* 90, width:rezX* 90, 
 	center:{x:rezX* 320, y:rezY* 355}, zIndex:99
 });
+var imgNavButtonRight2 = Titanium.UI.createImageView({
+	image:'assets/ui/mousefeet.png',
+	height:rezY* 90, width:rezX* 90, 
+	center:{x:rezX* 320, y:rezY* 355}, zIndex:99
+});
 
 /* various icons */
 var imgIconWarning = Titanium.UI.createImageView({
