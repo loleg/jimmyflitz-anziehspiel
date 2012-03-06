@@ -152,8 +152,10 @@ function showOutro() {
 		    this.animate({
 			      top: -170,
 			      autoreverse: true,
-			      duration: 400,
+			      duration: 350,
 			      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
+			    }, function(e) {
+			    	this.top = 1;
 			    });
 		} else { 
 			gotoScreen(windowsIx.game);
