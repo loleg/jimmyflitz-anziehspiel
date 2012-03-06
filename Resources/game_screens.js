@@ -148,10 +148,11 @@ function showOutro() {
 		if (currentScreen != windowsIx.outro) return;
 		if (windows[windowsIx.outro].endgame) {
 			// animate Jimmy jumping
+			this.top = 1;
 		    this.animate({
 			      top: -170,
 			      autoreverse: true,
-			      duration: 200,
+			      duration: 400,
 			      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
 			    });
 		} else { 
