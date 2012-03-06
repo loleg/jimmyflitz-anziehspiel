@@ -37,13 +37,13 @@ var soundClips = {
 	mute:  	false,
 	play:	false,
 	game: 	Titanium.Media.createSound({
-			url: "sound/HintergrundLiedJF.mp3" }),
+			url: "sound/ChaesliedPlayb.mp3" }),
 	jupi: 	Titanium.Media.createSound({
 			url: "sound/Jimmy_Jubell_Laute.m4a" }),
 	oops:	Titanium.Media.createSound({
 			url: "sound/JimmyOo_Upps_Dajana.m4a" }),
 	finale: Titanium.Media.createSound({
-			url: "sound/SchwyzerFlitzerLEAPop.mp3" })
+			url: "sound/SchwyzerFlitzerZoss.mp3" })
 	};
 
 // welcome images

@@ -240,7 +240,7 @@ function showCredits() {
 		Ti.Platform.openURL("http://itunes.apple.com/ch/book/jimmy-flitz-die-schweizermaus/id464844865?mt=11#");
 	});
 	imgIconAudioBook.addEventListener('click', function(e) {
-		Ti.Platform.openURL("http://itunes.apple.com/ch/album/honigmelonemond/id387316259");
+		Ti.Platform.openURL("http://ax.search.itunes.apple.com/WebObjects/MZSearch.woa/wa/search?entity=album&media=all&page=1&restrict=true&startIndex=0&term=jimmy-flitz");
 	});
 	imgIconWebsite.addEventListener('click', function(e) {
 		Ti.Platform.openURL("http://www.jimmyflitz.ch");
