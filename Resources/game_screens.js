@@ -88,7 +88,20 @@ function showIntro() {
 
 	// Click anywhere to continue
 	imgWindow.addEventListener('click', function(e) {
-		gotoScreen(windowsIx.game);
+		if (checkWearing()) {
+			gotoScreen(windowsIx.game);
+		} else {
+			// animate Jimmy walking to closet
+			var myleft = imgJimmy.left;
+			imgJimmy.animate({
+		      left: 1000,
+		      duration: 1000,
+		      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
+		    }, function(e) {
+		    	gotoScreen(windowsIx.game);
+		    	imgJimmy.left = myleft;
+			});
+		}
 	});
 }
 
@@ -128,7 +141,7 @@ function showOutro() {
 	container.add(imgJimmy);
 	container.add(imgDoor);
 	container.add(imgIconWarning);
-	imgNavButtonRight2.opacity = 0;
+	imgNavButtonRight2.opacity = 0; // hide button for a few seconds
 	windows[windowsIx.outro].add(imgNavButtonRight2);
 	// tap to return to cabinet or go to credits
 	windows[windowsIx.outro].container.addEventListener('click', function(e) {
@@ -136,9 +149,9 @@ function showOutro() {
 		if (windows[windowsIx.outro].endgame) {
 			// animate Jimmy jumping
 		    this.animate({
-			      top: -150,
+			      top: -170,
 			      autoreverse: true,
-			      duration: 500,
+			      duration: 200,
 			      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
 			    });
 		} else { 
@@ -149,26 +162,14 @@ function showOutro() {
     imgNavButtonRight2.addEventListener('click', function(e) {
     	container.animate({
 	      left: 1000,
-	      duration: 800,
+	      duration: 1000,
 	      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
 	    }, function(e) {
 	    	// What to do after animation finishes
-	    	this.opacity = 0;
+	    	this.opacity = 0; // hide button for next time
 	    	gotoScreen(windowsIx.credits);
 		});
     });
-    // animate Jimmy jump on tap
-	// imgJimmy.addEventListener('click', function(e) {
-		// if (currentScreen != windowsIx.outro) return;
-		// if (windows[windowsIx.outro].endgame) {
-			// container.animate({
-			      // top: 0,
-			      // autoreverse: true,
-			      // duration: 500,
-			      // curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
-			    // });
-		// }
-    // });
 }
 
 function showFinale() {
@@ -407,7 +408,16 @@ function unwearItem(obj) {
 	switchInventory();
 }
 
-// var showClothes = [];
+function checkWearing() {
+	// iterate through all worn clothing
+	for(var i in imgClothes) {
+		if (imgClothes[i].wearing) {
+			return true;
+		}
+	}
+	return false;
+}
+
 function updateWearing() {
 	// iterate through all worn clothing
 	for(var i in imgClothes) {
@@ -448,10 +458,10 @@ function updateResult() {
 		switch (parseInt(theLandscape)) {
 		case 0: // spring
 		case 2: // autumn
-			typeOK = (fairWeather && typeTally > 1 && typeTally < 5)	
-			 	  || (!fairWeather && typeTally > 2 && typeTally < 7 && rainTally > 0);
-			typeWarn = (typeTally < 2) ? 'snow' : typeWarn;
-			typeWarn = (typeTally > 4) ? 'sun' : typeWarn;
+			typeOK = (fairWeather && typeTally > 1 && typeTally < 6)	
+			 	  || (!fairWeather && typeTally > 2 && typeTally < 8 && rainTally > 0);
+			typeWarn = (typeTally < 3) ? 'snow' : typeWarn;
+			typeWarn = (typeTally >= 3) ? 'sun' : typeWarn;
 			break;
 		case 1: // summer
 			typeOK = (fairWeather && typeTally > 0 && typeTally < 4 && sunTally > 0)
