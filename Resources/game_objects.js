@@ -185,8 +185,8 @@ var clothes = [
 	{ id: "scarf1", type: 2, scale: 0.9, x: 176, y: 352, z: 4 },
 	{ id: "jacket2", type: 3, scale: 1.3, scaleTo: 1.4, x: 181, y: 353, z: 2 }, 
 	{ id: "jacket1", type: 2, scale: 1.2, scaleTo: 0.9, x: 178, y: 365, z: 1 },
-	{ id: "mittens1", type: 2, x: 183, y: 392, z: 3, scale: 0.8, scaleTo: 1.3 },
-	{ id: "mittens2", type: 2, x: 183, y: 395, z: 3, scale: 0.8, scaleTo: 1.4 },
+	{ id: "mittens1", type: 2, x: 183, y: 395, z: 3, scale: 0.8, scaleTo: 1.3 },
+	{ id: "mittens2", type: 2, x: 183, y: 397, z: 3, scale: 0.8, scaleTo: 1.35 },
 	{ id: "socks_blue", type: 1, x: 190, y: 445, z: 1 },
 	{ id: "boots", type: 1, sunny:-1, rainy:1, x: 187, y: 431, z: 3, scale: 0.9, scaleTo: 1.1 },
 	   
