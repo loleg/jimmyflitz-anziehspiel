@@ -20,9 +20,9 @@ function setUp() {
 function newGame() {
 	// reset Jimmy
 	for(var i in imgClothes) {
-		if (imgClothes[i].wearing) {
+		// if (imgClothes[i].wearing) {
 			unwearItem(imgClothes[i]);
-		}
+		// }
 	}
 	imgJimmy.image = 'assets/jimmy/jimmy_white.png';
 	Titanium.UI.setBackgroundImage(null);
