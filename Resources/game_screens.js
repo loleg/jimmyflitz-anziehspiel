@@ -47,6 +47,7 @@ function showMenu() {
 		});
 		// Choose a landscape
 		img.addEventListener('click', function(e) {
+			stopMusic();
 			setLandscape(this.landscapeIndex);
 			gotoScreen(windowsIx.intro);
 		});
@@ -141,6 +142,8 @@ function showOutro() {
 	container.add(imgJimmy);
 	container.add(imgDoor);
 	container.add(imgIconWarning);
+	container.add(imgNavButtonJump);
+	imgNavButtonJump.opacity = 0;
 	imgNavButtonRight2.opacity = 0; // hide button for a few seconds
 	windows[windowsIx.outro].add(imgNavButtonRight2);
 	// tap to return to cabinet or go to credits
@@ -149,13 +152,17 @@ function showOutro() {
 		if (windows[windowsIx.outro].endgame) {
 			// animate Jimmy jumping
 			this.top = 1;
-		    this.animate({
+			imgNavButtonJump.opacity = 0;
+		    windows[windowsIx.outro].container.animate({
 			      top: -170,
-			      autoreverse: true,
 			      duration: 350,
 			      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
 			    }, function(e) {
-			    	this.top = 1;
+			    	 windows[windowsIx.outro].container.animate({
+				      top: 1,
+				      duration: 350,
+				      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
+				    });
 			    });
 		} else { 
 			gotoScreen(windowsIx.game);
@@ -164,12 +171,10 @@ function showOutro() {
 	// animate Jimmy exit
     imgNavButtonRight2.addEventListener('click', function(e) {
     	container.animate({
-	      left: 1000,
-	      duration: 1000,
-	      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
+	      left: 1200,
+	      duration: 1000
 	    }, function(e) {
-	    	// What to do after animation finishes
-	    	this.opacity = 0; // hide button for next time
+	    	imgNavButtonRight2.opacity = 0; // hide button for next time
 	    	gotoScreen(windowsIx.credits);
 		});
     });
@@ -182,6 +187,8 @@ function showFinale() {
       left: 0,
       duration: 500,
       curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_OUT
+    }, function() {
+    	imgNavButtonJump.opacity = 1;
     });
 	// show exit button after a little while
 	var enableNavButton = function() {
@@ -211,7 +218,7 @@ function showCredits() {
 	var labelTexts = ['Music', 'Book', 'Audiobook'];
 	switch(Titanium.Platform.locale) {
 	case 'de':
-		labelTexts = ['Musik', 'Buch', 'Hörbuch']; break;
+		labelTexts = ['Musik', 'Buch', 'Hörspiele']; break;
 	case 'fr':
 		labelTexts = ['Musique', 'Livre', 'Livre audio']; break;
 	case 'it':
@@ -240,7 +247,7 @@ function showCredits() {
 		Ti.Platform.openURL("http://itunes.apple.com/ch/book/jimmy-flitz-die-schweizermaus/id464844865?mt=11#");
 	});
 	imgIconAudioBook.addEventListener('click', function(e) {
-		Ti.Platform.openURL("http://ax.search.itunes.apple.com/WebObjects/MZSearch.woa/wa/search?entity=album&media=all&page=1&restrict=true&startIndex=0&term=jimmy-flitz");
+		Ti.Platform.openURL("http://itunes.apple.com/ch/artist/roland-zoss/id260296137");
 	});
 	imgIconWebsite.addEventListener('click', function(e) {
 		Ti.Platform.openURL("http://www.jimmyflitz.ch");

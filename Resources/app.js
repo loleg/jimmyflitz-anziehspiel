@@ -30,8 +30,6 @@ function newGame() {
 	windows[windowsIx.outro].endgame = false;
 	switchInventory(0);
 	loadScreens(windowsIx.outro);
-	// stop music effects
-	stopMusic();
 	// return to menu
 	gotoScreen(0);
 }
