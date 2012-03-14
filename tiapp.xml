@@ -22,7 +22,7 @@
     <statusbar-hidden>true</statusbar-hidden>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
-    <analytics>true</analytics>
+    <analytics>false</analytics>
     <guid>24607ea0-c942-44bc-ba90-61f04bb2bcbb</guid>
     <iphone>
         <orientations device="iphone">

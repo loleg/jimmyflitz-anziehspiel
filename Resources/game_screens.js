@@ -234,9 +234,8 @@ function showCredits() {
 		});
 		container.add(lbl);
 	}
-	
 	// return to menu
-	windows[windowsIx.credits].container.addEventListener('click', function(e) {
+	container.addEventListener('click', function(e) {
 		newGame();
 	});
 	// assign links
