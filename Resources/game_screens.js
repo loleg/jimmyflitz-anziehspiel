@@ -214,6 +214,7 @@ function showCredits() {
 	container.add(imgIconBook);
 	container.add(imgIconAudioBook);
 	container.add(imgIconWebsite);
+	container.add(imgNavButtonHome);
 	// add labels
 	var labelTexts = ['Music', 'Book', 'Audiobook'];
 	switch(Titanium.Platform.locale) {
@@ -236,6 +237,9 @@ function showCredits() {
 	}
 	// return to menu
 	container.addEventListener('click', function(e) {
+		newGame();
+	});
+	imgNavButtonHome.addEventListener('click', function(e) {
 		newGame();
 	});
 	// assign links
@@ -286,6 +290,19 @@ function slideDoors(isOpening) {
 		duration : 2100
 	}, function() {
 		imgCabRight.hide();
+		wiggleClothes();
+	});
+}
+
+function slideDoors(isOpening) {
+	imgCabLeft.show();
+	imgCabRight.show();
+	imgCabLeft.left = (isOpening) ? imgCabLeft.showX : imgCabLeft.hideX;
+	imgCabLeft.animate({
+		left : (isOpening) ? imgCabLeft.hideX : imgCabLeft.showX,
+		duration : 1500
+	}, function() {
+		imgCabLeft.hide();
 	});
 }
 
