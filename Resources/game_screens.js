@@ -290,20 +290,17 @@ function slideDoors(isOpening) {
 		duration : 2100
 	}, function() {
 		imgCabRight.hide();
-		wiggleClothes();
 	});
-}
-
-function slideDoors(isOpening) {
-	imgCabLeft.show();
-	imgCabRight.show();
-	imgCabLeft.left = (isOpening) ? imgCabLeft.showX : imgCabLeft.hideX;
-	imgCabLeft.animate({
-		left : (isOpening) ? imgCabLeft.hideX : imgCabLeft.showX,
-		duration : 1500
-	}, function() {
-		imgCabLeft.hide();
-	});
+	// wiggle clothes a little
+	// for(var i = 0; i < clothesPerSide; i++) {
+		// if(!imgClothes[i].wearing) {
+			// imgClothes[i].animate({
+				// left: 10,
+				// autoreverse: true,
+				// duration: 150
+			// });
+		// }
+	// }
 }
 
 // draws all clothes

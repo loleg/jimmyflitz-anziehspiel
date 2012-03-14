@@ -144,7 +144,7 @@ var imgNavButtonJump = Titanium.UI.createImageView({
 var imgNavButtonHome = Titanium.UI.createImageView({
 	image:'assets/ui/mousehouse.png',
 	height:rezY* 70, width:rezX* 70, 
-	center:{y:rezY* 220}, zIndex:99
+	center:{y:rezY* 255}, zIndex:99
 });
 
 /* various icons */
