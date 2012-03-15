@@ -141,11 +141,6 @@ var imgNavButtonJump = Titanium.UI.createImageView({
 	height:rezY* 70, width:rezX* 70, 
 	center:{y:rezY* 70}, zIndex:99
 });
-var imgNavButtonHome = Titanium.UI.createImageView({
-	image:'assets/ui/mousehouse.png',
-	height:rezY* 70, width:rezX* 70, 
-	center:{y:rezY* 255}, zIndex:99
-});
 
 /* various icons */
 var imgIconWarning = Titanium.UI.createImageView({
@@ -172,8 +167,11 @@ var imgIconAudioBook = Titanium.UI.createImageView({
 var imgIconWebsite = Titanium.UI.createImageView({
 	height:rezY* 120, bottom:'1%'
 });
-var buttonCredits = Titanium.UI.createButton({
-	title: 'Impressum', size: {width: 120, height: 28}, bottom:'3%'
+var buttonCredits = Titanium.UI.createLabel({
+	text: 'Impressum', size: {width: 150, height: 57}, 
+	right:'15%', bottom:'1%',
+	color: '#631a05', font: { fontFamily:'serif', fontSize:14 }, 
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER
 });
 
 // some clothes 

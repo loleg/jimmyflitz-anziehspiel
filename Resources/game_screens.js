@@ -21,7 +21,7 @@ function showMenu() {
 		buttonText = "Edizione";
 		break;
 	}
-	buttonCredits.title = buttonText;
+	buttonCredits.text = buttonText;
 	// draw all four seasons
 	for(var l in landscapes) {
 		var img = Titanium.UI.createImageView({
@@ -170,10 +170,12 @@ function showOutro() {
 	});
 	// animate Jimmy exit
     imgNavButtonRight2.addEventListener('click', function(e) {
+    	container.left = 0;
     	container.animate({
 	      left: 1200,
 	      duration: 1000
 	    }, function(e) {
+	    	imgNavButtonJump.opacity = 0;
 	    	imgNavButtonRight2.opacity = 0; // hide button for next time
 	    	gotoScreen(windowsIx.credits);
 		});
@@ -214,7 +216,6 @@ function showCredits() {
 	container.add(imgIconBook);
 	container.add(imgIconAudioBook);
 	container.add(imgIconWebsite);
-	container.add(imgNavButtonHome);
 	// add labels
 	var labelTexts = ['Music', 'Book', 'Audiobook'];
 	switch(Titanium.Platform.locale) {
@@ -237,9 +238,6 @@ function showCredits() {
 	}
 	// return to menu
 	container.addEventListener('click', function(e) {
-		newGame();
-	});
-	imgNavButtonHome.addEventListener('click', function(e) {
 		newGame();
 	});
 	// assign links
@@ -291,16 +289,22 @@ function slideDoors(isOpening) {
 	}, function() {
 		imgCabRight.hide();
 	});
-	// wiggle clothes a little
-	// for(var i = 0; i < clothesPerSide; i++) {
-		// if(!imgClothes[i].wearing) {
-			// imgClothes[i].animate({
-				// left: 10,
-				// autoreverse: true,
-				// duration: 150
-			// });
-		// }
-	// }
+	
+}
+
+function wiggleClothes() {
+// wiggle clothes a little
+	for(var i = 0; i < clothesPerSide; i++) {
+		if(!imgClothes[i].wearing) {
+			// drop down from above
+			var x = imgClothes[i].center.x;
+			imgClothes[i].top = -100;
+			imgClothes[i].animate({
+					top: x,
+					duration: 300
+				});
+		}
+	}
 }
 
 // draws all clothes
@@ -315,6 +319,7 @@ function drawInventory() {
 		// }
 		// });
 		imgClothes[i].addEventListener('touchstart', function(e) {
+			if (currentScreen != windowsIx.game) return;
 			this.offset_x = e.x;
 			this.offset_y = e.y;
 			if (typeof this.origin === 'undefined') {
@@ -323,6 +328,7 @@ function drawInventory() {
 			this.zIndex = 90;
 		});
 		imgClothes[i].addEventListener('touchmove', function(e) {
+			if (currentScreen != windowsIx.game) return;
 			// only in edit mode
 			if(currentScreen != windowsIx.game)
 				return;
@@ -333,6 +339,7 @@ function drawInventory() {
 			};
 		});
 		imgClothes[i].addEventListener('touchend', function(e) {
+			if (currentScreen != windowsIx.game) return;
 			if(this.center.y > imgJimmy.center.y - imgJimmy.height / 2) {
 				// make Jimmy wear the item
 				wearItem(this);
@@ -485,11 +492,13 @@ function updateResult() {
 			 	  || (!fairWeather && typeTally > 2 && typeTally < 8 && rainTally > 0);
 			typeWarn = (typeTally < 3) ? 'snow' : typeWarn;
 			typeWarn = (typeTally >= 3) ? 'sun' : typeWarn;
+			typeWarn = (typeTally > 4) ? 'sweat' : typeWarn;
 			break;
 		case 1: // summer
 			typeOK = (fairWeather && typeTally > 0 && typeTally < 4 && sunTally > 0)
 			      || (!fairWeather && typeTally > 0 && typeTally < 5 && rainTally > 0);
 			typeWarn = (typeTally > 3) ? 'sun' : typeWarn;
+			typeWarn = (sunTally > 0) ? 'sweat' : typeWarn;
 			break;
 		case 3: // winter
 			typeOK = (typeTally > 5);
