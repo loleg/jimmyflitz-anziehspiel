@@ -170,7 +170,7 @@ var imgIconWebsite = Titanium.UI.createImageView({
 var buttonCredits = Titanium.UI.createLabel({
 	text: 'Impressum', size: {width: 150, height: 57}, 
 	right:'15%', bottom:'1%',
-	color: '#631a05', font: { fontFamily:'serif', fontSize:14 }, 
+	color: '#631a05', font: { fontFamily:'serif', fontSize:16 }, 
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER
 });
 
