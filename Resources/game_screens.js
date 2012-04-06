@@ -258,7 +258,7 @@ function showCredits() {
 function setLandscape(index) {
 	// choose a random landscape and conditions
 	theLandscape = (typeof index !== 'undefined') ? index : Math.floor(Math.random() * 4);
-	fairWeather = (Math.random() > 0.5);
+	fairWeather = (Math.random() > 0.33);
 	if (theLandscape == 3) fairWeather = true;
 	Ti.API.debug('Landscape: ' + landscapes[theLandscape] + ', ' + (fairWeather) ? 'nice weather' : 'storm');
 	// background asset
@@ -330,7 +330,7 @@ function drawInventory() {
 		imgClothes[i].addEventListener('touchmove', function(e) {
 			if (currentScreen != windowsIx.game) return;
 			// only in edit mode
-			if(currentScreen != windowsIx.game)
+			if (currentScreen != windowsIx.game)
 				return;
 			// move the item
 			this.center = {
@@ -340,7 +340,8 @@ function drawInventory() {
 		});
 		imgClothes[i].addEventListener('touchend', function(e) {
 			if (currentScreen != windowsIx.game) return;
-			if(this.center.y > imgJimmy.center.y - imgJimmy.height / 2) {
+			Ti.API.debug('Center: ' + this.center.x + ', ' + this.center.y ); 
+			if (this.center.y > imgJimmy.center.y - imgJimmy.height / 2) {
 				// make Jimmy wear the item
 				wearItem(this);
 			} else {

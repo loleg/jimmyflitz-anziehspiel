@@ -85,7 +85,7 @@ var imgCabRight = Titanium.UI.createImageView({
 // jimmy
 var imgJimmy = Titanium.UI.createImageView({
 	image:'assets/jimmy/jimmy_white.png',
-	height:rezY* 200,
+	height:rezY* 222,
 	center:{y:rezY* 365},
 	zIndex:50, touchEnabled:false
 });
@@ -181,27 +181,31 @@ var buttonCredits = Titanium.UI.createLabel({
 // center = new position (x, y) in cabinet - null is default
 var clothesPerSide = 8;
 var clothes = [
-	{ id: "shirt_red", type: 1, w: 232, h: 233 },
-	{ id: "shirt_blue", type: 1, w: 232, h: 233 }, 
-	{ id: "shirt_yellow", type: 1, w: 232, h: 233 }, 
-	{ id: "hat1", type: 1, sunny:1, x: 170, y: 295, z: 3, w: 224, h: 184 }, 
-	{ id: "hat2", type: 1, sunny:1, x: 170, y: 297, w: 310, h: 278 }, 
-	{ id: "hat3", type: 1, sunny:1, x: 163, y: 289, w: 333, h: 333 }, 
-	{ id: "shades1", type: 0, sunny:2, rainy:-2, w: 325, h: 213, 
-		x: 171, y: 305, center: {x:rezX* 136, y:rezY* 167} },
-	{ id: "shades2", type: 0, sunny:1, w: 330, h: 218, 
-		x: 170, y: 310, center: {x:rezX* 233, y:rezY* 165} }, 
+	{ id: "shirt1", type: 1, w: 232, h: 233, scale: 0.4, x: 182, y: 364 },
+	{ id: "shirt2", type: 1, w: 232, h: 233, scale: 0.4, x: 182, y: 364 }, 
+	{ id: "shirt3", type: 1, w: 232, h: 233, scale: 0.4, x: 182, y: 364,
+		center: {x:rezX* 270, y:rezY* 106} }, 
+	{ id: "shades1", type: 0, sunny:2, rainy:-2, w: 325, h: 213, scale: 0.25, scaleTo: 1.5,
+		x: 171, y: 299 },
+	{ id: "hat3", type: 1, sunny:1, w: 333, h: 333, scale: 0.25, 
+		x: 162, y: 281 }, 
+	{ id: "shades2", type: 0, sunny:1, w: 330, h: 218, scale: 0.2, scaleTo: 1.3,
+		x: 175, y: 303 }, 
+	{ id: "hat2", type: 1, sunny:1, w: 310, h: 278, scale: 0.18, scaleTo: 1.7,
+		x: 172, y: 289, center: {x:rezX* 136, y:rezY* 167} }, 
+	{ id: "hat1", type: 1, sunny:1, w: 224, h: 184, scale: 0.25, scaleTo: 1.8,
+		x: 170, y: 289, z: 3, center: {x:rezX* 233, y:rezY* 165} }, 
 	
-	{ id: "scarf1", type: 2, x: 176, y: 352, z: 4, w: 333, h: 333 },
-	{ id: "jacket2", type: 3, x: 181, y: 353, z: 2, w: 333, h: 333 }, 
-	{ id: "jacket1", type: 2, x: 178, y: 365, z: 1, w: 333, h: 333 },
-	{ id: "mittens1", type: 2, x: 183, y: 395, z: 3, w: 296, h: 234 },
-	{ id: "mittens2", type: 2, x: 183, y: 397, z: 3, w: 292, h: 241 },
-	{ id: "socks_blue", type: 1, w: 333, h: 333, x: 190, y: 445, z: 1 },
-	{ id: "boots", type: 1, sunny:-1, rainy:1, w: 295, h: 313, x: 187, y: 431, z: 3 },
+	{ id: "scarf1", type: 2, z: 4, w: 333, h: 333, scale: 0.25 },
+	{ id: "jacket2", type: 3, z: 2, w: 333, h: 333, scale: 0.25 }, 
+	{ id: "jacket1", type: 2, z: 1, w: 333, h: 333, scale: 0.25 },
+	{ id: "mittens1", type: 2, z: 3, w: 296, h: 234, scale: 0.25 },
+	{ id: "mittens2", type: 2, z: 3, w: 292, h: 241, scale: 0.25 },
+	{ id: "socks_blue", type: 1, z: 1, w: 333, h: 333, scale: 0.25 },
+	{ id: "boots", type: 1, sunny:-1, rainy:1, z: 3, w: 295, h: 313, scale: 0.25 },
 	   
-	{ id: "umbrella", type: 0, sunny:-5, rainy:2, w: 333, h: 333,
-	  x: 230, y: 310, z: -40, center: {x:rezX* 308, y:rezY* 85} }
+	{ id: "umbrella", type: 0, sunny:-5, rainy:2, w: 333, h: 333, scale: 0.25,
+	  z: -40, center: {x:rezX* 308, y:rezY* 85} }
 	];
 	
 var imgClothes = [];
@@ -233,7 +237,7 @@ var marginClothes = [ rezX* 85, rezY* 100 ];
 						wearing: false
 					},
 			image:  'assets/clothes/' + clothes[i].id + '.png',
-			height: clothes[i].h, width: clothes[i].w, zIndex: 20,
+			height: rezY* clothes[i].h, width: rezX* clothes[i].w, zIndex: 20,
 			center: {x:centerClothes[0] + (marginClothes[0] * col) + paddingLeft,
 				 	 y:centerClothes[1] + (marginClothes[1] * row) + paddingTop}
 		});
