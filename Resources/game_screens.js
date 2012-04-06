@@ -377,48 +377,30 @@ function wearItem(obj) {
 	} else {
 		obj.zIndex = 51;
 	}
-	if (obj.info.id.indexOf('jimmy') == 0) {
-		imgJimmy.image = 'assets/jimmy/' + obj.info.id + '.png';
-		// unhide other Jimmy clothes
-		for(var i in imgClothes) {
-			if(imgClothes[i].info.id != obj.info.id && imgClothes[i].info.id.indexOf('jimmy') == 0) {
-				imgClothes[i].wearing = false;
-			}
+	// check item swaps
+	var baseName = obj.info.id.replace(/\d/, "");
+	for (var i in imgClothes) {
+		if (imgClothes[i].wearing && imgClothes[i].info.id != obj.info.id && 
+			imgClothes[i].info.id.replace(/\d/, "") == baseName) {
+			unwearItem(imgClothes[i]);
 		}
-		obj.center = {
-			x : obj.origin.x,
-			y : obj.origin.y
-		};
-		// don't "wear" the costume
-		obj.opacity = 0;
-		// redraw the inventory to restore other shirts
-		switchInventory();
-	} else {
-		// check item swaps
-		var baseName = obj.info.id.replace(/\d/, "");
-		for (var i in imgClothes) {
-			if (imgClothes[i].wearing && imgClothes[i].info.id != obj.info.id && 
-				imgClothes[i].info.id.replace(/\d/, "") == baseName) {
-				unwearItem(imgClothes[i]);
-			}
-		}
-		// snap object to its defined center
-		if (obj.info.x) {
-			obj.center = {
-				x : obj.info.x,
-				y : obj.info.y
-			};
-		} else {
-			Ti.API.debug('Item ' + obj.info.id + ' at: ' + obj.center.x + ', ' + obj.center.y);
-		}
-		// if a target scale is defined
-		if (obj.info.scaleTo) {
-			obj.height = obj.o_height * obj.info.scaleTo;
-			obj.width = obj.o_width * obj.info.scaleTo;
-		}
-		// swap to worn asset
-		obj.image = 'assets/jimmy/' + obj.info.id + '.png';
 	}
+	// snap object to its defined center
+	if (obj.info.x) {
+		obj.center = {
+			x : obj.info.x,
+			y : obj.info.y
+		};
+	} else {
+		Ti.API.debug('Item ' + obj.info.id + ' at: ' + obj.center.x + ', ' + obj.center.y);
+	}
+	// if a target scale is defined
+	if (obj.info.scaleTo) {
+		obj.height = obj.o_height * obj.info.scaleTo;
+		obj.width = obj.o_width * obj.info.scaleTo;
+	}
+	// swap to worn asset
+	obj.image = 'assets/jimmy/' + obj.info.id + '.png';
 }
 
 // put the item back on its shelf
