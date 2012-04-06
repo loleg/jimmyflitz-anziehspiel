@@ -196,21 +196,25 @@ var clothes = [
 	{ id: "hat1", type: 1, sunny:1, w: 224, h: 184, scale: 0.25, scaleTo: 1.8,
 		x: 170, y: 289, z: 3, center: {x:rezX* 233, y:rezY* 165} }, 
 	
-	{ id: "scarf1", type: 2, z: 4, w: 333, h: 333, scale: 0.25 },
-	{ id: "jacket2", type: 3, z: 2, w: 333, h: 333, scale: 0.25 }, 
-	{ id: "jacket1", type: 2, z: 1, w: 333, h: 333, scale: 0.25 },
-	{ id: "mittens1", type: 2, z: 3, w: 296, h: 234, scale: 0.25 },
-	{ id: "mittens2", type: 2, z: 3, w: 292, h: 241, scale: 0.25 },
-	{ id: "socks_blue", type: 1, z: 1, w: 333, h: 333, scale: 0.25 },
-	{ id: "boots", type: 1, sunny:-1, rainy:1, z: 3, w: 295, h: 313, scale: 0.25 },
+	{ id: "scarf1", type: 2, z: 4, w: 333, h: 333, scale: 0.25, x: 177, y: 349 },
+	{ id: "jacket2", type: 3, z: 2, w: 333, h: 333, scale: 0.4, scaleTo: 1.32 }, 
+	{ id: "jacket1", type: 2, z: 1, w: 333, h: 333, scale: 0.3, scaleTo: 0.9, x: 180, y: 365 },
+	{ id: "mittens1", type: 2, z: 3, w: 296, h: 234, scale: 0.25, scaleTo: 1.42,
+		x: 185, y: 400, center: {x:rezX* 52, y:rezY* 206} },
+	{ id: "mittens2", type: 2, z: 3, w: 292, h: 241, scale: 0.25, scaleTo: 1.5,
+		x: 184, y: 396, center: {x:rezX* 136, y:rezY* 207} },
+	{ id: "socks_blue", type: 1, z: 1, w: 333, h: 333, scale: 0.25, scaleTo: 1.1,
+		x: 192, y: 453, center: {x:rezX* 218, y:rezY* 208} },
+	{ id: "boots", type: 1, sunny:-1, rainy:1, z: 3, w: 295, h: 313, 
+		x: 189, y: 437, scale: 0.25, scaleTo: 1.25 },
 	   
-	{ id: "umbrella", type: 0, sunny:-5, rainy:2, w: 333, h: 333, scale: 0.25,
-	  z: -40, center: {x:rezX* 308, y:rezY* 85} }
+	{ id: "umbrella", type: 0, sunny:-5, rainy:2, w: 333, h: 333, scale: 0.4,
+	  	x: 237, y: 304, z: -40, scaleTo: 1.5, center: {x:rezX* 308, y:rezY* 85} }
 	];
 	
 var imgClothes = [];
 var centerClothes = [ rezX* -37, rezY* 108 ];
-var marginClothes = [ rezX* 85, rezY* 100 ];
+var marginClothes = [ rezX* 83, rezY* 100 ];
 
 // loads clothes data
 {
