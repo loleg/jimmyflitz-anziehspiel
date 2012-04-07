@@ -21,7 +21,7 @@ function newGame() {
 	Ti.API.debug("Resetting game");
 	// return to menu
 	gotoScreen(0);	
-	// reset clothes
+	// reset game state
 	container = windows[windowsIx.game].container;
 	for(var i in imgClothes) {
 		resetItem(imgClothes[i]);
@@ -29,6 +29,8 @@ function newGame() {
 	}
 	container.remove(imgJimmy);
 	container.add(imgJimmy);
+	imgJimmy.zIndex = 50;	
+	imgJimmy.animate({zIndex:50});
 	drawInventory();
 	gotoScreen(0);
 	// reset inventory
