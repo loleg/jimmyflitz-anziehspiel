@@ -372,7 +372,7 @@ function wearItem(obj) {
 	for (var i in clothesWearing) {
 		if (clothesWearing[i].info.id != obj.info.id && 
 			clothesWearing[i].info.id.replace(/\d/, "") == baseName) {
-			unwearItem(clothesWearing[i]);
+			unwearItem(clothesWearing[i], true);
 		}
 	}
 	// special cases
@@ -380,7 +380,7 @@ function wearItem(obj) {
 		// unwear parka with hats
 		for (var i in clothesWearing) {
 			if (clothesWearing[i].info.id == "jacket2") {
-				unwearItem(clothesWearing[i]);
+				unwearItem(clothesWearing[i], true);
 			}
 		}
 	}
@@ -389,7 +389,7 @@ function wearItem(obj) {
 		for (var i in clothesWearing) {
 			var baseNameI = clothesWearing[i].info.id.replace(/\d/, "");
 			if (baseNameI == "hat") {
-				unwearItem(clothesWearing[i]);
+				unwearItem(clothesWearing[i], true);
 			}
 		}
 	}	
@@ -418,21 +418,38 @@ function wearItem(obj) {
 }
 
 // put the item back on its shelf
-function unwearItem(obj) {
+function unwearItem(obj, animated) {
 	Ti.API.debug('Unwearing ' + obj.info.id);
 	// put the item back on its shelf
-	obj.center = {
-		x : obj.origin.x,
-		y : obj.origin.y
-	};
-	// Restore size from pop-in
-	obj.height = obj.o_height;
-	obj.width = obj.o_width;
-	// Restore to shelf image
-	obj.image = 'assets/clothes/' + obj.info.id + '.png';
-	obj.wearing = false;
-	// Check shown inventory
-	switchInventory();
+	if (animated) {
+		obj.animate({ top: -200, duration: 350 }, function(e) {
+			obj.center = {
+				x: obj.origin.x,
+				y: obj.origin.y
+			};
+			// Restore size from pop-in
+			obj.height = obj.o_height;
+			obj.width = obj.o_width;
+			// Restore to shelf image
+			obj.image = 'assets/clothes/' + obj.info.id + '.png';
+			obj.wearing = false;
+			// Check shown inventory
+			switchInventory();
+		});
+	} else {
+		obj.center = {
+			x: obj.origin.x,
+			y: obj.origin.y
+		};
+		// Restore size from pop-in
+		obj.height = obj.o_height;
+		obj.width = obj.o_width;
+		// Restore to shelf image
+		obj.image = 'assets/clothes/' + obj.info.id + '.png';
+		obj.wearing = false;
+		// Check shown inventory
+		switchInventory();
+	}
 }
 
 // put the item back to start
