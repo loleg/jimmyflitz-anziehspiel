@@ -126,9 +126,9 @@ var imgNavButtonLeft = Titanium.UI.createImageView({
 	center:{x:rezX* 0, y:rezY* 355}, zIndex:99
 });
 var imgNavButtonLeft2 = Titanium.UI.createImageView({
-	image:'assets/ui/mousefeet.png',
+	image:'assets/ui/mousearrows.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 0, y:rezY* 270}, zIndex:99
+	center:{x:rezX* -5, y:rezY* 270}, zIndex:99
 });
 var imgNavButtonRight = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',

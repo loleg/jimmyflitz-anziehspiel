@@ -12,33 +12,36 @@ function setUp() {
 	Ti.UI.setBackgroundImage('assets/bg/loading.jpg');
 	
 	// quit the game when returning home
-	Ti.App.addEventListener('pause', function() {
-		newGame();
-	})
+	// Ti.App.addEventListener('pause', function() {
+		// newGame();
+		// Titanium.App.restart();
+	// })
+}
+
+function initGame() {
+	currentInventory = 0;
+	// reset game state
+	container = windows[windowsIx.game].container;
+	for(var i in imgClothes) { 
+		resetItem(imgClothes[i]); 
+		container.remove(imgClothes[i]); 
+	}	
+	container.remove(imgJimmy);
+	// add Jimmy and set up game
+	container.add(imgJimmy);
+	drawInventory();
 }
 
 function newGame() {
 	Ti.API.debug("Resetting game");
 	// return to menu
 	gotoScreen(0);	
-	// reset game state
-	container = windows[windowsIx.game].container;
-	for(var i in imgClothes) {
-		resetItem(imgClothes[i]);
-		container.remove(imgClothes[i]);
-	}
-	container.remove(imgJimmy);
-	container.add(imgJimmy);
-	imgJimmy.zIndex = 50;	
-	imgJimmy.animate({zIndex:50});
-	drawInventory();
-	gotoScreen(0);
 	// reset inventory
 	windows[windowsIx.outro].endgame = false;
-	switchInventory(0);
 	// reset weather
 	Titanium.UI.setBackgroundImage(null);
-	// reload outro
+	// reload 
+	initGame();
 	loadScreens(windowsIx.outro);
 }
 
@@ -113,6 +116,7 @@ function gotoScreen(scr) {
 			break;
 		case windowsIx.game:
 			startMusic();
+			initGame();
 			break;
 		case windowsIx.outro:
 			updateWearing();

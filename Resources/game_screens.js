@@ -49,6 +49,7 @@ function showMenu() {
 		img.addEventListener('click', function(e) {
 			stopMusic();
 			setLandscape(this.landscapeIndex);
+			initGame();
 			gotoScreen(windowsIx.intro);
 		});
 		menuImg.push(img);
@@ -67,6 +68,7 @@ function showIntro() {
 	container.add(imgWindow);
 	container.add(imgJimmy);
 	container.add(imgSmallWindow);
+	container.add(imgNavButtonLeft2);
 	container.opacity = 1;
 	imgZoomWindow.opacity = 0;
 	windows[windowsIx.intro].add(imgZoomWindow);
@@ -77,6 +79,9 @@ function showIntro() {
 	}
 	imgZoomWindow.addEventListener('click', fSwitchZoom);
 	imgSmallWindow.addEventListener('click', fSwitchZoom);
+	imgNavButtonLeft2.addEventListener('click', function(e) {
+		newGame();
+	});
 
 	// add weather effects
 	windows[windowsIx.intro].add(imgWeather);
@@ -112,9 +117,6 @@ function showGame() {
 	container.add(imgCabRight);
 	imgCabLeft.hide();
 	imgCabRight.hide();
-	// add Jimmy and set up game
-	container.add(imgJimmy);
-	drawInventory();
 	imgNavButtonLeft.addEventListener('click', function(e) {
 		if (currentInventory == 0) {
 			gotoScreen(windowsIx.intro);
@@ -482,7 +484,8 @@ function updateWearing() {
 
 function updateResult() {
 	// calculate the items worn
-	var count = 0, 
+	var count = 0,
+		topTally = 0,
 		typeTally = 0,
 		sunTally = 0,
 		rainTally = 0;
@@ -496,13 +499,18 @@ function updateResult() {
 			typeTally += item.info.type;
 			sunTally += item.info.sunny;
 			rainTally += item.info.rainy;
+			// make sure we are wearing a top
+			var baseName = item.info.id.replace(/\d/, "");
+			if (baseName == "shirt" || baseName == "jacket") {
+				topTally++;
+			}	
 		}
 	}
 	
 	// Win if the weather is nice & we're dressed lightly,
 	// or the weather is heavy and we're dressed warm
 	var typeOK = false, typeWarn = 'shirt';
-	if (count > 0) {
+	if (topTally > 0) {
 		typeWarn = (fairWeather) ? 'sun' : 'cloud';
 		switch (parseInt(theLandscape)) {
 		case 0: // spring
@@ -530,7 +538,7 @@ function updateResult() {
 	
 	Ti.API.debug(typeOK + '! (' + typeWarn + ') Why? ' +
 		' FairWeather: ' + fairWeather + ' Season: ' + theLandscape + ' ' + landscapes[theLandscape] +
-		' Tally: ' + typeTally + ' Rain: ' + rainTally + 
+		' Top: ' + topTally + ' Tally: ' + typeTally + ' Rain: ' + rainTally + 
 		' Sun: ' + sunTally + ' Count: ' + count + 
 		'');
 
