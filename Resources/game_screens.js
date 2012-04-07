@@ -365,29 +365,31 @@ function switchInventory(i) {
 function wearItem(obj) {
 	obj.wearing = true;
 	obj.opacity = 0;
+	Ti.API.debug('Wearing ' + obj.info.id);
 	// check item swaps
+	var clothesWearing = imgClothes.filter(function(o) { return o.wearing; });
 	var baseName = obj.info.id.replace(/\d/, "");
-	for (var i in imgClothes) {
-		if (imgClothes[i].wearing && imgClothes[i].info.id != obj.info.id && 
-			imgClothes[i].info.id.replace(/\d/, "") == baseName) {
-			unwearItem(imgClothes[i]);
+	for (var i in clothesWearing) {
+		if (clothesWearing[i].info.id != obj.info.id && 
+			clothesWearing[i].info.id.replace(/\d/, "") == baseName) {
+			unwearItem(clothesWearing[i]);
 		}
 	}
 	// special cases
 	if (baseName == "hat") {
 		// unwear parka with hats
-		for (var i in imgClothes) {
-			if (imgClothes[i].wearing && imgClothes[i].info.id == "jacket2") {
-				unwearItem(imgClothes[i]);
+		for (var i in clothesWearing) {
+			if (clothesWearing[i].info.id == "jacket2") {
+				unwearItem(clothesWearing[i]);
 			}
 		}
 	}
 	if (obj.info.id == "jacket2") {
 		// unwear hats with parka
-		for (var i in imgClothes) {
-			var baseNameI = imgClothes[i].info.id.replace(/\d/, "");
-			if (imgClothes[i].wearing && baseNameI == "hat") {
-				unwearItem(imgClothes[i]);
+		for (var i in clothesWearing) {
+			var baseNameI = clothesWearing[i].info.id.replace(/\d/, "");
+			if (baseNameI == "hat") {
+				unwearItem(clothesWearing[i]);
 			}
 		}
 	}	
@@ -417,6 +419,7 @@ function wearItem(obj) {
 
 // put the item back on its shelf
 function unwearItem(obj) {
+	Ti.API.debug('Unwearing ' + obj.info.id);
 	// put the item back on its shelf
 	obj.center = {
 		x : obj.origin.x,
