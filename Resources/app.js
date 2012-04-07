@@ -108,6 +108,8 @@ function gotoScreen(scr) {
 			break;
 		case windowsIx.game:
 			startMusic();
+			imgJimmy.zIndex = 50;
+			imgJimmy.animate({zIndex:50});
 			break;
 		case windowsIx.outro:
 			updateWearing();

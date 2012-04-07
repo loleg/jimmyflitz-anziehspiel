@@ -215,6 +215,7 @@ function showFinale() {
 }
 
 function showCredits() {
+	container.add(imgNavButtonLeft2);
 	container.add(imgCredits);
 	container.add(imgIconCD);
 	container.add(imgIconBook);
@@ -222,6 +223,7 @@ function showCredits() {
 	container.add(imgIconWebsite);
 	// add labels
 	var labelTexts = ['Music', 'Book', 'Audiobook'];
+	var positionTexts = ['4%', '34%', '64%'];
 	switch(Titanium.Platform.locale) {
 	case 'de':
 		labelTexts = ['Musik', 'Buch', 'Hörspiele']; break;
@@ -235,8 +237,9 @@ function showCredits() {
 			text: labelTexts[l], zIndex: 12, height:30,
 			font: { fontWeight:'bold', fontSize:'14pt' },
 			color: 'white', top : rezY* 185,
-			left : (14+l*27) + '%',
-			shadowColor:'#444', shadowOffset:{x:1, y:1}
+			left : positionTexts[l], width: rezX* 100,
+			shadowColor:'#444', shadowOffset:{x:1, y:1},
+			textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER
 		});
 		container.add(lbl);
 	}
@@ -414,8 +417,6 @@ function wearItem(obj) {
 	obj.opacity = 1;
 	// set ordering *an ugly Appcelerator hack see http://developer.appcelerator.com/question/32511/zindex-frustration
 	var zi = (obj.info.z) ? 50 + obj.info.z : 51;
-	imgJimmy.zIndex = 50;
-	imgJimmy.animate({zIndex:50});
 	obj.zIndex = zi;	
 	obj.animate({zIndex:zi});
 	//Ti.API.debug('Wearing ' + obj.info.id + ' at z:' + obj.zIndex + ' /' + imgJimmy.zIndex);
@@ -511,12 +512,14 @@ function updateResult() {
 			typeWarn = (typeTally < 3) ? 'snow' : typeWarn;
 			typeWarn = (typeTally >= 3) ? 'sun' : typeWarn;
 			typeWarn = (typeTally > 4) ? 'sweat' : typeWarn;
+			typeWarn = (!fairWeather && rainTally < 1) ? 'cloud' : typeWarn;
 			break;
 		case 1: // summer
 			typeOK = (fairWeather && typeTally > 0 && typeTally < 4 && sunTally > 0)
 			      || (!fairWeather && typeTally > 0 && typeTally < 5 && rainTally > 0);
 			typeWarn = (typeTally > 3) ? 'sun' : typeWarn;
 			typeWarn = (sunTally > 0) ? 'sweat' : typeWarn;
+			typeWarn = (!fairWeather && rainTally < 1) ? 'cloud' : typeWarn;
 			break;
 		case 3: // winter
 			typeOK = (typeTally > 5);

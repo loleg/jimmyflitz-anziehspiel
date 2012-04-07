@@ -125,6 +125,11 @@ var imgNavButtonLeft = Titanium.UI.createImageView({
 	height:rezY* 90, width:rezX* 90, 
 	center:{x:rezX* 0, y:rezY* 355}, zIndex:99
 });
+var imgNavButtonLeft2 = Titanium.UI.createImageView({
+	image:'assets/ui/mousefeet.png',
+	height:rezY* 90, width:rezX* 90, 
+	center:{x:rezX* 0, y:rezY* 270}, zIndex:99
+});
 var imgNavButtonRight = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
@@ -150,21 +155,21 @@ var imgIconWarning = Titanium.UI.createImageView({
 });
 var imgIconCD = Titanium.UI.createImageView({
 	image:'assets/ui/icon_disc.png',
-	height:rezY* 90, width:rezY* 90,
+	height:rezY* 60, width:rezY* 60,
 	center:{x:'20%', y:rezY* 150}
 });
 var imgIconBook = Titanium.UI.createImageView({
 	image:'assets/ui/icon_book.png',
-	height:rezY* 90, width:rezY* 90,
+	height:rezY* 80, width:rezY* 80,
 	center:{y:rezY* 150}
 });
 var imgIconAudioBook = Titanium.UI.createImageView({
 	image:'assets/ui/icon_audiobook.png',
-	height:rezY* 90, width:rezY* 90,
+	height:rezY* 80, width:rezY* 80,
 	center:{x:'80%', y:rezY* 150}
 });
 var imgIconWebsite = Titanium.UI.createImageView({
-	height:rezY* 120, bottom:'1%'
+	height:rezY* 110, bottom:'1%'
 });
 var imgCredits = Titanium.UI.createImageView({
 	backgroundImage:'assets/bg/credits.png', zIndex:0,
