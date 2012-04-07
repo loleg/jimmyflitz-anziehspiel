@@ -19,21 +19,23 @@ function setUp() {
 
 function newGame() {
 	Ti.API.debug("Resetting game");
-	// return to menu
-	gotoScreen(0);
 	// reset clothes
+	gotoScreen(windowsIx.game);
 	for(var i in imgClothes) {
 		resetItem(imgClothes[i]);
-		windows[windowsIx.game].container.remove(imgClothes[i]);
+		container.remove(imgClothes[i]);
 	}
-	windows[windowsIx.game].container.remove(imgJimmy);
-	// reset weather
-	Titanium.UI.setBackgroundImage(null);
+	container.remove(imgJimmy);
+	container.add(imgJimmy);
+	drawInventory();
 	// reset inventory
 	windows[windowsIx.outro].endgame = false;
 	switchInventory(0);
-	// reload
-	loadScreens(windowsIx.game);
+	// return to menu
+	gotoScreen(0);
+	// reset weather
+	Titanium.UI.setBackgroundImage(null);
+	// reload outro
 	loadScreens(windowsIx.outro);
 }
 
@@ -108,8 +110,6 @@ function gotoScreen(scr) {
 			break;
 		case windowsIx.game:
 			startMusic();
-			imgJimmy.zIndex = 50;
-			imgJimmy.animate({zIndex:50});
 			break;
 		case windowsIx.outro:
 			updateWearing();
