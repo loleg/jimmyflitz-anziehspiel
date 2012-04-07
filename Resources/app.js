@@ -19,8 +19,10 @@ function setUp() {
 
 function newGame() {
 	Ti.API.debug("Resetting game");
+	// return to menu
+	gotoScreen(0);	
 	// reset clothes
-	gotoScreen(windowsIx.game);
+	container = windows[windowsIx.game].container;
 	for(var i in imgClothes) {
 		resetItem(imgClothes[i]);
 		container.remove(imgClothes[i]);
@@ -28,11 +30,10 @@ function newGame() {
 	container.remove(imgJimmy);
 	container.add(imgJimmy);
 	drawInventory();
+	gotoScreen(0);
 	// reset inventory
 	windows[windowsIx.outro].endgame = false;
 	switchInventory(0);
-	// return to menu
-	gotoScreen(0);
 	// reset weather
 	Titanium.UI.setBackgroundImage(null);
 	// reload outro
