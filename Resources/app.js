@@ -22,7 +22,7 @@ function newGame() {
 	gotoScreen(0);
 	// reset Jimmy
 	imgJimmy.image = 'assets/jimmy/jimmy_white.png';
-	imgJimmy.zIndex = 50;
+	//imgJimmy.zIndex = 50;
 	for(var i in imgClothes) {
 		resetItem(imgClothes[i]);
 	}
@@ -101,12 +101,12 @@ function gotoScreen(scr) {
 	// Refresh end screen
 	switch (scr) {
 		case windowsIx.intro:
-			imgJimmy.zIndex = 30;
+			//imgJimmy.zIndex = 30;
 			updateWearing();
 			break;
 		case windowsIx.game:
 			startMusic();
-			imgJimmy.zIndex = 15;
+			//imgJimmy.zIndex = 15;
 			break;
 		case windowsIx.outro:
 			updateWearing();

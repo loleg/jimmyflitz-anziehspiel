@@ -365,11 +365,6 @@ function switchInventory(i) {
 function wearItem(obj) {
 	obj.wearing = true;
 	obj.opacity = 0;
-	if (obj.info.z) {
-		obj.zIndex = 50 + obj.info.z;
-	} else {
-		obj.zIndex = 51;
-	}
 	// check item swaps
 	var baseName = obj.info.id.replace(/\d/, "");
 	for (var i in imgClothes) {
@@ -379,6 +374,14 @@ function wearItem(obj) {
 		}
 	}
 	// special cases
+	if (baseName == "hat") {
+		// unwear parka with hats
+		for (var i in imgClothes) {
+			if (imgClothes[i].wearing && imgClothes[i].info.id == "jacket2") {
+				unwearItem(imgClothes[i]);
+			}
+		}
+	}
 	if (obj.info.id == "jacket2") {
 		// unwear hats with parka
 		for (var i in imgClothes) {
@@ -405,6 +408,11 @@ function wearItem(obj) {
 	// swap to worn asset
 	obj.image = 'assets/jimmy/' + obj.info.id + '.png';
 	obj.opacity = 1;
+	if (obj.info.z) {
+		obj.zIndex = 50 + obj.info.z;
+	} else {
+		obj.zIndex = 51;
+	}
 }
 
 // put the item back on its shelf
@@ -417,7 +425,6 @@ function unwearItem(obj) {
 	// Restore size from pop-in
 	obj.height = obj.o_height;
 	obj.width = obj.o_width;
-	//obj.zIndex = 2;
 	// Restore to shelf image
 	obj.image = 'assets/clothes/' + obj.info.id + '.png';
 	obj.wearing = false;
