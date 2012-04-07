@@ -33,8 +33,8 @@ function showMenu() {
 			width : rezX * 80,
 			height : rezY * 113,
 			top : (l < 2) ? '26%' : '54%',
-			left : (l % 2 == 0) ? '15%' : '56%',
-			borderColor:'white', borderWidth:1
+			left : (l % 2 == 0) ? '15%' : '56%'
+			//borderColor:'white', borderWidth:1
 		});
 		var lbl = Titanium.UI.createLabel({
 			text: landscapeText[l], zIndex: 12,
@@ -81,6 +81,7 @@ function showIntro() {
 	// add weather effects
 	windows[windowsIx.intro].add(imgWeather);
 	windows[windowsIx.outro].add(imgWeather);
+	windows[windowsIx.credits].add(imgWeather);
 
 	// container.add(buttonRestart);
 	// buttonRestart.addEventListener('click', function(e) {
@@ -142,6 +143,8 @@ function showOutro() {
 	container.add(imgJimmy);
 	container.add(imgDoor);
 	container.add(imgIconWarning);
+	container.add(imgNavButtonJump);
+	imgNavButtonJump.opacity = 0;
 	container.add(imgNavButtonJump);
 	imgNavButtonJump.opacity = 0;
 	imgNavButtonRight2.opacity = 0; // hide button for a few seconds
@@ -212,6 +215,7 @@ function showFinale() {
 }
 
 function showCredits() {
+	container.add(imgCredits);
 	container.add(imgIconCD);
 	container.add(imgIconBook);
 	container.add(imgIconAudioBook);
@@ -267,6 +271,7 @@ function setLandscape(index) {
 	// Titanium.UI.setBackgroundImage(path);
 	windows[windowsIx.intro].setBackgroundImage(path);
 	windows[windowsIx.outro].setBackgroundImage(path);
+	windows[windowsIx.credits].setBackgroundImage(path);
 	// show or hide the weather 'fx'
 	imgWeather.opacity = (fairWeather) ? 0 : 1;
 }
@@ -340,7 +345,7 @@ function drawInventory() {
 		});
 		imgClothes[i].addEventListener('touchend', function(e) {
 			if (currentScreen != windowsIx.game) return;
-			Ti.API.debug('Center: ' + this.center.x + ', ' + this.center.y ); 
+			//Ti.API.debug('Center: ' + this.center.x + ', ' + this.center.y ); 
 			if (this.center.y > imgJimmy.center.y - imgJimmy.height / 2) {
 				// make Jimmy wear the item
 				wearItem(this);
@@ -373,6 +378,7 @@ function switchInventory(i) {
 // dress up Jimmy
 function wearItem(obj) {
 	obj.wearing = true;
+	obj.opacity = 0;
 	if (obj.info.z) {
 		obj.zIndex = 50 + obj.info.z;
 	} else {
@@ -386,6 +392,16 @@ function wearItem(obj) {
 			unwearItem(imgClothes[i]);
 		}
 	}
+	// special cases
+	if (obj.info.id == "jacket2") {
+		// unwear hats with parka
+		for (var i in imgClothes) {
+			var baseNameI = imgClothes[i].info.id.replace(/\d/, "");
+			if (imgClothes[i].wearing && baseNameI == "hat") {
+				unwearItem(imgClothes[i]);
+			}
+		}
+	}	
 	// snap object to its defined center
 	if (obj.info.x) {
 		obj.center = {
@@ -402,6 +418,7 @@ function wearItem(obj) {
 	}
 	// swap to worn asset
 	obj.image = 'assets/jimmy/' + obj.info.id + '.png';
+	obj.opacity = 1;
 }
 
 // put the item back on its shelf
@@ -414,6 +431,7 @@ function unwearItem(obj) {
 	// Restore size from pop-in
 	obj.height = obj.o_height;
 	obj.width = obj.o_width;
+	obj.zIndex = 2;
 	// Restore to shelf image
 	obj.image = 'assets/clothes/' + obj.info.id + '.png';
 	obj.wearing = false;
@@ -439,6 +457,7 @@ function updateWearing() {
 			Ti.API.debug('Wearing ' + item.info.id);
 			container.add(item);
 		} else {
+			// Note: triggers warning when item is not in container
 			container.remove(item);
 		}
 	}

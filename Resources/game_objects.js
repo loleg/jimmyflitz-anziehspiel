@@ -15,8 +15,7 @@ var windows = [
 	}),
 	Titanium.UI.createWindow({ }), // title:'Outro'
 	Titanium.UI.createWindow({ // title:'Credits'
-	    backgroundImage:'assets/bg/credits.jpg'
-	}),
+		backgroundColor:'#2e6872' })
 ];
 
 // define landscapes
@@ -167,6 +166,10 @@ var imgIconAudioBook = Titanium.UI.createImageView({
 var imgIconWebsite = Titanium.UI.createImageView({
 	height:rezY* 120, bottom:'1%'
 });
+var imgCredits = Titanium.UI.createImageView({
+	backgroundImage:'assets/bg/credits.png', zIndex:0,
+	opacity:1, top:0, height:'100%', width:'100%'
+});
 var buttonCredits = Titanium.UI.createLabel({
 	text: 'Impressum', size: {width: 150, height: 57}, 
 	right:'15%', bottom:'1%',
@@ -179,6 +182,7 @@ var buttonCredits = Titanium.UI.createLabel({
 // scale = size scaling - 1.0 is default
 // x / y = position when being worn (required except for replacement items)
 // center = new position (x, y) in cabinet - null is default
+// z = ordering delta - 20: in cabinet, 50: Jimmy, 51: default, 50 + z
 var clothesPerSide = 8;
 var clothes = [
 	{ id: "shirt1", type: 1, w: 232, h: 233, scale: 0.4, x: 182, y: 364 },
@@ -197,15 +201,15 @@ var clothes = [
 		x: 170, y: 289, z: 3, center: {x:rezX* 233, y:rezY* 165} }, 
 	
 	{ id: "scarf1", type: 2, z: 4, w: 333, h: 333, scale: 0.25, x: 177, y: 349 },
-	{ id: "jacket2", type: 3, z: 2, w: 333, h: 333, scale: 0.4, scaleTo: 1.32 }, 
+	{ id: "jacket2", type: 3, z: 3, w: 333, h: 333, scale: 0.4, scaleTo: 1.32, x: 185, y: 352 }, 
 	{ id: "jacket1", type: 2, z: 1, w: 333, h: 333, scale: 0.3, scaleTo: 0.9, x: 180, y: 365 },
-	{ id: "mittens1", type: 2, z: 3, w: 296, h: 234, scale: 0.25, scaleTo: 1.42,
-		x: 185, y: 400, center: {x:rezX* 52, y:rezY* 206} },
-	{ id: "mittens2", type: 2, z: 3, w: 292, h: 241, scale: 0.25, scaleTo: 1.5,
+	{ id: "mittens1", type: 2, z: 4, w: 296, h: 234, scale: 0.25, scaleTo: 1.54,
+		x: 192, y: 405, center: {x:rezX* 52, y:rezY* 206} },
+	{ id: "mittens2", type: 2, z: 4, w: 292, h: 241, scale: 0.25, scaleTo: 1.5,
 		x: 184, y: 396, center: {x:rezX* 136, y:rezY* 207} },
 	{ id: "socks_blue", type: 1, z: 1, w: 333, h: 333, scale: 0.25, scaleTo: 1.1,
 		x: 192, y: 453, center: {x:rezX* 218, y:rezY* 208} },
-	{ id: "boots", type: 1, sunny:-1, rainy:1, z: 3, w: 295, h: 313, 
+	{ id: "boots", type: 1, sunny:-1, rainy:1, z: 2, w: 295, h: 313, 
 		x: 189, y: 437, scale: 0.25, scaleTo: 1.25 },
 	   
 	{ id: "umbrella", type: 0, sunny:-5, rainy:2, w: 333, h: 333, scale: 0.4,
@@ -241,7 +245,7 @@ var marginClothes = [ rezX* 83, rezY* 100 ];
 						wearing: false
 					},
 			image:  'assets/clothes/' + clothes[i].id + '.png',
-			height: rezY* clothes[i].h, width: rezX* clothes[i].w, zIndex: 20,
+			height: rezY* clothes[i].h, width: rezX* clothes[i].w, zIndex: 2,
 			center: {x:centerClothes[0] + (marginClothes[0] * col) + paddingLeft,
 				 	 y:centerClothes[1] + (marginClothes[1] * row) + paddingTop}
 		});
