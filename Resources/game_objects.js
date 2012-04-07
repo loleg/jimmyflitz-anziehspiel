@@ -245,7 +245,7 @@ var marginClothes = [ rezX* 83, rezY* 100 ];
 						wearing: false
 					},
 			image:  'assets/clothes/' + clothes[i].id + '.png',
-			height: rezY* clothes[i].h, width: rezX* clothes[i].w, zIndex: 2,
+			height: rezY* clothes[i].h, width: rezX* clothes[i].w, zIndex: 20,
 			center: {x:centerClothes[0] + (marginClothes[0] * col) + paddingLeft,
 				 	 y:centerClothes[1] + (marginClothes[1] * row) + paddingTop}
 		});

@@ -297,32 +297,17 @@ function slideDoors(isOpening) {
 	
 }
 
-function wiggleClothes() {
-// wiggle clothes a little
-	for(var i = 0; i < clothesPerSide; i++) {
-		if(!imgClothes[i].wearing) {
-			// drop down from above
-			var x = imgClothes[i].center.x;
-			imgClothes[i].top = -100;
-			imgClothes[i].animate({
-					top: x,
-					duration: 300
-				});
-		}
-	}
-}
-
 // draws all clothes
 function drawInventory() {
 	for(var i in imgClothes) {
-		// imgClothes[i].addEventListener('click', function(e) {
-		// if (currentScreen != 1) return;
-		// if (this.wearing) {
-		// wearItem(this);
-		// } else {
-		// unwearItem(this);
-		// }
-		// });
+		imgClothes[i].addEventListener('tap', function(e) {
+			if (currentScreen != windowsIx.game) return;
+			if (!this.wearing) {
+				wearItem(this);
+			} else {
+				unwearItem(this);
+			}
+		});
 		imgClothes[i].addEventListener('touchstart', function(e) {
 			if (currentScreen != windowsIx.game) return;
 			this.offset_x = e.x;
@@ -362,7 +347,7 @@ function drawInventory() {
 
 function switchInventory(i) {
 	if (typeof i != "undefined") currentInventory = i;
-	Ti.API.debug('Updating inventory ' + currentInventory);
+	//Ti.API.debug('Updating inventory ' + currentInventory);
 	windows[windowsIx.game].setBackgroundImage((currentInventory == 0) ? 
 		'assets/bg/kleiderschrank1-open-left.jpg' : 
 		'assets/bg/kleiderschrank1-open-right.jpg');
@@ -371,6 +356,7 @@ function switchInventory(i) {
 			imgClothes[i].opacity = 
 				(i >= clothesPerSide * currentInventory 
 				&& i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
+			imgClothes[i].zIndex = 2;
 		}
 	}
 }
@@ -431,7 +417,7 @@ function unwearItem(obj) {
 	// Restore size from pop-in
 	obj.height = obj.o_height;
 	obj.width = obj.o_width;
-	obj.zIndex = 2;
+	//obj.zIndex = 2;
 	// Restore to shelf image
 	obj.image = 'assets/clothes/' + obj.info.id + '.png';
 	obj.wearing = false;
