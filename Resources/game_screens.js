@@ -97,7 +97,7 @@ function showIntro() {
 			var myleft = imgJimmy.left;
 			imgJimmy.animate({
 		      left: 1000,
-		      duration: 1000,
+		      duration: 500,
 		      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
 		    }, function(e) {
 		    	gotoScreen(windowsIx.game);
