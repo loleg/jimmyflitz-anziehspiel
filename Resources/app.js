@@ -18,19 +18,22 @@ function setUp() {
 }
 
 function newGame() {
+	Ti.API.debug("Resetting game");
 	// return to menu
 	gotoScreen(0);
-	// reset Jimmy
-	imgJimmy.image = 'assets/jimmy/jimmy_white.png';
-	//imgJimmy.zIndex = 50;
+	// reset clothes
 	for(var i in imgClothes) {
 		resetItem(imgClothes[i]);
+		windows[windowsIx.game].container.remove(imgClothes[i]);
 	}
+	windows[windowsIx.game].container.remove(imgJimmy);
+	// reset weather
 	Titanium.UI.setBackgroundImage(null);
 	// reset inventory
 	windows[windowsIx.outro].endgame = false;
 	switchInventory(0);
 	// reload
+	loadScreens(windowsIx.game);
 	loadScreens(windowsIx.outro);
 }
 
@@ -101,12 +104,10 @@ function gotoScreen(scr) {
 	// Refresh end screen
 	switch (scr) {
 		case windowsIx.intro:
-			//imgJimmy.zIndex = 30;
 			updateWearing();
 			break;
 		case windowsIx.game:
 			startMusic();
-			//imgJimmy.zIndex = 15;
 			break;
 		case windowsIx.outro:
 			updateWearing();

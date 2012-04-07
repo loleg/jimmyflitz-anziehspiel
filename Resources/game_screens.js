@@ -330,8 +330,11 @@ function drawInventory() {
 		});
 		imgClothes[i].addEventListener('touchend', function(e) {
 			if (currentScreen != windowsIx.game) return;
-			//Ti.API.debug('Center: ' + this.center.x + ', ' + this.center.y ); 
-			if (this.center.y > imgJimmy.center.y - imgJimmy.height / 2) {
+			// Ti.API.debug('Center: ' + this.center.x + ', ' + this.center.y );
+			// Ti.API.debug('Jimmy: ' + imgJimmy.center.x + ', ' + imgJimmy.center.y + ' ' + imgJimmy.width + 'x' + imgJimmy.height); 
+			if (this.center.y > imgJimmy.center.y - 111 &&
+				this.center.x > imgJimmy.center.x - 88 &&
+				this.center.x < imgJimmy.center.x + 88) {
 				// make Jimmy wear the item
 				wearItem(this);
 			} else {
@@ -365,14 +368,13 @@ function switchInventory(i) {
 function wearItem(obj) {
 	obj.wearing = true;
 	obj.opacity = 0;
-	Ti.API.debug('Wearing ' + obj.info.id);
 	// check item swaps
 	var clothesWearing = imgClothes.filter(function(o) { return o.wearing; });
 	var baseName = obj.info.id.replace(/\d/, "");
 	for (var i in clothesWearing) {
 		if (clothesWearing[i].info.id != obj.info.id && 
 			clothesWearing[i].info.id.replace(/\d/, "") == baseName) {
-			unwearItem(clothesWearing[i], true);
+			unwearItem(clothesWearing[i]);
 		}
 	}
 	// special cases
@@ -380,7 +382,7 @@ function wearItem(obj) {
 		// unwear parka with hats
 		for (var i in clothesWearing) {
 			if (clothesWearing[i].info.id == "jacket2") {
-				unwearItem(clothesWearing[i], true);
+				unwearItem(clothesWearing[i]);
 			}
 		}
 	}
@@ -389,7 +391,7 @@ function wearItem(obj) {
 		for (var i in clothesWearing) {
 			var baseNameI = clothesWearing[i].info.id.replace(/\d/, "");
 			if (baseNameI == "hat") {
-				unwearItem(clothesWearing[i], true);
+				unwearItem(clothesWearing[i]);
 			}
 		}
 	}	
@@ -410,46 +412,31 @@ function wearItem(obj) {
 	// swap to worn asset
 	obj.image = 'assets/jimmy/' + obj.info.id + '.png';
 	obj.opacity = 1;
-	if (obj.info.z) {
-		obj.zIndex = 50 + obj.info.z;
-	} else {
-		obj.zIndex = 51;
-	}
+	// set ordering *an ugly Appcelerator hack see http://developer.appcelerator.com/question/32511/zindex-frustration
+	var zi = (obj.info.z) ? 50 + obj.info.z : 51;
+	imgJimmy.zIndex = 50;
+	imgJimmy.animate({zIndex:50});
+	obj.zIndex = zi;	
+	obj.animate({zIndex:zi});
+	//Ti.API.debug('Wearing ' + obj.info.id + ' at z:' + obj.zIndex + ' /' + imgJimmy.zIndex);
 }
 
 // put the item back on its shelf
-function unwearItem(obj, animated) {
+function unwearItem(obj) {
 	Ti.API.debug('Unwearing ' + obj.info.id);
 	// put the item back on its shelf
-	if (animated) {
-		obj.animate({ top: -200, duration: 350 }, function(e) {
-			obj.center = {
-				x: obj.origin.x,
-				y: obj.origin.y
-			};
-			// Restore size from pop-in
-			obj.height = obj.o_height;
-			obj.width = obj.o_width;
-			// Restore to shelf image
-			obj.image = 'assets/clothes/' + obj.info.id + '.png';
-			obj.wearing = false;
-			// Check shown inventory
-			switchInventory();
-		});
-	} else {
-		obj.center = {
-			x: obj.origin.x,
-			y: obj.origin.y
-		};
-		// Restore size from pop-in
-		obj.height = obj.o_height;
-		obj.width = obj.o_width;
-		// Restore to shelf image
-		obj.image = 'assets/clothes/' + obj.info.id + '.png';
-		obj.wearing = false;
-		// Check shown inventory
-		switchInventory();
-	}
+	obj.center = {
+		x: obj.origin.x,
+		y: obj.origin.y
+	};
+	// Restore size from pop-in
+	obj.height = obj.o_height;
+	obj.width = obj.o_width;
+	// Restore to shelf image
+	obj.image = 'assets/clothes/' + obj.info.id + '.png';
+	obj.wearing = false;
+	// Check shown inventory
+	switchInventory();
 }
 
 // put the item back to start
@@ -463,7 +450,8 @@ function resetItem(obj) {
 	obj.width = obj.o_width;
 	// put the item back on its shelf
 	obj.center = { x: obj.info.center.x, y: obj.info.center.y };
-	obj.zIndex = 20;
+	obj.zIndex = 2;
+	obj.animate({zIndex:2});
 	obj.opacity = 1;
 }
 
