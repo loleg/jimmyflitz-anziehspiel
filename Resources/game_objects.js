@@ -202,7 +202,7 @@ var clothes = [
 	
 	{ id: "scarf1", type: 2, z: 4, w: 333, h: 333, scale: 0.25, x: 177, y: 349 },
 	{ id: "jacket2", type: 3, z: 3, w: 333, h: 333, scale: 0.4, scaleTo: 1.32, x: 185, y: 352 }, 
-	{ id: "jacket1", type: 2, z: 1, w: 333, h: 333, scale: 0.3, scaleTo: 0.9, x: 180, y: 365 },
+	{ id: "jacket1", type: 2, z: 2, w: 333, h: 333, scale: 0.3, scaleTo: 0.9, x: 180, y: 365 },
 	{ id: "mittens1", type: 2, z: 4, w: 296, h: 234, scale: 0.25, scaleTo: 1.54,
 		x: 192, y: 405, center: {x:rezX* 52, y:rezY* 206} },
 	{ id: "mittens2", type: 2, z: 4, w: 292, h: 241, scale: 0.25, scaleTo: 1.5,
@@ -229,6 +229,9 @@ var marginClothes = [ rezX* 83, rezY* 100 ];
 		// scoot the clothes over to fit cabinet
 		var paddingLeft = (i < clothesPerSide) ? 58 : 0;
 		var paddingTop = (i < clothesPerSide) ? 0 : -14;
+		var myCenter = clothes[i].center ? clothes[i].center : 
+					{x:centerClothes[0] + (marginClothes[0] * col) + paddingLeft,
+				 	 y:centerClothes[1] + (marginClothes[1] * row) + paddingTop};
 		// define the image object
 		var img = Titanium.UI.createImageView({
 			info:	{
@@ -238,25 +241,21 @@ var marginClothes = [ rezX* 83, rezY* 100 ];
 						rainy: clothes[i].rainy ? clothes[i].rainy : 0,
 						scale: clothes[i].scale ? clothes[i].scale : 1,
 						scaleTo: clothes[i].scaleTo ? clothes[i].scaleTo : false,
-						center: clothes[i].center ? clothes[i].center : false,
 						x: clothes[i].x ? clothes[i].x : false,
 						y: clothes[i].y ? clothes[i].y : false,
 						z: clothes[i].z ? clothes[i].z : false,
+						center: myCenter,
 						wearing: false
 					},
 			image:  'assets/clothes/' + clothes[i].id + '.png',
-			height: rezY* clothes[i].h, width: rezX* clothes[i].w, zIndex: 20,
-			center: {x:centerClothes[0] + (marginClothes[0] * col) + paddingLeft,
-				 	 y:centerClothes[1] + (marginClothes[1] * row) + paddingTop}
+			height: rezY* clothes[i].h, width: rezX* clothes[i].w,
+			center: myCenter
 		});
 		
 		// update scale and position if specified
 		if (img.info.scale) {
 			img.height *= img.info.scale; 
 			img.width  *= img.info.scale;
-		}
-		if (img.info.center) {
-			img.center = img.info.center;
 		}
 		rowClothes++;
 		if (rowClothes == clothesPerSide) {

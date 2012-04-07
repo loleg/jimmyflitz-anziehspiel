@@ -425,6 +425,21 @@ function unwearItem(obj) {
 	switchInventory();
 }
 
+// put the item back to start
+function resetItem(obj) {
+	Ti.API.debug('Reset ' + obj.info.id + ' ' + obj.info.center.x + ',' + obj.info.center.y);
+	// Restore to shelf image
+	obj.image = 'assets/clothes/' + obj.info.id + '.png';
+	obj.wearing = false;
+	// Restore size from pop-in
+	obj.height = obj.o_height;
+	obj.width = obj.o_width;
+	// put the item back on its shelf
+	obj.center = { x: obj.info.center.x, y: obj.info.center.y };
+	obj.zIndex = 20;
+	obj.opacity = 1;
+}
+
 function checkWearing() {
 	// iterate through all worn clothing
 	for(var i in imgClothes) {

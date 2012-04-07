@@ -18,20 +18,20 @@ function setUp() {
 }
 
 function newGame() {
+	// return to menu
+	gotoScreen(0);
 	// reset Jimmy
-	for(var i in imgClothes) {
-		//if (imgClothes[i].wearing) {
-			unwearItem(imgClothes[i]);
-		//}
-	}
 	imgJimmy.image = 'assets/jimmy/jimmy_white.png';
+	imgJimmy.zIndex = 50;
+	for(var i in imgClothes) {
+		resetItem(imgClothes[i]);
+	}
 	Titanium.UI.setBackgroundImage(null);
 	// reset inventory
 	windows[windowsIx.outro].endgame = false;
 	switchInventory(0);
+	// reload
 	loadScreens(windowsIx.outro);
-	// return to menu
-	gotoScreen(0);
 }
 
 function stopMusic() {
