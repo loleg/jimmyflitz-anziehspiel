@@ -145,6 +145,14 @@ var imgCredits = Titanium.UI.createImageView({
 	backgroundImage:'assets/bg/credits.png', zIndex:0,
 	opacity:1, top:0, height:'100%', width:'100%'
 });
+var imgCreditsText = Titanium.UI.createImageView({
+	backgroundImage:'assets/bg/credits-text1.png', zIndex:1,
+	opacity:1, top:rezY*280, left:rezX*15, height:rezY*210, width:rezX*572/2
+});
+imgCreditsText.addEventListener('click', function(e) {
+	this.zIndex = (this.zIndex == 1) ? 2 : 1;
+	this.setBackgroundImage('assets/bg/credits-text' + this.zIndex + '.png');
+});
 var buttonCredits = Titanium.UI.createLabel({
 	text: 'Impressum', size: {width: 150, height: 57}, 
 	right:'15%', bottom:'1%',
@@ -157,13 +165,16 @@ var imgExBasket = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/ex-basket.png', zIndex:44,
 	width:129, height:100, top:'65%', left:'10%'
 });
+imgExBasket.addEventListener('click', function(e) {
+	imgExEgg.randomItem = 9 + parseInt(Math.random() * 6);
+});
 var imgExEgg = Titanium.UI.createImageView({
-	backgroundImage:'assets/ui/ex-egg1.png', zIndex:41,
+	backgroundImage:'assets/ui/ex-egg1.png', zIndex:11,
 	width:16, height:20
 });
 imgExEgg.addEventListener('click', function(e) {
-	this.zIndex = (this.zIndex > 43) ? 41 : this.zIndex+1;
-	this.setBackgroundImage('assets/ui/ex-egg' + (this.zIndex - 40) + '.png');
+	this.zIndex = (this.zIndex > 12) ? 11 : this.zIndex+1;
+	this.setBackgroundImage('assets/ui/ex-egg' + (this.zIndex - 10) + '.png');
 }); imgExEgg.randomItem = 0;
 
 // some clothes 

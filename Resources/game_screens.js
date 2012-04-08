@@ -64,11 +64,10 @@ function showMenu() {
 function showEaster(doShow) {
 	if (doShow) {
 		imgExBasket.opacity = 1;
-		imgExEgg.randomItem = 9 + parseInt(Math.random() * 6);
 	} else {
-		var randomItem = false;
-		imgExBasket.opacity = imgExEgg.opacity = 0;
+		imgExBasket.opacity = 0;
 	}
+	imgExEgg.opacity = 0;
 }
 	
 // initial screen with window
@@ -247,6 +246,7 @@ function showFinale() {
 function showCredits() {
 	container.add(imgNavButtonLeft2);
 	container.add(imgCredits);
+	container.add(imgCreditsText);
 	container.add(imgIconCD);
 	container.add(imgIconBook);
 	container.add(imgIconAudioBook);
@@ -274,7 +274,7 @@ function showCredits() {
 		container.add(lbl);
 	}
 	// return to menu
-	container.addEventListener('click', function(e) {
+	imgCredits.addEventListener('click', function(e) {
 		newGame();
 	});
 	// assign links
