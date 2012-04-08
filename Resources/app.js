@@ -18,31 +18,36 @@ function setUp() {
 	// })
 }
 
-function initGame() {
-	currentInventory = 0;
-	// reset game state
-	container = windows[windowsIx.game].container;
-	for(var i in imgClothes) { 
-		resetItem(imgClothes[i]); 
-		container.remove(imgClothes[i]); 
-	}	
-	container.remove(imgJimmy);
-	// add Jimmy and set up game
-	container.add(imgJimmy);
-	drawInventory();
-}
-
 function newGame() {
 	Ti.API.debug("Resetting game");
 	// return to menu
-	gotoScreen(0);	
-	// reset inventory
+	stopMusic();
+	gotoScreen(windowsIx.menu);
+	// reset game state
+	//var c = windows[windowsIx.game].container;
+	for (var i in imgClothes) { 
+		resetItem(imgClothes[i]); 
+		//container.remove(imgClothes[i]); 
+	}
+	//c.remove(imgJimmy);
+	//c.add(imgJimmy);
+	//imgJimmy.zIndex = 5;	
+	//imgJimmy.animate({zIndex:5});	
+	//imgJimmy.zIndex = 50;	
+	//imgJimmy.animate({zIndex:50});	
+	//drawInventory();
+	
 	windows[windowsIx.outro].endgame = false;
 	// reset weather
 	Titanium.UI.setBackgroundImage(null);
 	// reload 
-	initGame();
-	loadScreens(windowsIx.outro);
+	imgDoor.right = 0;
+	imgDoor.opacity = 1;
+	imgNavButtonJump.opacity = 0;
+	imgNavButtonJump.opacity = 0;
+	imgNavButtonRight2.opacity = 0; // hide button for a few seconds
+	windows[windowsIx.outro].container.top = 0;
+	windows[windowsIx.outro].container.left = 0;
 }
 
 function stopMusic() {
@@ -113,10 +118,10 @@ function gotoScreen(scr) {
 	switch (scr) {
 		case windowsIx.intro:
 			updateWearing();
+			switchInventory(0);
 			break;
 		case windowsIx.game:
 			startMusic();
-			initGame();
 			break;
 		case windowsIx.outro:
 			updateWearing();

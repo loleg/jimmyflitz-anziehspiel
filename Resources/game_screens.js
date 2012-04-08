@@ -47,9 +47,7 @@ function showMenu() {
 		});
 		// Choose a landscape
 		img.addEventListener('click', function(e) {
-			stopMusic();
 			setLandscape(this.landscapeIndex);
-			initGame();
 			gotoScreen(windowsIx.intro);
 		});
 		menuImg.push(img);
@@ -113,6 +111,12 @@ function showIntro() {
 }
 
 function showGame() {
+	// add Jimmy and set up game
+	container.add(imgJimmy);
+	imgJimmy.zIndex = 50;	
+	imgJimmy.animate({zIndex:50});	
+	drawInventory();
+	// set up game navigation
 	container.add(imgCabLeft);
 	container.add(imgCabRight);
 	imgCabLeft.hide();
@@ -140,17 +144,17 @@ function showGame() {
 }
 
 function showOutro() {
-	imgDoor.right = 0;
-	imgDoor.opacity = 1;
 	container.add(imgJimmy);
 	container.add(imgDoor);
 	container.add(imgIconWarning);
 	container.add(imgNavButtonJump);
-	imgNavButtonJump.opacity = 0;
 	container.add(imgNavButtonJump);
+	windows[windowsIx.outro].add(imgNavButtonRight2);
+	imgDoor.right = 0;
+	imgDoor.opacity = 1;
+	imgNavButtonJump.opacity = 0;
 	imgNavButtonJump.opacity = 0;
 	imgNavButtonRight2.opacity = 0; // hide button for a few seconds
-	windows[windowsIx.outro].add(imgNavButtonRight2);
 	// tap to return to cabinet or go to credits
 	windows[windowsIx.outro].container.addEventListener('click', function(e) {
 		if (currentScreen != windowsIx.outro) return;
@@ -359,12 +363,15 @@ function switchInventory(i) {
 	windows[windowsIx.game].setBackgroundImage((currentInventory == 0) ? 
 		'assets/bg/kleiderschrank1-open-left.jpg' : 
 		'assets/bg/kleiderschrank1-open-right.jpg');
+	//imgJimmy.zIndex = 50;	
+	//imgJimmy.animate({zIndex:50});
 	for(var i in imgClothes) {
 		if(!imgClothes[i].wearing) {
 			imgClothes[i].opacity = 
 				(i >= clothesPerSide * currentInventory 
 				&& i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
-			imgClothes[i].zIndex = 2;
+			//imgClothes[i].zIndex = 2;
+			//imgClothes[i].animate({zIndex:2});
 		}
 	}
 }
@@ -428,6 +435,7 @@ function wearItem(obj) {
 function unwearItem(obj) {
 	Ti.API.debug('Unwearing ' + obj.info.id);
 	// put the item back on its shelf
+	obj.opacity = 0;
 	obj.center = {
 		x: obj.origin.x,
 		y: obj.origin.y
@@ -438,6 +446,7 @@ function unwearItem(obj) {
 	// Restore to shelf image
 	obj.image = 'assets/clothes/' + obj.info.id + '.png';
 	obj.wearing = false;
+	obj.opacity = 1;
 	// Check shown inventory
 	switchInventory();
 }
@@ -453,8 +462,8 @@ function resetItem(obj) {
 	obj.width = obj.o_width;
 	// put the item back on its shelf
 	obj.center = { x: obj.info.center.x, y: obj.info.center.y };
-	obj.zIndex = 2;
-	obj.animate({zIndex:2});
+	//obj.zIndex = 2;
+	//obj.animate({zIndex:2});
 	obj.opacity = 1;
 }
 
@@ -472,12 +481,11 @@ function updateWearing() {
 	// iterate through all worn clothing
 	for(var i in imgClothes) {
 		var item = imgClothes[i];
+		// Note: triggers warning when item is not in container
+		container.remove(item);
 		if (item.wearing) {
 			Ti.API.debug('Wearing ' + item.info.id);
 			container.add(item);
-		} else {
-			// Note: triggers warning when item is not in container
-			container.remove(item);
 		}
 	}
 }
