@@ -155,12 +155,16 @@ var buttonCredits = Titanium.UI.createLabel({
 // Easter eggs
 var imgExBasket = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/ex-basket.png', zIndex:44,
-	width:129, height:100, top:'66%', left:'6%'
+	width:129, height:100, top:'65%', left:'10%'
 });
 var imgExEgg = Titanium.UI.createImageView({
-	backgroundImage:'assets/ui/ex-egg1.png', zIndex:44,
+	backgroundImage:'assets/ui/ex-egg1.png', zIndex:41,
 	width:16, height:20
 });
+imgExEgg.addEventListener('click', function(e) {
+	this.zIndex = (this.zIndex > 43) ? 41 : this.zIndex+1;
+	this.setBackgroundImage('assets/ui/ex-egg' + (this.zIndex - 40) + '.png');
+}); imgExEgg.randomItem = 0;
 
 // some clothes 
 // type = score quotient - 0 (default): spring/summer, 1: winter, 2: weather

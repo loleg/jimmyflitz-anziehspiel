@@ -61,14 +61,10 @@ function showMenu() {
 	});
 }
 
-var randomItem;
 function showEaster(doShow) {
 	if (doShow) {
 		imgExBasket.opacity = 1;
-		randomItem = parseInt(Math.random(imgClothes.length-2));
-		imgExEgg.center = {x:imgClothes[randomItem].center.x, y:imgClothes[randomItem].center.y};
-		Ti.API.debug('Easterhegg:' + imgClothes[randomItem].center.x + ',' + 
-					 imgClothes[randomItem].center.y);
+		imgExEgg.randomItem = 9 + parseInt(Math.random() * 6);
 	} else {
 		var randomItem = false;
 		imgExBasket.opacity = imgExEgg.opacity = 0;
@@ -393,6 +389,7 @@ function switchInventory(i) {
 		'assets/bg/kleiderschrank1-open-right.jpg');
 	//imgJimmy.zIndex = 50;	
 	//imgJimmy.animate({zIndex:50});
+	imgExEgg.center = imgClothes[imgExEgg.randomItem].center;		 
 	for(var i in imgClothes) {
 		if(!imgClothes[i].wearing) {
 			imgClothes[i].opacity = 
@@ -400,7 +397,9 @@ function switchInventory(i) {
 				&& i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
 			//imgClothes[i].zIndex = 2;
 			//imgClothes[i].animate({zIndex:2});
-			if (randomItem == i) imgExEgg.opacity = imgClothes[i].opacity;
+			if (imgExEgg.randomItem == i) {
+				imgExEgg.opacity = imgClothes[i].opacity;
+			}
 		}
 	}
 	
