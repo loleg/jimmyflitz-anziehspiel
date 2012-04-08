@@ -218,7 +218,7 @@ var clothes = [
 		x: 189, y: 437, scale: 0.25, scaleTo: 1.25 },
 	   
 	{ id: "umbrella", type: 0, sunny:-5, rainy:2, w: 333, h: 333, scale: 0.4,
-	  	x: 237, y: 304, z: -40, scaleTo: 1.5, center: {x:rezX* 308, y:rezY* 85} }
+	  	x: 233, y: 387, z: -40, center: {x:rezX* 308, y:rezY* 85} }
 	];
 	
 var imgClothes = [];

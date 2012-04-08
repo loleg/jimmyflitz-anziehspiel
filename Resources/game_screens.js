@@ -192,6 +192,16 @@ function showOutro() {
 }
 
 function showFinale() {
+	for (var i in imgClothes) { 
+		var obj = imgClothes[i];
+		if (obj.info.id == 'umbrella') {
+			obj.image = 'assets/jimmy/' + obj.info.id + '.png';
+			obj.center = { x: 237, y: 304 };
+			var scaleTo = 1.5;
+			obj.height = obj.o_height * scaleTo;
+			obj.width = obj.o_width * scaleTo;
+		}
+	}
 	// animate Jimmy entrance
 	container.left = -500; // starting point
 	container.animate({
@@ -422,7 +432,9 @@ function wearItem(obj) {
 		obj.width = obj.o_width * obj.info.scaleTo;
 	}
 	// swap to worn asset
-	obj.image = 'assets/jimmy/' + obj.info.id + '.png';
+	if (obj.info.id != 'umbrella') {
+		obj.image = 'assets/jimmy/' + obj.info.id + '.png';
+	}
 	obj.opacity = 1;
 	// set ordering *an ugly Appcelerator hack see http://developer.appcelerator.com/question/32511/zindex-frustration
 	var zi = (obj.info.z) ? 50 + obj.info.z : 51;
