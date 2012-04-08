@@ -24,19 +24,9 @@ function newGame() {
 	stopMusic();
 	gotoScreen(windowsIx.menu);
 	// reset game state
-	//var c = windows[windowsIx.game].container;
 	for (var i in imgClothes) { 
 		resetItem(imgClothes[i]); 
-		//container.remove(imgClothes[i]); 
 	}
-	//c.remove(imgJimmy);
-	//c.add(imgJimmy);
-	//imgJimmy.zIndex = 5;	
-	//imgJimmy.animate({zIndex:5});	
-	//imgJimmy.zIndex = 50;	
-	//imgJimmy.animate({zIndex:50});	
-	//drawInventory();
-	
 	windows[windowsIx.outro].endgame = false;
 	// reset weather
 	Titanium.UI.setBackgroundImage(null);
@@ -48,6 +38,11 @@ function newGame() {
 	imgNavButtonRight2.opacity = 0; // hide button for a few seconds
 	windows[windowsIx.outro].container.top = 0;
 	windows[windowsIx.outro].container.left = 0;
+}
+
+function startGame() {
+	showEaster(parseInt(theLandscape) == 0);
+	gotoScreen(windowsIx.intro);	
 }
 
 function stopMusic() {

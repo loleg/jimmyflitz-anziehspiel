@@ -48,7 +48,7 @@ function showMenu() {
 		// Choose a landscape
 		img.addEventListener('click', function(e) {
 			setLandscape(this.landscapeIndex);
-			gotoScreen(windowsIx.intro);
+			startGame();
 		});
 		menuImg.push(img);
 		container.add(img);
@@ -61,12 +61,28 @@ function showMenu() {
 	});
 }
 
+var randomItem;
+function showEaster(doShow) {
+	if (doShow) {
+		imgExBasket.opacity = 1;
+		randomItem = parseInt(Math.random(imgClothes.length-2));
+		imgExEgg.center = {x:imgClothes[randomItem].center.x, y:imgClothes[randomItem].center.y};
+		Ti.API.debug('Easterhegg:' + imgClothes[randomItem].center.x + ',' + 
+					 imgClothes[randomItem].center.y);
+	} else {
+		var randomItem = false;
+		imgExBasket.opacity = imgExEgg.opacity = 0;
+	}
+}
+	
 // initial screen with window
 function showIntro() {
 	container.add(imgWindow);
 	container.add(imgJimmy);
 	container.add(imgSmallWindow);
 	container.add(imgNavButtonLeft2);
+	container.add(imgExBasket);
+
 	container.opacity = 1;
 	imgZoomWindow.opacity = 0;
 	windows[windowsIx.intro].add(imgZoomWindow);
@@ -113,6 +129,8 @@ function showIntro() {
 function showGame() {
 	// add Jimmy and set up game
 	container.add(imgJimmy);
+	container.add(imgExEgg);
+	
 	imgJimmy.zIndex = 50;	
 	imgJimmy.animate({zIndex:50});	
 	drawInventory();
@@ -382,8 +400,10 @@ function switchInventory(i) {
 				&& i < clothesPerSide * (currentInventory + 1)) ? 1 : 0;
 			//imgClothes[i].zIndex = 2;
 			//imgClothes[i].animate({zIndex:2});
+			if (randomItem == i) imgExEgg.opacity = imgClothes[i].opacity;
 		}
 	}
+	
 }
 
 // dress up Jimmy

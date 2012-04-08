@@ -57,13 +57,13 @@ var imgDoor = Titanium.UI.createImageView({
 
 // zoom window
 var imgSmallWindow = Titanium.UI.createImageView({
-	backgroundImage:'assets/ui/window.png',
+	backgroundImage:'assets/ui/window.gif',
 	opacity:1, zIndex:11, 
 	width:rezX * 112, height:rezY * 162,
 	center:{x: rezX * 104, y: rezY * 201}
 });
 var imgZoomWindow = Titanium.UI.createImageView({
-	backgroundImage:'assets/ui/window.png',
+	backgroundImage:'assets/ui/window.gif',
 	opacity:1, zIndex:99, 
 	width:Ti.Platform.displayCaps.getPlatformWidth(), 
 	height:Ti.Platform.displayCaps.getPlatformHeight()
@@ -89,37 +89,7 @@ var imgJimmy = Titanium.UI.createImageView({
 	zIndex:50, touchEnabled:false
 });
 
-// jimmy (intro) and friends
-/*
-var imgFriends = [
-	Titanium.UI.createImageView({
-		image:'assets/jimmy/dancing.png',
-		height:rezY* 200, width:rezX* 200, 
-		center:{x:rezX* 135, y:rezY* 356}, zIndex:2
-	}),
-	Titanium.UI.createImageView({
-		image:'assets/friends/fernanda.png',
-		height:rezY* 150, width:rezX* 150,
-		center:{x:rezX* 255, y:rezY* 178}, zIndex:3
-	}),
-	Titanium.UI.createImageView({
-		image:'assets/friends/wulwul.png',
-		height:rezY* 270, width:rezX* 220,
-		center:{x:rezX* 260, y:rezY* 330}, zIndex:4
-	}),
-	Titanium.UI.createImageView({
-		image:'assets/friends/culan.png',
-		height:rezY* 200, width:rezX* 200,
-		center:{x:rezX* 28, y:rezY* 414}, zIndex:5
-	})
-]*/
-
 // UI elements
-// var buttonRestart = Titanium.UI.createButton({
-	// title: 'Start', zIndex: 55,
-	// size: {width: 80, height: 20},
-	// center: {x: rezX * 30, y: rezY* 340}
-// });
 var imgNavButtonLeft = Titanium.UI.createImageView({
 	image:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
@@ -180,6 +150,16 @@ var buttonCredits = Titanium.UI.createLabel({
 	right:'15%', bottom:'1%',
 	color: '#631a05', font: { fontFamily:'American Typewriter', fontSize:16 }, 
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER
+});
+
+// Easter eggs
+var imgExBasket = Titanium.UI.createImageView({
+	backgroundImage:'assets/ui/ex-basket.png', zIndex:44,
+	width:129, height:100, top:'66%', left:'6%'
+});
+var imgExEgg = Titanium.UI.createImageView({
+	backgroundImage:'assets/ui/ex-egg1.png', zIndex:44,
+	width:16, height:20
 });
 
 // some clothes 
