@@ -193,13 +193,14 @@ function showOutro() {
 	});
 	// animate Jimmy exit
     imgNavButtonRight2.addEventListener('click', function(e) {
+    	imgNavButtonJump.opacity = 0;
+	    imgNavButtonRight2.opacity = 0; // hide button for next time
     	container.left = 0;
     	container.animate({
 	      left: 1200,
 	      duration: 1000
 	    }, function(e) {
-	    	imgNavButtonJump.opacity = 0;
-	    	imgNavButtonRight2.opacity = 0; // hide button for next time
+	    	// continue to credits
 	    	gotoScreen(windowsIx.credits);
 		});
     });
@@ -380,13 +381,6 @@ function drawInventory() {
 		container.add(imgClothes[i]);
 	}	
 	switchInventory();
-	// place egh
-	if (imgExEgg.randomItem > 0) {
-		imgExEgg.center = {
-			x: imgClothes[imgExEgg.randomItem].origin.x,
-			y: imgClothes[imgExEgg.randomItem].origin.y
-		};
-	}
 }
 
 function switchInventory(i) {
@@ -397,7 +391,11 @@ function switchInventory(i) {
 		'assets/bg/kleiderschrank1-open-right.jpg');
 	//imgJimmy.zIndex = 50;	
 	//imgJimmy.animate({zIndex:50});
-	
+	// place egh
+	if (imgExEgg.randomItem > 0) {
+		imgExEgg.center = imgClothes[imgExEgg.randomItem].center;
+		imgExEgg.animate({zIndex:0}); imgExEgg.zIndex = 0;
+	}
 	for(var i in imgClothes) {
 		if(!imgClothes[i].wearing) {
 			imgClothes[i].opacity = 
@@ -410,7 +408,7 @@ function switchInventory(i) {
 			}
 		}
 	}
-	
+
 }
 
 // dress up Jimmy

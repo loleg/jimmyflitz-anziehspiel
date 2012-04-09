@@ -169,13 +169,13 @@ imgExBasket.addEventListener('click', function(e) {
 	imgExEgg.randomItem = 9 + parseInt(Math.random() * 6);
 });
 var imgExEgg = Titanium.UI.createImageView({
-	backgroundImage:'assets/ui/ex-egg1.png', zIndex:11,
+	backgroundImage:'assets/ui/ex-egg1.png', zIndex:1,
 	width:16, height:20, opacity:0
 });
 imgExEgg.addEventListener('click', function(e) {
-	this.zIndex = (this.zIndex > 12) ? 11 : this.zIndex+1;
-	this.setBackgroundImage('assets/ui/ex-egg' + (this.zIndex - 10) + '.png');
-});
+	this.eggi = (this.eggi > 2) ? 1 : this.eggi+1;
+	this.setBackgroundImage('assets/ui/ex-egg' + this.eggi + '.png');
+}); imgExEgg.eggi = 1;
 
 // some clothes 
 // type = score quotient - 0 (default): spring/summer, 1: winter, 2: weather
