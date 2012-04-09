@@ -170,12 +170,12 @@ imgExBasket.addEventListener('click', function(e) {
 });
 var imgExEgg = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/ex-egg1.png', zIndex:11,
-	width:16, height:20
+	width:16, height:20, opacity:0
 });
 imgExEgg.addEventListener('click', function(e) {
 	this.zIndex = (this.zIndex > 12) ? 11 : this.zIndex+1;
 	this.setBackgroundImage('assets/ui/ex-egg' + (this.zIndex - 10) + '.png');
-}); imgExEgg.randomItem = 0;
+});
 
 // some clothes 
 // type = score quotient - 0 (default): spring/summer, 1: winter, 2: weather
