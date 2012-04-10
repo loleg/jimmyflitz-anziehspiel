@@ -73,11 +73,11 @@ function showEaster(doShow) {
 	
 // initial screen with window
 function showIntro() {
+	container.add(imgExBunny);
 	container.add(imgWindow);
 	container.add(imgJimmy);
 	container.add(imgSmallWindow);
 	container.add(imgNavButtonLeft2);
-	container.add(imgExBunny);
 	container.add(imgExBasket);
 
 	container.opacity = 1;

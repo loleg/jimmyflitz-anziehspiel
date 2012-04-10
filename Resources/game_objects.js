@@ -47,7 +47,7 @@ var soundClips = {
 
 // welcome images
 var imgWindow = Titanium.UI.createImageView({
-	image:'assets/bg/cabane.gif',
+	backgroundImage:'assets/bg/cabane.gif',
 	opacity:1, top:0, height:'100%', zIndex:2
 });
 var imgDoor = Titanium.UI.createImageView({
@@ -83,58 +83,58 @@ var imgCabRight = Titanium.UI.createImageView({
 
 // jimmy
 var imgJimmy = Titanium.UI.createImageView({
-	image:'assets/jimmy/jimmy_white.png',
-	height:rezY* 222,
+	backgroundImage:'assets/jimmy/jimmy_white.png',
+	width:rezX* 151, height:rezY* 222,
 	center:{y:rezY* 365},
 	zIndex:50, touchEnabled:false
 });
 
 // UI elements
 var imgNavButtonLeft = Titanium.UI.createImageView({
-	image:'assets/ui/mousefeet.png',
+	backgroundImage:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
 	center:{x:rezX* 0, y:rezY* 355}, zIndex:99
 });
 var imgNavButtonLeft2 = Titanium.UI.createImageView({
-	image:'assets/ui/mousearrows.png',
+	backgroundImage:'assets/ui/mousearrows.png',
 	height:rezY* 90, width:rezX* 90, 
 	center:{x:rezX* -5, y:rezY* 270}, zIndex:99
 });
 var imgNavButtonRight = Titanium.UI.createImageView({
-	image:'assets/ui/mousefeet.png',
+	backgroundImage:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
 	center:{x:rezX* 320, y:rezY* 355}, zIndex:99
 });
 var imgNavButtonRight2 = Titanium.UI.createImageView({
-	image:'assets/ui/mousefeet.png',
+	backgroundImage:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
 	center:{x:rezX* 320, y:rezY* 355}, zIndex:99
 });
 var imgNavButtonJump = Titanium.UI.createImageView({
-	image:'assets/ui/mousejump.png',
+	backgroundImage:'assets/ui/mousejump.png',
 	height:rezY* 70, width:rezX* 70, 
 	center:{y:rezY* 70}, zIndex:99
 });
 
 /* various icons */
 var imgIconWarning = Titanium.UI.createImageView({
-	image:'assets/ui/warn_cloud.png',
-	height:rezY* 80,
+	backgroundImage:'assets/ui/warn_cloud.png',
+	height:rezY* 80, width:rezX* 77,
 	center:{y:rezY* 235},
 	zIndex:90, opacity:0
 });
 var imgIconCD = Titanium.UI.createImageView({
-	image:'assets/ui/icon_disc.png',
+	backgroundImage:'assets/ui/icon_disc.png',
 	height:rezY* 60, width:rezY* 60,
 	center:{x:'20%', y:rezY* 150}
 });
 var imgIconBook = Titanium.UI.createImageView({
-	image:'assets/ui/icon_book.png',
+	backgroundImage:'assets/ui/icon_book.png',
 	height:rezY* 80, width:rezY* 80,
 	center:{y:rezY* 150}
 });
 var imgIconAudioBook = Titanium.UI.createImageView({
-	image:'assets/ui/icon_audiobook.png',
+	backgroundImage:'assets/ui/icon_audiobook.png',
 	height:rezY* 80, width:rezY* 80,
 	center:{x:'80%', y:rezY* 150}
 });
@@ -163,27 +163,32 @@ var buttonCredits = Titanium.UI.createLabel({
 // Easter eggs
 var imgExBasket = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/ex-basket.png', zIndex:44,
-	width:129, height:100, top:'65%', left:'10%'
+	width:129, height:100, top:'62%', left:'12%'
 });
 var imgExBunny = Titanium.UI.createImageView({
-	backgroundImage:'assets/ui/ex-bunny.png', zIndex:40,
+	image:'assets/ui/ex-bunny.png', zIndex:0,
 	width:75, height:100, top:'65%', left:'10%', opacity:0
 });
 imgExBasket.addEventListener('click', function(e) {
 	imgExEgg.randomItem = 9 + parseInt(Math.random() * 6);
 	// pop up rabbit
-	imgExBunny.center = { x: this.center.x - 5, y: this.center.y - 10 };
-	imgExBunny.opacity = 1;
+	imgExBunny.center = { x: this.center.x - 28, y: this.center.y - 10 };
+	imgExBunny.opacity = 0;
 	imgExBunny.animate({
-      center: { x: this.center.x - 5, y: this.center.y - 75 },
-      duration: 400, autoreverse: true
+      center: { x: imgExBasket.center.x - 28, y: imgExBasket.center.y - 110 },
+      duration: 400, opacity: 1
     }, function(e) {
-    	imgExBunny.opacity = 0;
+    	imgExBunny.animate({
+	      center: { x: imgExBasket.center.x - 28, y: imgExBasket.center.y - 10 },
+	      duration: 400, opacity: 0
+	    }, function(e) {
+	    	imgExBunny.opacity = 0;
+		});
 	});
 });
 var imgExEgg = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/ex-egg1.png', zIndex:1,
-	width:16, height:20, opacity:0
+	width:rezX* 16, height:rezY* 20, opacity:0
 });
 imgExEgg.addEventListener('click', function(e) {
 	this.eggi = (this.eggi > 2) ? 1 : this.eggi+1;
