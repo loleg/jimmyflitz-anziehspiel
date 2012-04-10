@@ -139,7 +139,7 @@ var imgIconAudioBook = Titanium.UI.createImageView({
 	center:{x:'80%', y:rezY* 150}
 });
 var imgIconWebsite = Titanium.UI.createImageView({
-	height:rezY* 110, bottom:'1%', zIndex:10
+	height:rezY* 65, bottom:1, zIndex:10
 });
 var imgCredits = Titanium.UI.createImageView({
 	backgroundImage:'assets/bg/credits.png', zIndex:0,
