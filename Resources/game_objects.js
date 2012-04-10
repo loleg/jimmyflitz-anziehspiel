@@ -139,7 +139,7 @@ var imgIconAudioBook = Titanium.UI.createImageView({
 	center:{x:'80%', y:rezY* 150}
 });
 var imgIconWebsite = Titanium.UI.createImageView({
-	height:rezY* 110, bottom:'1%'
+	height:rezY* 110, bottom:'1%', zIndex:10
 });
 var imgCredits = Titanium.UI.createImageView({
 	backgroundImage:'assets/bg/credits.png', zIndex:0,
@@ -165,8 +165,21 @@ var imgExBasket = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/ex-basket.png', zIndex:44,
 	width:129, height:100, top:'65%', left:'10%'
 });
+var imgExBunny = Titanium.UI.createImageView({
+	backgroundImage:'assets/ui/ex-bunny.png', zIndex:40,
+	width:75, height:100, top:'65%', left:'10%', opacity:0
+});
 imgExBasket.addEventListener('click', function(e) {
 	imgExEgg.randomItem = 9 + parseInt(Math.random() * 6);
+	// pop up rabbit
+	imgExBunny.center = { x: this.center.x - 5, y: this.center.y - 10 };
+	imgExBunny.opacity = 1;
+	imgExBunny.animate({
+      center: { x: this.center.x - 5, y: this.center.y - 75 },
+      duration: 400, autoreverse: true
+    }, function(e) {
+    	imgExBunny.opacity = 0;
+	});
 });
 var imgExEgg = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/ex-egg1.png', zIndex:1,

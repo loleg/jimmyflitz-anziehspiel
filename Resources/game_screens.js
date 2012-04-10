@@ -77,6 +77,7 @@ function showIntro() {
 	container.add(imgJimmy);
 	container.add(imgSmallWindow);
 	container.add(imgNavButtonLeft2);
+	container.add(imgExBunny);
 	container.add(imgExBasket);
 
 	container.opacity = 1;
