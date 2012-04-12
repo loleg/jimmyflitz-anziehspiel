@@ -225,8 +225,8 @@ var clothes = [
 		x: 192, y: 405, center: {x:rezX* 52, y:rezY* 206} },
 	{ id: "mittens2", type: 2, z: 4, w: 292, h: 241, scale: 0.25, scaleTo: 1.5,
 		x: 184, y: 396, center: {x:rezX* 136, y:rezY* 207} },
-	{ id: "socks_blue", type: 1, z: 1, w: 333, h: 333, scale: 0.25, scaleTo: 1.1,
-		x: 192, y: 453, center: {x:rezX* 218, y:rezY* 208} },
+	/*{ id: "socks_blue", type: 1, z: 1, w: 333, h: 333, scale: 0.25, scaleTo: 1.1,
+		x: 192, y: 453, center: {x:rezX* 218, y:rezY* 208} },*/
 	{ id: "boots", type: 1, sunny:-1, rainy:1, z: 2, w: 295, h: 313, 
 		x: 189, y: 437, scale: 0.25, scaleTo: 1.25 },
 	   
