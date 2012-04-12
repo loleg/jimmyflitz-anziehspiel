@@ -105,6 +105,7 @@ function gotoScreen(scr) {
 	switchingScreen = true;
 	
 	Ti.API.debug('Opening screen ' + scr);
+	
 	container = windows[scr].container;
 	var prevScreen = currentScreen;
 	currentScreen = scr;
@@ -123,6 +124,9 @@ function gotoScreen(scr) {
 			updateResult();
 			break;
 	}
+	
+	// Send analytics event
+	Ti.Analytics.navEvent(prevScreen.toString(), scr.toString(), "Goto", null);
 	
 	// Close the currently open window
 	if (prevScreen != -1) {

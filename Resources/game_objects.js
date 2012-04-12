@@ -71,14 +71,14 @@ var imgZoomWindow = Titanium.UI.createImageView({
 
 // sliding animation
 var imgCabLeft = Titanium.UI.createImageView({
-	image:'assets/bg/kleiderschrank1-closed-LEFT.jpg',
-	showX:-Ti.Platform.displayCaps.getPlatformWidth()/2, hideX:-900,
-	height:'100%', zIndex:95
+	backgroundImage:'assets/bg/kleiderschrank1-closed-LEFT.jpg',
+	showX:0, hideX:rezX* -160,
+	height:rezY* 480, width:rezX* 160, zIndex:95
 });
 var imgCabRight = Titanium.UI.createImageView({
-	image:'assets/bg/kleiderschrank1-closed-RIGHT.jpg',
-	showX:'50%',	hideX:1200,
-	height:'100%', zIndex:95
+	backgroundImage:'assets/bg/kleiderschrank1-closed-RIGHT.jpg',
+	showX:rezX* 160,	hideX:rezX* 320,
+	height:rezY* 480, width:rezX* 160, zIndex:95
 });
 
 // jimmy
@@ -93,7 +93,7 @@ var imgJimmy = Titanium.UI.createImageView({
 var imgNavButtonLeft = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 0, y:rezY* 355}, zIndex:99
+	center:{x:rezX* 0, y:rezY* 270}, zIndex:99
 });
 var imgNavButtonLeft2 = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/mousearrows.png',
@@ -103,7 +103,7 @@ var imgNavButtonLeft2 = Titanium.UI.createImageView({
 var imgNavButtonRight = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/mousefeet.png',
 	height:rezY* 90, width:rezX* 90, 
-	center:{x:rezX* 320, y:rezY* 355}, zIndex:99
+	center:{x:rezX* 320, y:rezY* 270}, zIndex:99
 });
 var imgNavButtonRight2 = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/mousefeet.png',
@@ -112,7 +112,7 @@ var imgNavButtonRight2 = Titanium.UI.createImageView({
 });
 var imgNavButtonJump = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/mousejump.png',
-	height:rezY* 70, width:rezX* 70, 
+	height:rezY* 86, width:rezX* 84, 
 	center:{y:rezY* 70}, zIndex:99
 });
 

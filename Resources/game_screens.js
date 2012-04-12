@@ -112,7 +112,7 @@ function showIntro() {
 			// animate Jimmy walking to closet
 			var myleft = imgJimmy.left;
 			imgJimmy.animate({
-		      left: 1000,
+		      left: 50+(rezX* 320),
 		      duration: 500,
 		      curve: Ti.UI.iOS.ANIMATION_CURVE_EASE_IN
 		    }, function(e) {
@@ -326,11 +326,10 @@ function slideDoors(isOpening) {
 	imgCabRight.left = (isOpening) ? imgCabRight.showX : imgCabRight.hideX;
 	imgCabRight.animate({
 		left : (isOpening) ? imgCabRight.hideX : imgCabRight.showX,
-		duration : 2100
+		duration : 1500
 	}, function() {
 		imgCabRight.hide();
 	});
-	
 }
 
 // draws all clothes
@@ -534,7 +533,8 @@ function updateResult() {
 		topTally = 0,
 		typeTally = 0,
 		sunTally = 0,
-		rainTally = 0;
+		rainTally = 0,
+		summary = [];
 		
 	// iterate through all worn clothing
 	for(var i in imgClothes) {
@@ -549,7 +549,9 @@ function updateResult() {
 			var baseName = item.info.id.replace(/\d/, "");
 			if (baseName == "shirt" || baseName == "jacket") {
 				topTally++;
-			}	
+			}
+			// add to summary
+			summary.push(item.info.id);
 		}
 	}
 	
@@ -581,12 +583,18 @@ function updateResult() {
 			break;
 		}
 	}
-	
+
+	Ti.Analytics.featureEvent("Result", {
+		Result:	  typeOK,
+		Reason:   typeWarn,
+		Season:   landscapes[theLandscape],
+		Weather:  fairWeather,
+		Clothes:  summary
+	});
 	Ti.API.debug(typeOK + '! (' + typeWarn + ') Why? ' +
-		' FairWeather: ' + fairWeather + ' Season: ' + theLandscape + ' ' + landscapes[theLandscape] +
+		' FairWeather: ' + fairWeather + ' Season: ' + theLandscape +
 		' Top: ' + topTally + ' Tally: ' + typeTally + ' Rain: ' + rainTally + 
-		' Sun: ' + sunTally + ' Count: ' + count + 
-		'');
+		' Sun: ' + sunTally + ' Count: ' + count);
 
 	// show warning
 	imgIconWarning.image = 'assets/ui/warn_' + typeWarn + '.png';
