@@ -59,7 +59,7 @@ var imgDoor = Titanium.UI.createImageView({
 var imgSmallWindow = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/window.gif',
 	opacity:1, zIndex:11, 
-	width:rezX * 112, height:rezY * 162,
+	width:rezX * 114, height:rezY * 163,
 	center:{x: rezX * 104, y: rezY * 201}
 });
 var imgZoomWindow = Titanium.UI.createImageView({
@@ -120,7 +120,7 @@ var imgNavButtonJump = Titanium.UI.createImageView({
 var imgIconWarning = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/warn_cloud.png',
 	height:rezY* 80, width:rezX* 77,
-	center:{y:rezY* 235},
+	center:{x:rezX* 180, y:rezY* 235},
 	zIndex:90, opacity:0
 });
 var imgIconCD = Titanium.UI.createImageView({

@@ -11,11 +11,20 @@ function setUp() {
 	Ti.UI.setBackgroundColor('#fff');
 	Ti.UI.setBackgroundImage('assets/bg/loading.jpg');
 	
-	// quit the game when returning home
-	// Ti.App.addEventListener('pause', function() {
+	// what to do when the app is exited
+	Ti.App.addEventListener('pause', function() {
 		// newGame();
 		// Titanium.App.restart();
-	// })
+		
+		// Remove all clothes objects
+		for (var i in imgClothes) {
+			windows[windowsIx.game].container.remove(imgClothes[i]);
+		}
+		// Add them back in
+		for (var i in imgClothes) {
+			windows[windowsIx.game].container.add(imgClothes[i]);
+		}
+	});
 }
 
 function newGame() {

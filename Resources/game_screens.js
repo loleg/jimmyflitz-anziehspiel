@@ -433,6 +433,15 @@ function wearItem(obj) {
 			}
 		}
 	}
+	if (baseName == "shirt") {
+		// unwear jackets with shirt
+		for (var i in clothesWearing) {
+			var bn = clothesWearing[i].info.id.replace(/\d/, "");
+			if (bn == "jacket") {
+				unwearItem(clothesWearing[i]);
+			}
+		}
+	}
 	if (obj.info.id == "jacket2") {
 		// unwear hats with parka
 		for (var i in clothesWearing) {
@@ -601,13 +610,13 @@ function updateResult() {
 	imgIconWarning.opacity = (typeOK) ? 0 : 1;
 
 	// animate warning
-	if(!typeOK) {
-		imgIconWarning.top = rezY * 10;
-		imgIconWarning.animate({
-			top : rezY * 240,
-			duration : 500
-		});
-	}
+	//if(!typeOK) {
+		// imgIconWarning.top = rezY * 10;
+		// imgIconWarning.animate({
+			// top : rezY * 240,
+			// duration : 500
+		// });
+	// }
 
 	// check if Jimmy goes out
 	windows[windowsIx.outro].endgame = typeOK;
