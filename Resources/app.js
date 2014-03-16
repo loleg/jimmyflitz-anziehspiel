@@ -12,11 +12,16 @@ function setUp() {
 	Ti.UI.setBackgroundImage('assets/bg/loading.jpg');
 	
 	// what to do when the app is exited
+<<<<<<< HEAD
 	Ti.App.addEventListener('pause', function() {
+=======
+	// Ti.App.addEventListener('pause', function() {
+>>>>>>> 1ba0ba1c332e9dea62c7aa1adbea6c1b0d93ce34
 		// newGame();
 		// Titanium.App.restart();
 		
 		// Remove all clothes objects
+<<<<<<< HEAD
 		for (var i in imgClothes) {
 			windows[windowsIx.game].container.remove(imgClothes[i]);
 		}
@@ -25,6 +30,16 @@ function setUp() {
 			windows[windowsIx.game].container.add(imgClothes[i]);
 		}
 	});
+=======
+		// for (var i in imgClothes) {
+			// windows[windowsIx.game].container.remove(imgClothes[i]);
+		// }
+		// // Add them back in
+		// for (var i in imgClothes) {
+			// windows[windowsIx.game].container.add(imgClothes[i]);
+		// }
+	// });
+>>>>>>> 1ba0ba1c332e9dea62c7aa1adbea6c1b0d93ce34
 }
 
 function newGame() {
