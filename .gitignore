@@ -1,4 +1,6 @@
 .project
 .settings
+Resources/assets
+Resources/sound
 build/
 build.log
