@@ -87,7 +87,7 @@ function showIntro() {
 	var fSwitchZoom = function(e) {
 		container.opacity = (container.opacity) ? 0 : 1;
 		imgZoomWindow.opacity = (container.opacity) ? 0 : 1;
-	}
+	};
 	imgZoomWindow.addEventListener('click', fSwitchZoom);
 	imgSmallWindow.addEventListener('click', fSwitchZoom);
 	imgNavButtonLeft2.addEventListener('click', function(e) {
@@ -332,6 +332,8 @@ function slideDoors(isOpening) {
 	});
 }
 
+var curX = null, curY = null;
+
 // draws all clothes
 function drawInventory() {
 	for(var i in imgClothes) {
@@ -345,11 +347,10 @@ function drawInventory() {
 		});
 		imgClothes[i].addEventListener('touchstart', function(e) {
 			if (currentScreen != windowsIx.game) return;
-			this.offset_x = e.x;
-			this.offset_y = e.y;
-			if (typeof this.origin === 'undefined') {
-				this.origin = this.center;
-			}
+			curX = e.x;
+			curY = e.y;
+			this.originX = this.originX || e.x;
+			this.originY = this.originY || e.y;
 			this.zIndex = 90;
 		});
 		imgClothes[i].addEventListener('touchmove', function(e) {
@@ -358,15 +359,17 @@ function drawInventory() {
 			if (currentScreen != windowsIx.game)
 				return;
 			// move the item
-			this.center = {
-				x : this.center.x + (e.x - this.offset_x),
-				y : this.center.y + (e.y - this.offset_y)
-			};
+			var deltaX = e.x - curX,
+			    deltaY = e.y - curY;
+			olt = olt.translate(deltaX, deltaY);
+			this.animate({transform: olt, duration: 100});
 		});
 		imgClothes[i].addEventListener('touchend', function(e) {
 			if (currentScreen != windowsIx.game) return;
-			// Ti.API.debug('Center: ' + this.center.x + ', ' + this.center.y );
-			// Ti.API.debug('Jimmy: ' + imgJimmy.center.x + ', ' + imgJimmy.center.y + ' ' + imgJimmy.width + 'x' + imgJimmy.height); 
+			this.finalX = e.x;
+			this.finalY = e.y;
+			Ti.API.debug('Center: ' + this.center.x + ', ' + this.center.y );
+			Ti.API.debug('Jimmy: ' + imgJimmy.center.x + ',' + imgJimmy.center.y + ' ' + imgJimmy.width + 'x' + imgJimmy.height); 
 			if (this.center.y > imgJimmy.center.y - 111 &&
 				this.center.x > imgJimmy.center.x - 88 &&
 				this.center.x < imgJimmy.center.x + 88) {
@@ -481,25 +484,15 @@ function wearItem(obj) {
 function unwearItem(obj) {
 	Ti.API.debug('Unwearing ' + obj.info.id);
 	// put the item back on its shelf
-	obj.opacity = 0;
-	obj.center = {
-		x: obj.origin.x,
-		y: obj.origin.y
-	};
-	// Restore size from pop-in
-	obj.height = obj.o_height;
-	obj.width = obj.o_width;
-	// Restore to shelf image
-	obj.image = 'assets/clothes/' + obj.info.id + '.png';
-	obj.wearing = false;
-	obj.opacity = 1;
+	//obj.opacity = 0;
+	resetItem(obj);
 	// Check shown inventory
 	switchInventory();
 }
 
 // put the item back to start
 function resetItem(obj) {
-	Ti.API.debug('Reset ' + obj.info.id + ' ' + obj.info.center.x + ',' + obj.info.center.y);
+	Ti.API.debug('Reset ' + obj.info.id);
 	// Restore to shelf image
 	obj.image = 'assets/clothes/' + obj.info.id + '.png';
 	obj.wearing = false;
@@ -507,10 +500,15 @@ function resetItem(obj) {
 	obj.height = obj.o_height;
 	obj.width = obj.o_width;
 	// put the item back on its shelf
-	obj.center = { x: obj.info.center.x, y: obj.info.center.y };
-	//obj.zIndex = 2;
-	//obj.animate({zIndex:2});
-	obj.opacity = 1;
+	if (typeof obj.originX === 'undefined' || typeof obj.finalX === 'undefined') return;
+	Ti.API.debug(obj.originX + ',' + obj.originY + ' -> ' + obj.finalX + ',' + obj.finalY);
+	var deltaX = obj.originX - obj.finalX;
+	    deltaY = obj.originY - obj.finalY;
+	olt = olt.translate(deltaX, deltaY);
+	obj.animate({transform: olt, duration: 100});
+	obj.originX = obj.originY = obj.finalX = obj.finalY = null;
+	// reappear
+	//obj.opacity = 1;
 }
 
 function checkWearing() {

@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-Place your change log text here.  This file will be incorporated with your app at package time.
-=======
-1.0 Initial release
->>>>>>> 1ba0ba1c332e9dea62c7aa1adbea6c1b0d93ce34

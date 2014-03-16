@@ -5,6 +5,7 @@ Ti.include('game_screens.js');
 var currentScreen = -1;
 var currentInventory = 0;
 var switchingScreen = false;
+var olt = Titanium.UI.create2DMatrix();
 
 function setUp() {
 	// background of the master UIView

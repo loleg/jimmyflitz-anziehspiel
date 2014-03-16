@@ -48,7 +48,7 @@ var soundClips = {
 // welcome images
 var imgWindow = Titanium.UI.createImageView({
 	backgroundImage:'assets/bg/cabane.gif',
-	opacity:1, top:0, height:'100%', zIndex:2
+	opacity:1, top:0, height:'100%', width:'100%', zIndex:2
 });
 var imgDoor = Titanium.UI.createImageView({
 	backgroundImage:'assets/ui/cabane_door.gif', zIndex:2,
@@ -166,13 +166,13 @@ var imgExBasket = Titanium.UI.createImageView({
 	width:129, height:100, top:'62%', left:'12%'
 });
 var imgExBunny = Titanium.UI.createImageView({
-	image:'assets/ui/ex-bunny.png', zIndex:0,
+	backgroundImage:'assets/ui/ex-bunny.png', zIndex:0,
 	width:75, height:100, top:'65%', left:'10%', opacity:0
 });
 imgExBasket.addEventListener('click', function(e) {
 	imgExEgg.randomItem = 9 + parseInt(Math.random() * 6);
 	// pop up rabbit
-	imgExBunny.center = { x: this.center.x - 28, y: this.center.y - 10 };
+	imgExBunny.center = { x: imgExBasket.center.x - 28, y: imgExBasket.center.y - 10 };
 	imgExBunny.opacity = 0;
 	imgExBunny.animate({
       center: { x: imgExBasket.center.x - 28, y: imgExBasket.center.y - 110 },
@@ -282,6 +282,8 @@ var marginClothes = [ rezX* 83, rezY* 100 ];
 		
 		img.o_height = img.height;
 		img.o_width = img.width;
+		img.o_top = img.top;
+		img.o_left = img.left;
 		img.wearing = false;
 		
 		// add to stack
